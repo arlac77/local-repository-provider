@@ -2,8 +2,8 @@
   "name": "local-repository-provider",
   "version": "0.0.0-semantic-release",
   "description": "repository provider using local (native) git commands",
-  "main": "dist/module.js",
-  "module": "src/module.js",
+  "main": "dist/local-repository-provider.js",
+  "module": "src/local-repository-provider.js",
   "scripts": {
     "cover": "nyc --temp-directory build/nyc ava",
     "test": "ava",
@@ -25,6 +25,7 @@
     "execa": "^0.8.0",
     "globby": "^6.1.0",
     "make-dir": "^1.1.0",
+    "repository-provider": "^1.0.5",
     "tempy": "^0.2.1"
   },
   "devDependencies": {
