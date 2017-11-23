@@ -38,12 +38,7 @@ test('local get file', async t => {
 
   const file = await branch.content('README.md');
 
-  t.is(
-    file,
-    `xxx
-
-`
-  );
+  t.is(file.substring(0, 3), `xxx`);
 });
 
 test('local provider list files', async t => {
@@ -55,4 +50,21 @@ test('local provider list files', async t => {
 
   t.is(files[0].path, 'README.md');
   t.is(files[0].type, 'blob');
+});
+
+test('local provider commit files', async t => {
+  const provider = new LocalProvider({ workspace: tempy.directory() });
+  const repository = await provider.repository(REPOSITORY_NAME);
+  const branch = await repository.branch('master');
+
+  let file = await branch.content('README.md');
+
+  file += `\n${new Date()}`;
+
+  const r = await branch.commit('test: ignore', [
+    { path: 'README.md', content: file }
+  ]);
+
+  const file2 = await branch.content('README.md');
+  t.is(file, file2);
 });

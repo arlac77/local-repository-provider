@@ -9,6 +9,7 @@ const globby = require('globby');
 
 const stat = promisify(fs.stat);
 const readFile = promisify(fs.readFile);
+const writeFile = promisify(fs.writeFile);
 
 export class LocalProvider extends Provider {
   static get repositoryClass() {
@@ -90,6 +91,24 @@ export class LocalBranch extends Branch {
       }
       throw e;
     }
+  }
+
+  async commit(message, blobs, options = {}) {
+    await Promise.all(
+      blobs.map(b => writeFile(path.join(this.workspace, b.path), b.content))
+    );
+
+    await execa('git', ['add', ...blobs.map(b => b.path)], {
+      cwd: this.workspace
+    });
+
+    await execa('git', ['commit', '-m', message], {
+      cwd: this.workspace
+    });
+
+    await execa('git', ['push'], {
+      cwd: this.workspace
+    });
   }
 
   async list() {
