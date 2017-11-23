@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "execa": "^0.8.0",
-    "globby": "^7.0.0",
+    "globby": "^7.1.1",
     "make-dir": "^1.1.0",
-    "repository-provider": "^2.0.1",
+    "repository-provider": "^2.0.2",
     "tempy": "^0.2.1"
   },
   "devDependencies": {
