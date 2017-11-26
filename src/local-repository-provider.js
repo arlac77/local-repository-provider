@@ -35,6 +35,12 @@ export class LocalRepository extends Repository {
     }
   }
 
+  async push() {
+    return execa('git', ['push'], {
+      cwd: this.workspace
+    });
+  }
+
   async branches() {
     const result = await execa('git', ['branch'], {
       cwd: this.workspace
@@ -103,10 +109,6 @@ export class LocalBranch extends Branch {
     });
 
     await execa('git', ['commit', '-m', message], {
-      cwd: this.workspace
-    });
-
-    await execa('git', ['push'], {
       cwd: this.workspace
     });
   }

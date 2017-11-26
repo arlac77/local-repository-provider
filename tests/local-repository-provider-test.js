@@ -17,7 +17,7 @@ test('local provider', async t => {
   t.is(repository.name, REPOSITORY_NAME);
 });
 
-test('local provider create branch', async t => {
+test('local provider create & delete branch', async t => {
   const provider = new LocalProvider({ workspace: tempy.directory() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branches = await repository.branches();
