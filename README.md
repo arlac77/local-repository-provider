@@ -18,3 +18,18 @@
 local-repository-provider
 ===
 repository provider using local (native) git commands
+
+
+# API
+
+# install
+
+With [npm](http://npmjs.org) do:
+
+```shell
+npm install local-repository-provider
+```
+
+# license
+
+BSD-2-Clause
