@@ -12,12 +12,23 @@ const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
 export class LocalProvider extends Provider {
-  static get repositoryClass() {
+  get repositoryClass() {
     return LocalRepository;
   }
 
-  static get branchClass() {
+  get branchClass() {
     return LocalBranch;
+  }
+
+  async repository(name) {
+    let r = this.repositories.get(name);
+    if (r === undefined) {
+      r = new this.repositoryClass(this, name);
+      await r.initialize();
+      this.repositories.set(name, r);
+    }
+
+    return r;
   }
 }
 
@@ -45,7 +56,7 @@ export class LocalRepository extends Repository {
       const m = b.match(/^\*?\s*([^\s]+)/);
       if (m) {
         const name = m[1];
-        const branch = new this.provider.constructor.branchClass(this, name);
+        const branch = new this.provider.branchClass(this, name);
         this._branches.set(branch.name, branch);
       }
     });
@@ -62,7 +73,7 @@ export class LocalRepository extends Repository {
       cwd: this.workspace
     });
 
-    const b = new this.provider.constructor.branchClass(this, name);
+    const b = new this.provider.branchClass(this, name);
     this._branches.set(b.name, b);
     return b;
   }
