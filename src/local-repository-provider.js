@@ -33,15 +33,10 @@ export class LocalRepository extends Repository {
     } catch (e) {
       const result = await execa('git', ['clone', this.name, this.workspace]);
     }
+    await this.initializeBranches();
   }
 
-  async push() {
-    return execa('git', ['push'], {
-      cwd: this.workspace
-    });
-  }
-
-  async branches() {
+  async initializeBranches() {
     const result = await execa('git', ['branch'], {
       cwd: this.workspace
     });
@@ -54,8 +49,12 @@ export class LocalRepository extends Repository {
         this._branches.set(branch.name, branch);
       }
     });
+  }
 
-    return this._branches;
+  async push() {
+    return execa('git', ['push'], {
+      cwd: this.workspace
+    });
   }
 
   async createBranch(name, from) {
