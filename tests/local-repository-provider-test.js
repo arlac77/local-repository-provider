@@ -38,7 +38,7 @@ test('local get file', async t => {
 
   const file = await branch.content('README.md');
 
-  t.is(file.substring(0, 3), `xxx`);
+  t.is(file.content.substring(0, 3), `xxx`);
 });
 
 test('local provider list files', async t => {
@@ -66,5 +66,5 @@ test('local provider commit files', async t => {
   ]);
 
   const file2 = await branch.content('README.md');
-  t.is(file, file2);
+  t.is(file, file2.content);
 });

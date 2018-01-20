@@ -98,9 +98,14 @@ export class LocalBranch extends Branch {
 
   async content(fileName, options = {}) {
     try {
-      return readFile(path.join(this.workspace, fileName), {
+      const d = readFile(path.join(this.workspace, fileName), {
         encoding: 'utf8'
       });
+
+      return {
+        path: fileName,
+        content: await d
+      };
     } catch (e) {
       if (options.ignoreMissing) {
         return '';
