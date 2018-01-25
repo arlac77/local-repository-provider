@@ -1,4 +1,4 @@
-import { Provider, Repository, Branch } from 'repository-provider';
+import { Provider, Repository, Branch, Content } from 'repository-provider';
 
 const makeDir = require('make-dir');
 const execa = require('execa');
@@ -38,6 +38,7 @@ export class LocalRepository extends Repository {
   }
 
   async initialize() {
+    await super.initialize();
     try {
       await stat(this.workspace);
       const result = await execa('git', ['pull'], { cwd: this.workspace });
@@ -102,13 +103,10 @@ export class LocalBranch extends Branch {
         encoding: 'utf8'
       });
 
-      return {
-        path: fileName,
-        content: await d
-      };
+      return new Content(fileName, await d);
     } catch (e) {
       if (options.ignoreMissing) {
-        return '';
+        return new Content(fileName, '');
       }
       throw e;
     }
