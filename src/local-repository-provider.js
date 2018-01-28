@@ -131,4 +131,10 @@ export class LocalBranch extends Branch {
       return { path: f, type: 'blob' };
     });
   }
+
+  async createPullRequest(to, message) {
+    console.log(
+      `create pull request from ${this.name} to ${to.name} ${message}`
+    );
+  }
 }
