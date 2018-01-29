@@ -7,6 +7,6 @@ export default {
     format: 'cjs',
     sourcemap: true
   },
-  external: ['ava', 'repository-provider'],
+  external: ['ava', 'fs', 'util', 'path', 'repository-provider'],
   plugins: [multiEntry()]
 };

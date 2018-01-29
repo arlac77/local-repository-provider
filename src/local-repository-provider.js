@@ -1,15 +1,15 @@
 import { Provider, Repository, Branch, Content } from 'repository-provider';
+import { stat, readFile, writeFile } from 'fs';
+import { promisify } from 'util';
+import { join } from 'path';
 
 const makeDir = require('make-dir');
 const execa = require('execa');
-const { promisify } = require('util');
-const fs = require('fs');
-const path = require('path');
 const globby = require('globby');
 
-const stat = promisify(fs.stat);
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
+const pStat = promisify(stat);
+const pReadFile = promisify(readFile);
+const pWriteFile = promisify(writeFile);
 
 export class LocalProvider extends Provider {
   get repositoryClass() {
@@ -34,13 +34,13 @@ export class LocalProvider extends Provider {
 
 export class LocalRepository extends Repository {
   get workspace() {
-    return this.provider.config.workspace;
+    return join(this.provider.config.workspace, this.name);
   }
 
   async initialize() {
     await super.initialize();
     try {
-      await stat(this.workspace);
+      await pStat(this.workspace);
       const result = await execa('git', ['pull'], { cwd: this.workspace });
     } catch (e) {
       const result = await execa('git', ['clone', this.name, this.workspace]);
@@ -99,7 +99,7 @@ export class LocalBranch extends Branch {
 
   async content(fileName, options = {}) {
     try {
-      const d = readFile(path.join(this.workspace, fileName), {
+      const d = pReadFile(join(this.workspace, fileName), {
         encoding: 'utf8'
       });
 
@@ -114,7 +114,7 @@ export class LocalBranch extends Branch {
 
   async commit(message, blobs, options = {}) {
     await Promise.all(
-      blobs.map(b => writeFile(path.join(this.workspace, b.path), b.content))
+      blobs.map(b => pWriteFile(join(this.workspace, b.path), b.content))
     );
 
     await execa('git', ['add', ...blobs.map(b => b.path)], {
