@@ -17,6 +17,14 @@ test('local provider', async t => {
   t.is(repository.name, REPOSITORY_NAME);
 });
 
+test('local provider with default workspace', async t => {
+  const provider = new LocalProvider();
+
+  const repository = await provider.repository(REPOSITORY_NAME);
+
+  t.is(repository.name, REPOSITORY_NAME);
+});
+
 test('local provider create & delete branch', async t => {
   const provider = new LocalProvider({ workspace: tempy.directory() });
   const repository = await provider.repository(REPOSITORY_NAME);

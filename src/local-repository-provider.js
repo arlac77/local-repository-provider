@@ -2,6 +2,7 @@ import { Provider, Repository, Branch, Content } from 'repository-provider';
 import { stat, readFile, writeFile } from 'fs';
 import { promisify } from 'util';
 import { join } from 'path';
+import { tmpdir } from 'os';
 
 const makeDir = require('make-dir');
 const execa = require('execa');
@@ -11,7 +12,18 @@ const pStat = promisify(stat);
 const pReadFile = promisify(readFile);
 const pWriteFile = promisify(writeFile);
 
+/**
+ * Provider using native git
+ */
 export class LocalProvider extends Provider {
+  /**
+   * Default configuration options
+   * @return {Object}
+   */
+  static get defaultOptions() {
+    return { workspace: tmpdir() };
+  }
+
   get repositoryClass() {
     return LocalRepository;
   }

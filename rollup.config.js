@@ -9,5 +9,5 @@ export default {
     format: 'cjs'
   },
   plugins: [resolve(), commonjs()],
-  external: ['fs', 'util', 'path', 'repository-provider']
+  external: ['fs', 'util', 'path', 'os', 'repository-provider']
 };
