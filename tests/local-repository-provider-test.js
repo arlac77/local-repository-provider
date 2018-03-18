@@ -8,13 +8,22 @@ const tempy = require('tempy');
 //const config = { workspace };
 
 const REPOSITORY_NAME = 'https://github.com/arlac77/sync-test-repository.git';
+const REPOSITORY_NAME_GIT = 'git@github.com:arlac77/sync-test-repository.git';
 
-test('local provider', async t => {
+test('local provider https', async t => {
   const provider = new LocalProvider({ workspace: tempy.directory() });
 
   const repository = await provider.repository(REPOSITORY_NAME);
 
   t.is(repository.name, REPOSITORY_NAME);
+});
+
+test('local provider git@', async t => {
+  const provider = new LocalProvider({ workspace: tempy.directory() });
+
+  const repository = await provider.repository(REPOSITORY_NAME_GIT);
+
+  t.is(repository.name, REPOSITORY_NAME_GIT);
 });
 
 test('local provider with default workspace', async t => {
