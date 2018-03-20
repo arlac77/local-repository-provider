@@ -19,11 +19,15 @@ test('local provider https', async t => {
 });
 
 test('local provider git@', async t => {
-  const provider = new LocalProvider({ workspace: tempy.directory() });
+  if (process.env.SSH_AUTH_SOCK) {
+    const provider = new LocalProvider({ workspace: tempy.directory() });
 
-  const repository = await provider.repository(REPOSITORY_NAME_GIT);
+    const repository = await provider.repository(REPOSITORY_NAME_GIT);
 
-  t.is(repository.name, REPOSITORY_NAME_GIT);
+    t.is(repository.name, REPOSITORY_NAME_GIT);
+  } else {
+    t.is(1, 1, 'skip git@ test without SSH_AUTH_SOCK');
+  }
 });
 
 test('local provider with default workspace', async t => {
