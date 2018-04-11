@@ -24,6 +24,13 @@ export class LocalProvider extends Provider {
     return { workspace: tmpdir() };
   }
 
+  /**
+   * @return {Object} empty object
+   */
+  static optionsFromEnvironment(env) {
+    return {};
+  }
+
   get repositoryClass() {
     return LocalRepository;
   }

@@ -28,6 +28,7 @@ repository provider using local (native) git commands
 
 -   [LocalProvider](#localprovider)
     -   [defaultOptions](#defaultoptions)
+    -   [optionsFromEnvironment](#optionsfromenvironment)
 
 ## LocalProvider
 
@@ -40,6 +41,14 @@ Provider using native git
 Default configuration options
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### optionsFromEnvironment
+
+**Parameters**
+
+-   `env`  
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** empty object
 
 # install
 
