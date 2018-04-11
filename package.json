@@ -29,14 +29,14 @@
   },
   "dependencies": {
     "execa": "^0.10.0",
-    "globby": "^8.0.0",
-    "make-dir": "^1.1.0",
-    "repository-provider": "^2.19.0",
+    "globby": "^8.0.1",
+    "make-dir": "^1.2.0",
+    "repository-provider": "^2.20.0",
     "tempy": "^0.2.1"
   },
   "devDependencies": {
-    "ava": "^0.25.0",
-    "documentation": "^6.1.0",
+    "ava": "0.25.0",
+    "documentation": "6.2.0",
     "markdown-doctest": "^0.9.1",
     "nyc": "^11.6.0",
     "rollup": "^0.57.1",
