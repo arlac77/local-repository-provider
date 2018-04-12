@@ -31,6 +31,10 @@ export class LocalProvider extends Provider {
     return {};
   }
 
+  get workspace() {
+    return this.config.workspace;
+  }
+
   get repositoryClass() {
     return LocalRepository;
   }
@@ -43,7 +47,9 @@ export class LocalProvider extends Provider {
     let r = this.repositories.get(name);
     if (r === undefined) {
       r = new this.repositoryClass(this, name);
-      await r.initialize();
+      await r.initialize(
+        join(this.workspace, `r${this.repositories.size + 1}`)
+      );
       this.repositories.set(name, r);
     }
 
@@ -51,12 +57,16 @@ export class LocalProvider extends Provider {
   }
 }
 
+/**
+ * @property {string} workspace
+ */
 export class LocalRepository extends Repository {
-  get workspace() {
-    return join(this.provider.config.workspace, this.name);
-  }
-
-  async initialize() {
+  /**
+   * exec git clone or git pull
+   * @param {string} workspace
+   */
+  async initialize(workspace) {
+    Object.defineProperty(this, 'workspace', { value: workspace });
     await super.initialize();
     try {
       await pStat(this.workspace);
@@ -153,7 +163,7 @@ export class LocalBranch extends Branch {
 
   async createPullRequest(to, message) {
     console.log(
-      `create pull request from ${this.name} to ${to.name} ${message}`
+      `Create pull request from ${this.name} to ${to.name} ${message}`
     );
   }
 }

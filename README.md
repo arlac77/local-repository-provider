@@ -29,6 +29,8 @@ repository provider using local (native) git commands
 -   [LocalProvider](#localprovider)
     -   [defaultOptions](#defaultoptions)
     -   [optionsFromEnvironment](#optionsfromenvironment)
+-   [LocalRepository](#localrepository)
+    -   [initialize](#initialize)
 
 ## LocalProvider
 
@@ -49,6 +51,22 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 -   `env`  
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** empty object
+
+## LocalRepository
+
+**Extends Repository**
+
+**Properties**
+
+-   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### initialize
+
+exec git clone or git pull
+
+**Parameters**
+
+-   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 # install
 
