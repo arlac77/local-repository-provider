@@ -1,11 +1,10 @@
 import test from 'ava';
 import { LocalProvider } from '../src/local-repository-provider';
+import { join } from 'path';
 
-const path = require('path');
 const tempy = require('tempy');
 
-//const workspace = path.join(__dirname, '..', 'build', 'sample_repo');
-//const config = { workspace };
+const workspace = join(__dirname, '..', 'build', 'workspace');
 
 const REPOSITORY_NAME = 'https://github.com/arlac77/sync-test-repository.git';
 const REPOSITORY_NAME_GIT = 'git@github.com:arlac77/sync-test-repository.git';
@@ -74,18 +73,26 @@ test('local provider list files', async t => {
 });
 
 test('local provider commit files', async t => {
-  const provider = new LocalProvider({ workspace: tempy.directory() });
-  const repository = await provider.repository(REPOSITORY_NAME);
-  const branch = await repository.branch('master');
+  const provider = new LocalProvider({ workspace });
 
-  let file = await branch.content('README.md');
+  if (process.env.SSH_AUTH_SOCK) {
+    const repository = await provider.repository(REPOSITORY_NAME_GIT);
+    const branch = await repository.branch('master');
 
-  file += `\n${new Date()}`;
+    const file = await branch.content('README.md');
 
-  const r = await branch.commit('test: ignore', [
-    { path: 'README.md', content: file }
-  ]);
+    let content = file.content;
 
-  const file2 = await branch.content('README.md');
-  t.is(file, file2.content);
+    content += `\n${new Date()}`;
+
+    const r = await branch.commit('test: ignore', [
+      { path: 'README.md', content }
+    ]);
+
+    const file2 = await branch.content('README.md');
+
+    t.is(content, file2.content);
+  } else {
+    t.is(1, 1, 'skip git@ test without SSH_AUTH_SOCK');
+  }
 });
