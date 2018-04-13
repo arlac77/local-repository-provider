@@ -18,6 +18,7 @@ const pWriteFile = promisify(writeFile);
 export class LocalProvider extends Provider {
   /**
    * Default configuration options
+   * - workspace
    * @return {Object}
    */
   static get defaultOptions() {
@@ -162,8 +163,8 @@ export class LocalBranch extends Branch {
   }
 
   async createPullRequest(to, message) {
-    console.log(
-      `Create pull request from ${this.name} to ${to.name} ${message}`
-    );
+    return new this.provider.pullRequestClass(this.repository, '0', {
+      title: 'plese create pull request manually'
+    });
   }
 }
