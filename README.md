@@ -31,6 +31,8 @@ repository provider using local (native) git commands
     -   [optionsFromEnvironment](#optionsfromenvironment)
 -   [LocalRepository](#localrepository)
     -   [initialize](#initialize)
+-   [LocalBranch](#localbranch)
+    -   [commit](#commit)
 
 ## LocalProvider
 
@@ -41,6 +43,8 @@ Provider using native git
 ### defaultOptions
 
 Default configuration options
+
+-   workspace
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
@@ -67,6 +71,28 @@ exec git clone or git pull
 **Parameters**
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## LocalBranch
+
+**Extends Branch**
+
+**Properties**
+
+-   `workspce` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### commit
+
+Excutes:
+
+-   git add
+-   git commit
+-   git push
+
+**Parameters**
+
+-   `message`  
+-   `blobs`  
+-   `options`   (optional, default `{}`)
 
 # install
 

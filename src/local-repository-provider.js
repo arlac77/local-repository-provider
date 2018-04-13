@@ -122,6 +122,9 @@ export class LocalRepository extends Repository {
   }
 }
 
+/**
+ * @property {string} workspce
+ */
 export class LocalBranch extends Branch {
   get workspace() {
     return this.repository.workspace;
@@ -142,18 +145,28 @@ export class LocalBranch extends Branch {
     }
   }
 
+  /**
+   * Excutes:
+   * - git add
+   * - git commit
+   * - git push
+   */
   async commit(message, blobs, options = {}) {
     await Promise.all(
       blobs.map(b => pWriteFile(join(this.workspace, b.path), b.content))
     );
 
-    await execa('git', ['add', ...blobs.map(b => b.path)], {
+    const execaOptions = {
       cwd: this.workspace
-    });
+    };
 
-    await execa('git', ['commit', '-m', message], {
-      cwd: this.workspace
-    });
+    await execa('git', ['add', ...blobs.map(b => b.path)], execaOptions);
+    await execa('git', ['commit', '-m', message], execaOptions);
+    await execa(
+      'git',
+      ['push', '--set-upstream', 'origin', this.name],
+      execaOptions
+    );
   }
 
   async list() {
