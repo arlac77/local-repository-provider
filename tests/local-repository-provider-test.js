@@ -15,6 +15,7 @@ test('local provider https', async t => {
   const repository = await provider.repository(REPOSITORY_NAME);
 
   t.is(repository.name, REPOSITORY_NAME);
+  t.is(repository.url, REPOSITORY_NAME);
 });
 
 test('local provider git@', async t => {
@@ -68,8 +69,13 @@ test('local provider list files', async t => {
 
   const files = await branch.list();
 
-  t.is(files[0].path, 'README.md');
-  t.is(files[0].type, 'blob');
+  const file1 = files.find(f => f.path === 'README.md');
+  t.is(file1.path, 'README.md');
+  t.is(file1.type, 'blob');
+
+  const file2 = files.find(f => f.path === '.gitignore');
+  t.is(file2.path, '.gitignore');
+  t.is(file2.type, 'blob');
 });
 
 test('local provider commit files', async t => {
