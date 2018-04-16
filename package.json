@@ -4,7 +4,10 @@
   "main": "dist/local-repository-provider.js",
   "module": "src/local-repository-provider.js",
   "description": "repository provider using local (native) git commands",
-  "keywords": ["git", "repository-provider"],
+  "keywords": [
+    "git",
+    "repository-provider"
+  ],
   "contributors": [
     {
       "name": "Markus Felten",
@@ -18,8 +21,7 @@
     "pretest": "rollup -c tests/rollup.config.js",
     "precover": "rollup -c tests/rollup.config.js",
     "posttest": "npm run prepare && markdown-doctest",
-    "docs":
-      "documentation readme src/local-repository-provider.js --section=API",
+    "docs": "documentation readme src/local-repository-provider.js --section=API",
     "semantic-release": "semantic-release",
     "prepare": "rollup -c",
     "lint": "documentation lint src/local-repository-provider.js",
@@ -36,7 +38,7 @@
     "documentation": "^6.2.0",
     "markdown-doctest": "^0.9.1",
     "nyc": "^11.6.0",
-    "rollup": "^0.57.1",
+    "rollup": "^0.58.0",
     "rollup-plugin-commonjs": "^9.1.0",
     "rollup-plugin-multi-entry": "^2.0.2",
     "rollup-plugin-node-resolve": "^3.3.0",
@@ -56,12 +58,21 @@
   "homepage": "https://github.com/arlac77/local-repository-provider#readme",
   "release": {},
   "ava": {
-    "files": ["build/*-test.js"],
-    "require": ["babel-register"]
+    "files": [
+      "build/*-test.js"
+    ],
+    "require": [
+      "babel-register"
+    ]
   },
   "nyc": {
-    "include": ["build/*-test.js", "src/**/*.js"],
-    "reporter": ["lcov"],
+    "include": [
+      "build/*-test.js",
+      "src/**/*.js"
+    ],
+    "reporter": [
+      "lcov"
+    ],
     "report-dir": "./build/coverage"
   },
   "xo": {
