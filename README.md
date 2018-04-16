@@ -78,21 +78,22 @@ exec git clone or git pull
 
 **Properties**
 
--   `workspce` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### commit
 
 Excutes:
 
+-   writes all blobs into the workspace
 -   git add
 -   git commit
 -   git push
 
 **Parameters**
 
--   `message`  
--   `blobs`  
--   `options`   (optional, default `{}`)
+-   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** commit message
+-   `updates` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Content>** file content to be commited
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
 
 # install
 

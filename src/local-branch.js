@@ -9,7 +9,7 @@ const pReadFile = promisify(readFile);
 const pWriteFile = promisify(writeFile);
 
 /**
- * @property {string} workspce
+ * @property {string} workspace
  */
 export class LocalBranch extends Branch {
   get workspace() {
@@ -33,13 +33,17 @@ export class LocalBranch extends Branch {
 
   /**
    * Excutes:
+   * - writes all blobs into the workspace
    * - git add
    * - git commit
    * - git push
+   * @param {string} message commit message
+   * @param {Content[]} updates file content to be commited
+   * @param {Object} options
    */
-  async commit(message, blobs, options = {}) {
+  async commit(message, updates, options = {}) {
     await Promise.all(
-      blobs.map(b => pWriteFile(join(this.workspace, b.path), b.content))
+      updates.map(b => pWriteFile(join(this.workspace, b.path), b.content))
     );
 
     const execaOptions = {
