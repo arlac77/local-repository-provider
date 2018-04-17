@@ -84,7 +84,7 @@ exec git clone or git pull
 
 Excutes:
 
--   writes all blobs into the workspace
+-   writes all updates into the workspace
 -   git add
 -   git commit
 -   git push

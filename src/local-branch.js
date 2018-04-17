@@ -1,9 +1,10 @@
 import { Branch, Content } from 'repository-provider';
 const execa = require('execa');
 const globby = require('globby');
+const makeDir = require('make-dir');
 import { readFile, writeFile } from 'fs';
 import { promisify } from 'util';
-import { join } from 'path';
+import { join, dirname } from 'path';
 
 const pReadFile = promisify(readFile);
 const pWriteFile = promisify(writeFile);
@@ -33,7 +34,7 @@ export class LocalBranch extends Branch {
 
   /**
    * Excutes:
-   * - writes all blobs into the workspace
+   * - writes all updates into the workspace
    * - git add
    * - git commit
    * - git push
@@ -43,6 +44,10 @@ export class LocalBranch extends Branch {
    */
   async commit(message, updates, options = {}) {
     await Promise.all(
+      updates.map(b => makeDir(dirname(join(this.workspace, b.path))))
+    );
+
+    await Promise.all(
       updates.map(b => pWriteFile(join(this.workspace, b.path), b.content))
     );
 
@@ -50,7 +55,7 @@ export class LocalBranch extends Branch {
       cwd: this.workspace
     };
 
-    await execa('git', ['add', ...blobs.map(b => b.path)], execaOptions);
+    await execa('git', ['add', ...updates.map(b => b.path)], execaOptions);
     await execa('git', ['commit', '-m', message], execaOptions);
     await execa(
       'git',
