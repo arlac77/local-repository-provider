@@ -27,6 +27,8 @@ repository provider using local (native) git commands
 ### Table of Contents
 
 -   [LocalProvider](#localprovider)
+    -   [newWorkspacePath](#newworkspacepath)
+    -   [repository](#repository)
     -   [defaultOptions](#defaultoptions)
     -   [optionsFromEnvironment](#optionsfromenvironment)
 -   [LocalRepository](#localrepository)
@@ -38,7 +40,22 @@ repository provider using local (native) git commands
 
 **Extends Provider**
 
-Provider using native git
+Provider using native git executable
+
+### newWorkspacePath
+
+Generate path for a new newWorkspace
+For the livetime of the provider always genrate new names
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** path
+
+### repository
+
+using provider workspace and number of repositories to create repository workspace
+
+**Parameters**
+
+-   `name`  
 
 ### defaultOptions
 

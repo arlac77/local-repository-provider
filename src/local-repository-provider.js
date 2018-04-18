@@ -5,7 +5,7 @@ import { join } from 'path';
 import { tmpdir } from 'os';
 
 /**
- * Provider using native git
+ * Provider using native git executable
  */
 export class LocalProvider extends Provider {
   /**
@@ -36,13 +36,26 @@ export class LocalProvider extends Provider {
     return LocalBranch;
   }
 
+  /**
+   * Generate path for a new newWorkspace
+   * For the livetime of the provider always genrate new names
+   * @return {string} path
+   */
+  get newWorkspacePath() {
+    this._nextWorkspace =
+      this._nextWorkspace === undefined ? 1 : this._nextWorkspace + 1;
+
+    return join(this.workspace, `r${this._nextWorkspace}`);
+  }
+
+  /**
+   * using provider workspace and number of repositories to create repository workspace
+   */
   async repository(name) {
     let r = this.repositories.get(name);
     if (r === undefined) {
       r = new this.repositoryClass(this, name);
-      await r.initialize(
-        join(this.workspace, `r${this.repositories.size + 1}`)
-      );
+      await r.initialize(this.newWorkspacePath);
       this.repositories.set(name, r);
     }
 

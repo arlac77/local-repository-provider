@@ -9,6 +9,14 @@ const workspace = join(__dirname, '..', 'build', 'workspace');
 const REPOSITORY_NAME = 'https://github.com/arlac77/sync-test-repository.git';
 const REPOSITORY_NAME_GIT = 'git@github.com:arlac77/sync-test-repository.git';
 
+test('local provider workspacePaths', async t => {
+  const provider = new LocalProvider({ workspace: '/tmp' });
+
+  t.is(provider.newWorkspacePath, '/tmp/r1');
+  t.is(provider.newWorkspacePath, '/tmp/r2');
+  t.is(provider.newWorkspacePath, '/tmp/r3');
+});
+
 test('local provider https', async t => {
   const provider = new LocalProvider({ workspace: tempy.directory() });
 
@@ -76,6 +84,21 @@ test('local provider list files', async t => {
   const file2 = files.find(f => f.path === '.gitignore');
   t.is(file2.path, '.gitignore');
   t.is(file2.type, 'blob');
+});
+
+test('local provider get none exiting file', async t => {
+  const provider = new LocalProvider({ workspace });
+
+  if (process.env.SSH_AUTH_SOCK) {
+    const repository = await provider.repository(REPOSITORY_NAME_GIT);
+    const branch = await repository.branch('master');
+
+    const file = await branch.content('missing file', { ignoreMissing: true });
+    t.is(file.path, 'missing file');
+    t.is(file.content.length, 0);
+  } else {
+    t.is(1, 1, 'skip git@ test without SSH_AUTH_SOCK');
+  }
 });
 
 test('local provider commit files', async t => {

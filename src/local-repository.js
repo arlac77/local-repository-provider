@@ -20,7 +20,11 @@ export class LocalRepository extends Repository {
       await pStat(this.workspace);
       const result = await execa('git', ['pull'], { cwd: this.workspace });
     } catch (e) {
-      const result = await execa('git', ['clone', this.name, this.workspace]);
+      if (e.code === 'ENOENT') {
+        const result = await execa('git', ['clone', this.name, this.workspace]);
+      } else {
+        throw e;
+      }
     }
     await this.initializeBranches();
   }
