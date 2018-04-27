@@ -55,7 +55,7 @@ using provider workspace and number of repositories to create repository workspa
 
 **Parameters**
 
--   `name`  
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### defaultOptions
 

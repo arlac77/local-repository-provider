@@ -26,6 +26,12 @@ test('local provider https', async t => {
   t.is(repository.url, REPOSITORY_NAME);
 });
 
+test('local provider repo undefined', async t => {
+  const provider = new LocalProvider();
+  const repository = await provider.repository(undefined);
+  t.true(repository === undefined);
+});
+
 test('local provider git@', async t => {
   if (process.env.SSH_AUTH_SOCK) {
     const provider = new LocalProvider({ workspace: tempy.directory() });
