@@ -2,7 +2,11 @@ import { Provider, Repository, Branch } from 'repository-provider';
 import { LocalRepository } from './local-repository';
 import { LocalBranch } from './local-branch';
 import { join } from 'path';
+import { stat } from 'fs';
+import { promisify } from 'util';
 import { tmpdir } from 'os';
+
+const pstat = promisify(stat);
 
 /**
  * Provider using native git executable
@@ -37,15 +41,22 @@ export class LocalProvider extends Provider {
   }
 
   /**
-   * Generate path for a new newWorkspace
+   * Generate path for a new workspace
    * For the livetime of the provider always genrate new names
    * @return {string} path
    */
-  get newWorkspacePath() {
-    this._nextWorkspace =
-      this._nextWorkspace === undefined ? 1 : this._nextWorkspace + 1;
+  async newWorkspacePath() {
+    do {
+      this._nextWorkspace =
+        this._nextWorkspace === undefined ? 1 : this._nextWorkspace + 1;
 
-    return join(this.workspace, `r${this._nextWorkspace}`);
+      let w = join(this.workspace, `r${this._nextWorkspace}`);
+      try {
+        const s = await pstat(w);
+      } catch (e) {
+        return w;
+      }
+    } while (true);
   }
 
   /**
@@ -60,7 +71,7 @@ export class LocalProvider extends Provider {
       }
 
       r = new this.repositoryClass(this, name);
-      await r.initialize(this.newWorkspacePath);
+      await r.initialize(await this.newWorkspacePath());
       this.repositories.set(name, r);
     }
 

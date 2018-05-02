@@ -43,7 +43,7 @@ Provider using native git executable
 
 ### newWorkspacePath
 
-Generate path for a new newWorkspace
+Generate path for a new workspace
 For the livetime of the provider always genrate new names
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** path

@@ -12,9 +12,9 @@ const REPOSITORY_NAME_GIT = 'git@github.com:arlac77/sync-test-repository.git';
 test('local provider workspacePaths', async t => {
   const provider = new LocalProvider({ workspace: '/tmp' });
 
-  t.is(provider.newWorkspacePath, '/tmp/r1');
-  t.is(provider.newWorkspacePath, '/tmp/r2');
-  t.is(provider.newWorkspacePath, '/tmp/r3');
+  t.is(await provider.newWorkspacePath(), '/tmp/r1');
+  t.is(await provider.newWorkspacePath(), '/tmp/r2');
+  t.is(await provider.newWorkspacePath(), '/tmp/r3');
 });
 
 test('local provider https', async t => {
@@ -69,7 +69,7 @@ test('local provider create & delete branch', async t => {
 test('local get file', async t => {
   const provider = new LocalProvider({ workspace: tempy.directory() });
   const repository = await provider.repository(REPOSITORY_NAME);
-  const branch = await repository.branch('master');
+  const branch = await repository.defaultBranch;
 
   const file = await branch.content('README.md');
 
@@ -79,7 +79,7 @@ test('local get file', async t => {
 test('local provider list files', async t => {
   const provider = new LocalProvider({ workspace: tempy.directory() });
   const repository = await provider.repository(REPOSITORY_NAME);
-  const branch = await repository.branch('master');
+  const branch = await repository.defaultBranch;
 
   const files = await branch.list();
 
@@ -97,7 +97,7 @@ test('local provider get none exiting file', async t => {
 
   if (process.env.SSH_AUTH_SOCK) {
     const repository = await provider.repository(REPOSITORY_NAME_GIT);
-    const branch = await repository.branch('master');
+    const branch = await repository.defaultBranch;
 
     const file = await branch.content('missing file', { ignoreMissing: true });
     t.is(file.path, 'missing file');
@@ -112,8 +112,7 @@ test('local provider commit files', async t => {
 
   if (process.env.SSH_AUTH_SOCK) {
     const repository = await provider.repository(REPOSITORY_NAME_GIT);
-    const branch = await repository.branch('master');
-
+    const branch = await repository.defaultBranch;
     const file = await branch.content('README.md');
 
     let content = file.content;

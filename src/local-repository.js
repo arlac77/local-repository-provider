@@ -65,13 +65,12 @@ export class LocalRepository extends Repository {
   }
 
   async deleteBranch(name) {
-    await execa('git', ['checkout', 'master'], {
+    const options = {
       cwd: this.workspace
-    });
+    };
 
-    const result = await execa('git', ['branch', '-D', name], {
-      cwd: this.workspace
-    });
+    await execa('git', ['checkout', 'master'], options);
+    const result = await execa('git', ['branch', '-D', name], options);
 
     this._branches.delete(name);
   }
