@@ -1,5 +1,5 @@
 import test from 'ava';
-import { LocalProvider } from '../src/local-repository-provider';
+import { LocalProvider } from '../src/local-provider';
 import { join } from 'path';
 
 const tempy = require('tempy');
