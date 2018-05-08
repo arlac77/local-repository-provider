@@ -31,7 +31,7 @@
     "execa": "^0.10.0",
     "globby": "^8.0.1",
     "make-dir": "^1.2.0",
-    "repository-provider": "^2.20.1",
+    "repository-provider": "^2.21.0",
     "tempy": "^0.2.1"
   },
   "devDependencies": {
