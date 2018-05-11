@@ -30,7 +30,7 @@
   "dependencies": {
     "execa": "^0.10.0",
     "globby": "^8.0.1",
-    "make-dir": "^1.2.0",
+    "make-dir": "^1.3.0",
     "repository-provider": "^2.21.0",
     "tempy": "^0.2.1"
   },
