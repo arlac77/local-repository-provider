@@ -1,6 +1,9 @@
 {
   "name": "local-repository-provider",
   "version": "0.0.0-semantic-release",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/local-provider.js",
   "module": "src/local-provider.js",
   "description": "repository provider using local (native) git commands",
