@@ -28,12 +28,18 @@ repository provider using local (native) git commands
 -   [LocalProvider](#localprovider)
     -   [newWorkspacePath](#newworkspacepath)
     -   [repository](#repository)
+        -   [Parameters](#parameters)
     -   [defaultOptions](#defaultoptions)
     -   [optionsFromEnvironment](#optionsfromenvironment)
+        -   [Parameters](#parameters-1)
 -   [LocalRepository](#localrepository)
+    -   [Properties](#properties)
     -   [initialize](#initialize)
+        -   [Parameters](#parameters-2)
 -   [LocalBranch](#localbranch)
+    -   [Properties](#properties-1)
     -   [commit](#commit)
+        -   [Parameters](#parameters-3)
 
 ## LocalProvider
 
@@ -52,7 +58,7 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 using provider workspace and number of repositories to create repository workspace
 
-**Parameters**
+#### Parameters
 
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
@@ -66,7 +72,7 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ### optionsFromEnvironment
 
-**Parameters**
+#### Parameters
 
 -   `env`  
 
@@ -76,7 +82,7 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 **Extends Repository**
 
-**Properties**
+### Properties
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
@@ -84,7 +90,7 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 exec git clone or git pull
 
-**Parameters**
+#### Parameters
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
@@ -92,7 +98,7 @@ exec git clone or git pull
 
 **Extends Branch**
 
-**Properties**
+### Properties
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
@@ -105,7 +111,7 @@ Excutes:
 -   git commit
 -   git push
 
-**Parameters**
+#### Parameters
 
 -   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** commit message
 -   `updates` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Content>** file content to be commited
