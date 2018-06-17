@@ -1,7 +1,7 @@
-import { Repository } from 'repository-provider';
-const execa = require('execa');
 import { stat } from 'fs';
 import { promisify } from 'util';
+import { Repository } from 'repository-provider';
+import execa from 'execa';
 
 const pStat = promisify(stat);
 
@@ -30,14 +30,14 @@ export class LocalRepository extends Repository {
   }
 
   async initializeBranches() {
-    const result = await execa('git', ['branch'], {
+    const result = await execa('git', ['branch', '--list'], {
       cwd: this.workspace
     });
 
     result.stdout.split(/\n/).forEach(b => {
-      const m = b.match(/^\*?\s*([^\s]+)/);
+      const m = b.match(/^(\*\s+)?([^\s]+)/);
       if (m) {
-        const name = m[1];
+        const name = m[2];
         const branch = new this.provider.branchClass(this, name);
         this._branches.set(branch.name, branch);
       }
