@@ -1,10 +1,10 @@
 import { Branch, Content } from 'repository-provider';
-const execa = require('execa');
-const globby = require('globby');
-const makeDir = require('make-dir');
 import { readFile, writeFile } from 'fs';
 import { promisify } from 'util';
 import { join, dirname } from 'path';
+import makeDir from 'make-dir';
+import globby from 'globby';
+import execa from 'execa';
 
 const pReadFile = promisify(readFile);
 const pWriteFile = promisify(writeFile);

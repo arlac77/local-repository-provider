@@ -6,8 +6,18 @@ export default {
   input: pkg.module,
   output: {
     file: pkg.main,
-    format: 'cjs'
+    format: 'cjs',
+    interop: false
   },
   plugins: [resolve(), commonjs()],
-  external: ['fs', 'util', 'path', 'os', 'repository-provider']
+  external: [
+    'fs',
+    'util',
+    'path',
+    'os',
+    'make-dir',
+    'globby',
+    'execa',
+    'repository-provider'
+  ]
 };

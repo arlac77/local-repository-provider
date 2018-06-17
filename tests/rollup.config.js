@@ -5,8 +5,20 @@ export default {
   output: {
     file: 'build/bundle-test.js',
     format: 'cjs',
-    sourcemap: true
+    sourcemap: true,
+    interop: false
   },
-  external: ['ava', 'fs', 'util', 'path', 'os', 'tempy', 'repository-provider'],
+  external: [
+    'ava',
+    'fs',
+    'util',
+    'path',
+    'os',
+    'make-dir',
+    'globby',
+    'execa',
+    'tempy',
+    'repository-provider'
+  ],
   plugins: [multiEntry()]
 };
