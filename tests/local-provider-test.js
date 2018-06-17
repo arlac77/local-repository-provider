@@ -1,8 +1,7 @@
 import test from 'ava';
 import { LocalProvider } from '../src/local-provider';
 import { join } from 'path';
-
-const tempy = require('tempy');
+import { directory } from 'tempy';
 
 const workspace = join(__dirname, '..', 'build', 'workspace');
 
@@ -18,7 +17,7 @@ test('local provider workspacePaths', async t => {
 });
 
 test('local provider https', async t => {
-  const provider = new LocalProvider({ workspace: tempy.directory() });
+  const provider = new LocalProvider({ workspace: directory() });
 
   const repository = await provider.repository(REPOSITORY_NAME);
 
@@ -34,7 +33,7 @@ test('local provider repo undefined', async t => {
 
 test('local provider git@', async t => {
   if (process.env.SSH_AUTH_SOCK) {
-    const provider = new LocalProvider({ workspace: tempy.directory() });
+    const provider = new LocalProvider({ workspace: directory() });
 
     const repository = await provider.repository(REPOSITORY_NAME_GIT);
 
@@ -53,7 +52,7 @@ test('local provider with default workspace', async t => {
 });
 
 test('local provider create & delete branch', async t => {
-  const provider = new LocalProvider({ workspace: tempy.directory() });
+  const provider = new LocalProvider({ workspace: directory() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branches = await repository.branches();
 
@@ -67,7 +66,7 @@ test('local provider create & delete branch', async t => {
 });
 
 test('local get file', async t => {
-  const provider = new LocalProvider({ workspace: tempy.directory() });
+  const provider = new LocalProvider({ workspace: directory() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
 
@@ -77,7 +76,7 @@ test('local get file', async t => {
 });
 
 test('local provider list files', async t => {
-  const provider = new LocalProvider({ workspace: tempy.directory() });
+  const provider = new LocalProvider({ workspace: directory() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
 
