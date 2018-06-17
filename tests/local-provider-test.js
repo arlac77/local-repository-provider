@@ -16,7 +16,7 @@ test('local provider workspacePaths', async t => {
   t.is(await provider.newWorkspacePath(), '/tmp/r3');
 });
 
-test('local provider https', async t => {
+test.serial('local provider https', async t => {
   const provider = new LocalProvider({ workspace: directory() });
 
   const repository = await provider.repository(REPOSITORY_NAME);
@@ -31,7 +31,7 @@ test('local provider repo undefined', async t => {
   t.true(repository === undefined);
 });
 
-test('local provider git@', async t => {
+test.serial('local provider git@', async t => {
   if (process.env.SSH_AUTH_SOCK) {
     const provider = new LocalProvider({ workspace: directory() });
 
@@ -51,7 +51,7 @@ test('local provider with default workspace', async t => {
   t.is(repository.name, REPOSITORY_NAME);
 });
 
-test('local provider create & delete branch', async t => {
+test.serial('local provider create & delete branch', async t => {
   const provider = new LocalProvider({ workspace: directory() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branches = await repository.branches();
@@ -65,7 +65,7 @@ test('local provider create & delete branch', async t => {
   t.is(branches.get(newName), undefined);
 });
 
-test('local get file', async t => {
+test.serial('local get file', async t => {
   const provider = new LocalProvider({ workspace: directory() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
@@ -75,7 +75,7 @@ test('local get file', async t => {
   t.is(file.content.substring(0, 3), `xxx`);
 });
 
-test('local provider list files', async t => {
+test.serial('local provider list files', async t => {
   const provider = new LocalProvider({ workspace: directory() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
@@ -91,7 +91,7 @@ test('local provider list files', async t => {
   t.is(file2.type, 'blob');
 });
 
-test('local provider get none exiting file', async t => {
+test.serial('local provider get none exiting file', async t => {
   const provider = new LocalProvider({ workspace });
 
   if (process.env.SSH_AUTH_SOCK) {
@@ -106,7 +106,7 @@ test('local provider get none exiting file', async t => {
   }
 });
 
-test('local provider commit files', async t => {
+test.serial('local provider commit files', async t => {
   const provider = new LocalProvider({ workspace });
 
   if (process.env.SSH_AUTH_SOCK) {
