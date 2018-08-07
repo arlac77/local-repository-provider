@@ -72,7 +72,7 @@ export class LocalBranch extends Branch {
 
   async createPullRequest(to, message) {
     return new this.provider.pullRequestClass(this.repository, '0', {
-      title: 'plese create pull request manually'
+      title: 'please create pull request manually'
     });
   }
 }
