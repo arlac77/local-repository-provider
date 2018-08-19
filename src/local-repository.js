@@ -13,9 +13,9 @@ export class LocalRepository extends Repository {
    * exec git clone or git pull
    * @param {string} workspace
    */
-  async initialize(workspace) {
+  async _initialize(workspace) {
     Object.defineProperty(this, 'workspace', { value: workspace });
-    await super.initialize();
+    await super._initialize();
     try {
       await pStat(this.workspace);
       const result = await execa('git', ['pull'], { cwd: this.workspace });
