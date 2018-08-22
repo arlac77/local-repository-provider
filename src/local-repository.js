@@ -1,7 +1,7 @@
-import { stat } from 'fs';
-import { promisify } from 'util';
-import { Repository } from 'repository-provider';
-import execa from 'execa';
+import { stat } from "fs";
+import { promisify } from "util";
+import { Repository } from "repository-provider";
+import execa from "execa";
 
 const pStat = promisify(stat);
 
@@ -9,19 +9,35 @@ const pStat = promisify(stat);
  * @property {string} workspace
  */
 export class LocalRepository extends Repository {
+  get execOptions() {
+    return { cwd: this.workspace };
+  }
+
   /**
    * exec git clone or git pull
    * @param {string} workspace
    */
   async _initialize(workspace) {
-    Object.defineProperty(this, 'workspace', { value: workspace });
+    Object.defineProperty(this, "workspace", { value: workspace });
     await super._initialize();
     try {
       await pStat(this.workspace);
-      const result = await execa('git', ['pull'], { cwd: this.workspace });
+
+      const remoteResult = await execa(
+        "git",
+        ["remote", "-v"],
+        this.execOptions
+      );
+      console.log(remoteResult.stdout);
+      const m = remoteResult.stdout.match(/origin\s+([^\s]+)\s+/);
+      if (m && m[1] === this.name) {
+        const result = await execa("git", ["pull"], this.execOptions);
+      } else {
+        throw new Error(`Unknown content in ${this.workspace}`);
+      }
     } catch (e) {
-      if (e.code === 'ENOENT') {
-        const result = await execa('git', ['clone', this.name, this.workspace]);
+      if (e.code === "ENOENT") {
+        const result = await execa("git", ["clone", this.name, this.workspace]);
       } else {
         throw e;
       }
@@ -30,7 +46,7 @@ export class LocalRepository extends Repository {
   }
 
   async initializeBranches() {
-    const result = await execa('git', ['branch', '--list'], {
+    const result = await execa("git", ["branch", "--list"], {
       cwd: this.workspace
     });
 
@@ -49,15 +65,15 @@ export class LocalRepository extends Repository {
   }
 
   async push() {
-    return execa('git', ['push'], {
-      cwd: this.workspace
-    });
+    return execa("git", ["push"], this.execOptions);
   }
 
   async createBranch(name, from) {
-    const result = await execa('git', ['checkout', '-b', name], {
-      cwd: this.workspace
-    });
+    const result = await execa(
+      "git",
+      ["checkout", "-b", name],
+      this.execOptions
+    );
 
     const b = new this.provider.branchClass(this, name);
     this._branches.set(b.name, b);
@@ -65,12 +81,8 @@ export class LocalRepository extends Repository {
   }
 
   async deleteBranch(name) {
-    const options = {
-      cwd: this.workspace
-    };
-
-    await execa('git', ['checkout', 'master'], options);
-    const result = await execa('git', ['branch', '-D', name], options);
+    await execa("git", ["checkout", "master"], this.execOptions);
+    const result = await execa("git", ["branch", "-D", name], this.execOptions);
 
     this._branches.delete(name);
   }
