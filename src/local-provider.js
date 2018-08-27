@@ -68,9 +68,11 @@ export class LocalProvider extends Provider {
 
     let r = this.repositories.get(name);
     if (r === undefined) {
-      r = new this.repositoryClass(this, name);
-      await r.initialize(await this.newWorkspacePath());
-      this.repositories.set(name, r);
+      r = new this.repositoryClass(this, name, {
+        workspace: await this.newWorkspacePath()
+      });
+
+      this.repositories.set(r.name, r);
     }
 
     return r;

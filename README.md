@@ -36,6 +36,7 @@ repository provider using local (native) git commands
     -   [Properties](#properties)
     -   [\_initialize](#_initialize)
         -   [Parameters](#parameters-2)
+-   [workspace](#workspace)
 -   [LocalBranch](#localbranch)
     -   [Properties](#properties-1)
     -   [commit](#commit)
@@ -93,6 +94,12 @@ exec git clone or git pull
 #### Parameters
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## workspace
+
+workspace directory.
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ## LocalBranch
 

@@ -7,6 +7,19 @@ const { stat } = require("fs").promises;
  * @property {string} workspace
  */
 export class LocalRepository extends Repository {
+  static get defaultOptions() {
+    return Object.assign(
+      {
+        /**
+         * workspace directory.
+         * @return {string}
+         */
+        workspace: "/tmp"
+      },
+      super.defaultOptions
+    );
+  }
+
   get execOptions() {
     return { cwd: this.workspace };
   }
@@ -16,7 +29,6 @@ export class LocalRepository extends Repository {
    * @param {string} workspace
    */
   async _initialize(workspace) {
-    Object.defineProperty(this, "workspace", { value: workspace });
     await super._initialize();
     try {
       await stat(this.workspace);
