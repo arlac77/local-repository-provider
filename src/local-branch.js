@@ -13,6 +13,10 @@ export class LocalBranch extends Branch {
     return this.repository.workspace;
   }
 
+  get execOptions() {
+    return this.repository.execOptions;
+  }
+
   async content(fileName, options = {}) {
     try {
       const d = readFile(join(this.workspace, fileName), {
@@ -47,16 +51,12 @@ export class LocalBranch extends Branch {
       updates.map(b => writeFile(join(this.workspace, b.path), b.content))
     );
 
-    const execaOptions = {
-      cwd: this.workspace
-    };
-
-    await execa("git", ["add", ...updates.map(b => b.path)], execaOptions);
-    await execa("git", ["commit", "-m", message], execaOptions);
+    await execa("git", ["add", ...updates.map(b => b.path)], this.execOptions);
+    await execa("git", ["commit", "-m", message], this.execOptions);
     await execa(
       "git",
       ["push", "--set-upstream", "origin", this.name],
-      execaOptions
+      this.execOptions
     );
   }
 

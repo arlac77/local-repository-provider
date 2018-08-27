@@ -44,9 +44,7 @@ export class LocalRepository extends Repository {
   }
 
   async initializeBranches() {
-    const result = await execa("git", ["branch", "--list"], {
-      cwd: this.workspace
-    });
+    const result = await execa("git", ["branch", "--list"], this.execOptions);
 
     result.stdout.split(/\n/).forEach(b => {
       const m = b.match(/^(\*\s+)?([^\s]+)/);

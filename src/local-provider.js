@@ -62,12 +62,12 @@ export class LocalProvider extends Provider {
    * @param {string} name
    */
   async repository(name) {
+    if (name === undefined) {
+      return undefined;
+    }
+
     let r = this.repositories.get(name);
     if (r === undefined) {
-      if (name === undefined) {
-        return undefined;
-      }
-
       r = new this.repositoryClass(this, name);
       await r.initialize(await this.newWorkspacePath());
       this.repositories.set(name, r);
