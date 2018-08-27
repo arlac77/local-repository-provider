@@ -1,12 +1,10 @@
-import { Provider, Repository, Branch } from 'repository-provider';
-import { LocalRepository } from './local-repository';
-import { LocalBranch } from './local-branch';
-import { join } from 'path';
-import { stat } from 'fs';
-import { promisify } from 'util';
-import { tmpdir } from 'os';
+import { Provider, Repository, Branch } from "repository-provider";
+import { LocalRepository } from "./local-repository";
+import { LocalBranch } from "./local-branch";
+import { join } from "path";
+import { tmpdir } from "os";
 
-const pstat = promisify(stat);
+const { stat } = require("fs").promises;
 
 /**
  * Provider using native git executable
@@ -52,7 +50,7 @@ export class LocalProvider extends Provider {
 
       let w = join(this.workspace, `r${this._nextWorkspace}`);
       try {
-        const s = await pstat(w);
+        const s = await stat(w);
       } catch (e) {
         return w;
       }

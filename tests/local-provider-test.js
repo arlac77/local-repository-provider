@@ -40,6 +40,7 @@ test("local provider with default workspace", async t => {
   const repository = await provider.repository(REPOSITORY_NAME);
 
   t.is(repository.name, REPOSITORY_NAME);
+  t.is(repository.url, REPOSITORY_NAME);
 });
 
 test.serial("local provider create & delete branch", async t => {

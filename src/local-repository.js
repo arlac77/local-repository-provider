@@ -1,9 +1,7 @@
-import { stat } from "fs";
-import { promisify } from "util";
 import { Repository } from "repository-provider";
 import execa from "execa";
 
-const pStat = promisify(stat);
+const { stat } = require("fs").promises;
 
 /**
  * @property {string} workspace
@@ -21,7 +19,7 @@ export class LocalRepository extends Repository {
     Object.defineProperty(this, "workspace", { value: workspace });
     await super._initialize();
     try {
-      await pStat(this.workspace);
+      await stat(this.workspace);
 
       const remoteResult = await execa(
         "git",

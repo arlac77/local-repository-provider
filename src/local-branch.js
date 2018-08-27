@@ -1,13 +1,9 @@
-import { Branch, Content } from 'repository-provider';
-import { readFile, writeFile } from 'fs';
-import { promisify } from 'util';
-import { join, dirname } from 'path';
-import makeDir from 'make-dir';
-import globby from 'globby';
-import execa from 'execa';
-
-const pReadFile = promisify(readFile);
-const pWriteFile = promisify(writeFile);
+import { Branch, Content } from "repository-provider";
+import { join, dirname } from "path";
+import makeDir from "make-dir";
+import globby from "globby";
+import execa from "execa";
+const { readFile, writeFile } = require("fs").promises;
 
 /**
  * @property {string} workspace
@@ -19,14 +15,14 @@ export class LocalBranch extends Branch {
 
   async content(fileName, options = {}) {
     try {
-      const d = pReadFile(join(this.workspace, fileName), {
-        encoding: 'utf8'
+      const d = readFile(join(this.workspace, fileName), {
+        encoding: "utf8"
       });
 
       return new Content(fileName, await d);
     } catch (e) {
       if (options.ignoreMissing) {
-        return new Content(fileName, '');
+        return new Content(fileName, "");
       }
       throw e;
     }
@@ -48,31 +44,31 @@ export class LocalBranch extends Branch {
     );
 
     await Promise.all(
-      updates.map(b => pWriteFile(join(this.workspace, b.path), b.content))
+      updates.map(b => writeFile(join(this.workspace, b.path), b.content))
     );
 
     const execaOptions = {
       cwd: this.workspace
     };
 
-    await execa('git', ['add', ...updates.map(b => b.path)], execaOptions);
-    await execa('git', ['commit', '-m', message], execaOptions);
+    await execa("git", ["add", ...updates.map(b => b.path)], execaOptions);
+    await execa("git", ["commit", "-m", message], execaOptions);
     await execa(
-      'git',
-      ['push', '--set-upstream', 'origin', this.name],
+      "git",
+      ["push", "--set-upstream", "origin", this.name],
       execaOptions
     );
   }
 
   async list() {
-    return (await globby(['**/.*', '**/*'], { cwd: this.workspace })).map(f => {
-      return { path: f, type: 'blob' };
+    return (await globby(["**/.*", "**/*"], { cwd: this.workspace })).map(f => {
+      return { path: f, type: "blob" };
     });
   }
 
   async createPullRequest(to, message) {
-    return new this.provider.pullRequestClass(this.repository, '0', {
-      title: 'please create pull request manually'
+    return new this.provider.pullRequestClass(this.repository, "0", {
+      title: "please create pull request manually"
     });
   }
 }
