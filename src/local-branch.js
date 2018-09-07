@@ -17,11 +17,9 @@ export class LocalBranch extends Branch {
     return this.repository.execOptions;
   }
 
-  async content(fileName, options = {}) {
+  async content(fileName, options = { encoding: "utf8" }) {
     try {
-      const d = readFile(join(this.workspace, fileName), {
-        encoding: "utf8"
-      });
+      const d = readFile(join(this.workspace, fileName), options);
 
       return new Content(fileName, await d);
     } catch (e) {

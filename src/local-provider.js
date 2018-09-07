@@ -11,19 +11,22 @@ const { stat } = require("fs").promises;
  */
 export class LocalProvider extends Provider {
   /**
+   * - GIT_CLONE_OPTIONS
+   */
+  static optionsFromEnvironment(env) {
+    if (env.GIT_CLONE_OPTIONS !== undefined) {
+      return { cloneOptions: env.GIT_CLONE_OPTIONS.split(/\s+/) };
+    }
+    return undefined;
+  }
+
+  /**
    * Default configuration options
    * - workspace
    * @return {Object}
    */
   static get defaultOptions() {
-    return { workspace: tmpdir() };
-  }
-
-  /**
-   * @return {Object} empty object
-   */
-  static optionsFromEnvironment(env) {
-    return {};
+    return { cloneOptions: [], workspace: tmpdir() };
   }
 
   get workspace() {
@@ -66,15 +69,15 @@ export class LocalProvider extends Provider {
       return undefined;
     }
 
-    let r = this.repositories.get(name);
-    if (r === undefined) {
-      r = new this.repositoryClass(this, name, {
+    let repository = this.repositories.get(name);
+    if (repository === undefined) {
+      repository = new this.repositoryClass(this, name, {
         workspace: await this.newWorkspacePath()
       });
 
-      this.repositories.set(r.name, r);
+      this.repositories.set(repository.name, repository);
     }
 
-    return r;
+    return repository;
   }
 }

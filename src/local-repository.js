@@ -47,7 +47,12 @@ export class LocalRepository extends Repository {
       }
     } catch (e) {
       if (e.code === "ENOENT") {
-        const result = await execa("git", ["clone", this.name, this.workspace]);
+        const result = await execa("git", [
+          "clone",
+          ...this.provider.cloneOptions,
+          this.name,
+          this.workspace
+        ]);
       } else {
         throw e;
       }

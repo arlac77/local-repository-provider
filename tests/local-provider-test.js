@@ -8,6 +8,22 @@ const workspace = join(__dirname, "..", "build", "workspace");
 const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 const REPOSITORY_NAME_GIT = "git@github.com:arlac77/sync-test-repository.git";
 
+test("local provider optionsFromEnvironment", t => {
+  const options = LocalProvider.optionsFromEnvironment({
+    GIT_CLONE_OPTIONS: "--depth 1"
+  });
+
+  t.deepEqual(options.cloneOptions, ["--depth", "1"]);
+
+  const provider = new LocalProvider(options);
+  t.deepEqual(provider.cloneOptions, ["--depth", "1"]);
+});
+
+test("local provider", async t => {
+  const provider = new LocalProvider();
+  t.deepEqual(provider.cloneOptions, []);
+});
+
 test("local provider workspacePaths", async t => {
   const provider = new LocalProvider({ workspace: "/tmp" });
 
@@ -64,7 +80,7 @@ test.serial("local get file", async t => {
 
   const file = await branch.content("README.md");
 
-  t.is(file.content.substring(0, 3), `xxx`);
+  t.is(file.content.substring(0, 3), `fil`);
 });
 
 test.serial("local provider list files", async t => {
