@@ -27,3 +27,10 @@ test.serial("local provider reuse workspace", async t => {
   t.is(repository1.name, REPOSITORY_NAME);
   t.is(repository2.name, REPOSITORY_NAME);
 });
+
+test.skip("local provider show ref", async t => {
+  const provider = new LocalProvider({ workspace });
+  const repository = await provider.repository(REPOSITORY_NAME);
+
+  t.is((await repository.refId("refs/heads/master")).length, 10);
+});

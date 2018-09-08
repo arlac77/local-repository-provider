@@ -36,11 +36,13 @@ repository provider using local (native) git commands
     -   [Properties](#properties)
     -   [\_initialize](#_initialize)
         -   [Parameters](#parameters-2)
+    -   [refId](#refid)
+        -   [Parameters](#parameters-3)
 -   [workspace](#workspace)
 -   [LocalBranch](#localbranch)
     -   [Properties](#properties-1)
     -   [commit](#commit)
-        -   [Parameters](#parameters-3)
+        -   [Parameters](#parameters-4)
 
 ## LocalProvider
 
@@ -94,6 +96,21 @@ exec git clone or git pull
 #### Parameters
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### refId
+
+Get sha of a ref
+Calls
+
+```sh
+git show-ref <ref>
+```
+
+#### Parameters
+
+-   `ref` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** sha of the ref
 
 ## workspace
 

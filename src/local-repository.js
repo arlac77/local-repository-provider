@@ -95,8 +95,22 @@ export class LocalRepository extends Repository {
 
   async deleteBranch(name) {
     await execa("git", ["checkout", "master"], this.execOptions);
-    const result = await execa("git", ["branch", "-D", name], this.execOptions);
+    await execa("git", ["branch", "-D", name], this.execOptions);
 
     this._branches.delete(name);
+  }
+
+  /**
+   * Get sha of a ref
+   * Calls
+   * ```sh
+   * git show-ref <ref>
+   * ```
+   * @param {string} ref
+   * @return {string} sha of the ref
+   */
+  async refId(ref) {
+    const g = await execa("git", ["show-ref", ref], this.execOptions);
+    return g.stdout.split(/\s+/)[0];
   }
 }
