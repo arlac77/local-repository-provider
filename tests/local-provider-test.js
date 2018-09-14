@@ -99,6 +99,18 @@ test.serial("local provider list files", async t => {
   t.is(file2.type, "blob");
 });
 
+test.serial("local provider list files with pattern", async t => {
+  const provider = new LocalProvider({ workspace: directory() });
+  const repository = await provider.repository(REPOSITORY_NAME);
+  const branch = await repository.defaultBranch;
+
+  const files = await branch.list(["README.md"]);
+
+  const file = files[0];
+  t.is(file.path, "README.md");
+  t.is(file.type, "blob");
+});
+
 test.serial("local provider get none exiting file", async t => {
   const provider = new LocalProvider({ workspace });
 

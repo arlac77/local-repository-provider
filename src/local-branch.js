@@ -58,8 +58,13 @@ export class LocalBranch extends Branch {
     );
   }
 
-  async list() {
-    return (await globby(["**/.*", "**/*"], { cwd: this.workspace })).map(f => {
+  /**
+   * Search for patch in the branch
+   * @param {string[]} matchingPatterns
+   * @return {Object }[] matching branch path names
+   */
+  async list(matchingPatterns = ["**/.*", "**/*"]) {
+    return (await globby(matchingPatterns, { cwd: this.workspace })).map(f => {
       return { path: f, type: "blob" };
     });
   }

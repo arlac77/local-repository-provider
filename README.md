@@ -43,6 +43,8 @@ repository provider using local (native) git commands
     -   [Properties](#properties-1)
     -   [commit](#commit)
         -   [Parameters](#parameters-4)
+    -   [list](#list)
+        -   [Parameters](#parameters-5)
 
 ## LocalProvider
 
@@ -140,6 +142,16 @@ Excutes:
 -   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** commit message
 -   `updates` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Content>** file content to be commited
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+
+### list
+
+Search for patch in the branch
+
+#### Parameters
+
+-   `matchingPatterns` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>**  (optional, default `["**/.*","**/*"]`)
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** \[] matching branch path names
 
 # install
 
