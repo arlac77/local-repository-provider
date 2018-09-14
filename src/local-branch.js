@@ -18,16 +18,10 @@ export class LocalBranch extends Branch {
   }
 
   async content(fileName, options = { encoding: "utf8" }) {
-    try {
-      const d = readFile(join(this.workspace, fileName), options);
-
-      return new Content(fileName, await d);
-    } catch (e) {
-      if (options.ignoreMissing) {
-        return new Content(fileName, "");
-      }
-      throw e;
-    }
+    return new Content(
+      fileName,
+      await readFile(join(this.workspace, fileName), options)
+    );
   }
 
   /**
@@ -40,7 +34,7 @@ export class LocalBranch extends Branch {
    * @param {Content[]} updates file content to be commited
    * @param {Object} options
    */
-  async commit(message, updates, options = {}) {
+  async commit(message, updates, options) {
     await Promise.all(
       updates.map(b => makeDir(dirname(join(this.workspace, b.path))))
     );
@@ -63,10 +57,12 @@ export class LocalBranch extends Branch {
    * @param {string[]} matchingPatterns
    * @return {Object }[] matching branch path names
    */
-  async list(matchingPatterns = ["**/.*", "**/*"]) {
-    return (await globby(matchingPatterns, { cwd: this.workspace })).map(f => {
-      return { path: f, type: "blob" };
-    });
+  async *list(matchingPatterns = ["**/.*", "**/*"]) {
+    for (const entry of await globby(matchingPatterns, {
+      cwd: this.workspace
+    })) {
+      yield { path: entry, type: "blob" };
+    }
   }
 
   async createPullRequest(to, message) {

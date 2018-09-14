@@ -88,9 +88,13 @@ test.serial("local provider list files", async t => {
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
 
-  const files = await branch.list();
+  const files = [];
 
-  const file1 = files.find(f => f.path === "README.md");
+  for await (const entry of branch.list()) {
+    files.push(entry);
+  }
+
+  const file1 = files.find(f => f.path == "README.md");
   t.is(file1.path, "README.md");
   t.is(file1.type, "blob");
 
@@ -104,9 +108,14 @@ test.serial("local provider list files with pattern", async t => {
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
 
-  const files = await branch.list(["README.md"]);
+  const files = [];
+
+  for await (const entry of branch.list(["README.md"])) {
+    files.push(entry);
+  }
 
   const file = files[0];
+
   t.is(file.path, "README.md");
   t.is(file.type, "blob");
 });
@@ -118,9 +127,9 @@ test.serial("local provider get none exiting file", async t => {
     const repository = await provider.repository(REPOSITORY_NAME_GIT);
     const branch = await repository.defaultBranch;
 
-    const file = await branch.content("missing file", { ignoreMissing: true });
-    t.is(file.path, "missing file");
-    t.is(file.content.length, 0);
+    await t.throwsAsync(async () => branch.content("missing file"), {
+      instanceOf: Error
+    });
   } else {
     t.is(1, 1, "skip git@ test without SSH_AUTH_SOCK");
   }
