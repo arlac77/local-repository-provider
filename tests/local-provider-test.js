@@ -96,11 +96,11 @@ test.serial("local provider list files", async t => {
 
   const file1 = files.find(f => f.path == "README.md");
   t.is(file1.path, "README.md");
-  t.is(file1.type, "blob");
+  t.true(file1.isFile);
 
   const file2 = files.find(f => f.path === ".gitignore");
   t.is(file2.path, ".gitignore");
-  t.is(file2.type, "blob");
+  t.true(file2.isFile);
 });
 
 test.serial("local provider list files with pattern", async t => {
@@ -117,7 +117,7 @@ test.serial("local provider list files with pattern", async t => {
   const file = files[0];
 
   t.is(file.path, "README.md");
-  t.is(file.type, "blob");
+  t.true(file.isFile);
 });
 
 test.serial("local provider get none exiting file", async t => {

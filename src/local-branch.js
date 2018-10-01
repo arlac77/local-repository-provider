@@ -55,13 +55,13 @@ export class LocalBranch extends Branch {
   /**
    * Search for patch in the branch
    * @param {string[]} matchingPatterns
-   * @return {Object }[] matching branch path names
+   * @return {Content} matching branch path names
    */
   async *list(matchingPatterns = ["**/.*", "**/*"]) {
     for (const entry of await globby(matchingPatterns, {
       cwd: this.workspace
     })) {
-      yield { path: entry, type: "blob" };
+      yield new Content(entry);
     }
   }
 
