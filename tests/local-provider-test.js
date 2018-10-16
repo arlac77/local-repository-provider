@@ -143,17 +143,13 @@ test.serial("local provider commit files", async t => {
     const branch = await repository.defaultBranch;
     const file = await branch.content("README.md");
 
-    let content = file.content;
+    file.content += `\n${new Date()}`;
 
-    content += `\n${new Date()}`;
-
-    const r = await branch.commit("test: ignore", [
-      { path: "README.md", content }
-    ]);
+    await branch.commit("test: ignore", [file]);
 
     const file2 = await branch.content("README.md");
 
-    t.is(content, file2.content);
+    t.is(file.content, file2.content);
   } else {
     t.is(1, 1, "skip git@ test without SSH_AUTH_SOCK");
   }
