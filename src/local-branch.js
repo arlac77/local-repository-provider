@@ -3,6 +3,8 @@ import { join, dirname } from "path";
 import makeDir from "make-dir";
 import globby from "globby";
 import execa from "execa";
+import { createWriteStream, promises } from "fs";
+
 const { readFile, writeFile } = require("fs").promises;
 
 /**
@@ -24,6 +26,40 @@ export class LocalBranch extends Branch {
     );
   }
 
+  async write(updates) {
+    await Promise.all(
+      updates.map(b => makeDir(dirname(join(this.workspace, b.path))))
+    );
+
+    return new Promise((resolve, reject) => {
+      let ongoing = 0;
+
+      for (const u of updates) {
+        const o = createWriteStream(join(this.workspace, u.path));
+        o.on('error', error => reject(error));
+
+        o.on("finish", () => {
+          ongoing--;
+          if(ongoing <= 0) {
+            resolve();
+          }
+          //console.error("All writes are now complete.");
+        });
+
+        u.toStream().pipe(o);
+        ongoing++;
+
+        //console.log(`pipe into ${join(this.workspace, u.path)}`);
+      }
+    });
+
+    /*
+    return Promise.all(
+      updates.map(b => writeFile(join(this.workspace, b.path), b.content))
+    );
+    */
+  }
+
   /**
    * Excutes:
    * - writes all updates into the workspace
@@ -35,14 +71,7 @@ export class LocalBranch extends Branch {
    * @param {Object} options
    */
   async commit(message, updates, options) {
-    await Promise.all(
-      updates.map(b => makeDir(dirname(join(this.workspace, b.path))))
-    );
-
-    await Promise.all(
-      updates.map(b => writeFile(join(this.workspace, b.path), b.content))
-    );
-
+    await this.write(updates);
     await execa("git", ["add", ...updates.map(b => b.path)], this.execOptions);
     await execa("git", ["commit", "-m", message], this.execOptions);
     await execa(
