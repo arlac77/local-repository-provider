@@ -41,10 +41,12 @@ repository provider using local (native) git commands
 -   [workspace](#workspace)
 -   [LocalBranch](#localbranch)
     -   [Properties](#properties-1)
-    -   [commit](#commit)
+    -   [writeContent](#writecontent)
         -   [Parameters](#parameters-4)
-    -   [list](#list)
+    -   [commit](#commit)
         -   [Parameters](#parameters-5)
+    -   [list](#list)
+        -   [Parameters](#parameters-6)
 
 ## LocalProvider
 
@@ -127,6 +129,16 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 ### Properties
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### writeContent
+
+writes content into the branch
+
+#### Parameters
+
+-   `content` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Content>** 
+
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Content>>** written content
 
 ### commit
 

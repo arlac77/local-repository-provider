@@ -5,7 +5,7 @@ import globby from "globby";
 import execa from "execa";
 import { createWriteStream, promises } from "fs";
 
-const { readFile, writeFile } = require("fs").promises;
+const { readFile } = require("fs").promises;
 
 /**
  * @property {string} workspace
@@ -26,33 +26,38 @@ export class LocalBranch extends Branch {
     );
   }
 
-  async write(updates) {
+  /**
+   * writes content into the branch
+   * @param {Content[]} content
+   * @return {Promise<Content[]>} written content
+   */
+  async writeContent(content) {
     await Promise.all(
-      updates.map(b => makeDir(dirname(join(this.workspace, b.path))))
+      content.map(b => makeDir(dirname(join(this.workspace, b.path))))
     );
 
-    return new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       let ongoing = 0;
 
-      for (const u of updates) {
+      for (const u of content) {
         const o = createWriteStream(join(this.workspace, u.path));
-        o.on('error', error => reject(error));
+        o.on("error", error => reject(error));
 
         o.on("finish", () => {
           ongoing--;
-          if(ongoing <= 0) {
-            resolve();
+          if (ongoing <= 0) {
+            resolve(content);
           }
-          //console.error("All writes are now complete.");
         });
 
         u.toStream().pipe(o);
         ongoing++;
-
-        //console.log(`pipe into ${join(this.workspace, u.path)}`);
       }
     });
 
+    await execa("git", ["add", ...content.map(b => b.path)], this.execOptions);
+
+    return content;
     /*
     return Promise.all(
       updates.map(b => writeFile(join(this.workspace, b.path), b.content))
@@ -71,8 +76,7 @@ export class LocalBranch extends Branch {
    * @param {Object} options
    */
   async commit(message, updates, options) {
-    await this.write(updates);
-    await execa("git", ["add", ...updates.map(b => b.path)], this.execOptions);
+    await this.writeContent(updates);
     await execa("git", ["commit", "-m", message], this.execOptions);
     await execa(
       "git",
