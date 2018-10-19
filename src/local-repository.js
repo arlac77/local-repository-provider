@@ -81,16 +81,14 @@ export class LocalRepository extends Repository {
     return execa("git", ["push"], this.execOptions);
   }
 
-  async createBranch(name, from) {
+  async _createBranch(name, from, options) {
     const result = await execa(
       "git",
       ["checkout", "-b", name],
       this.execOptions
     );
 
-    const b = new this.provider.branchClass(this, name);
-    this._branches.set(b.name, b);
-    return b;
+    return new this.provider.branchClass(this, name);
   }
 
   async deleteBranch(name) {
