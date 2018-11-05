@@ -36,7 +36,7 @@ export class LocalBranch extends Branch {
       content.map(b => makeDir(dirname(join(this.workspace, b.path))))
     );
 
-    await new Promise((resolve, reject) => {
+    await new Promise(async (resolve, reject) => {
       let ongoing = 0;
 
       for (const u of content) {
@@ -50,7 +50,7 @@ export class LocalBranch extends Branch {
           }
         });
 
-        u.toStream().pipe(o);
+        (await u.getReadStream()).pipe(o);
         ongoing++;
       }
     });
