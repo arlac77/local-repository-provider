@@ -1,11 +1,10 @@
 import { Branch, Content } from "repository-provider";
 import { join, dirname } from "path";
-import makeDir from "make-dir";
 import globby from "globby";
 import execa from "execa";
-import { createWriteStream, promises } from "fs";
+import { createWriteStream } from "fs";
 
-const { readFile } = require("fs").promises;
+const { readFile, mkdir } = require("fs").promises;
 
 /**
  * @property {string} workspace
@@ -33,7 +32,9 @@ export class LocalBranch extends Branch {
    */
   async writeContent(content) {
     await Promise.all(
-      content.map(b => makeDir(dirname(join(this.workspace, b.path))))
+      content.map(b =>
+        mkdir(dirname(join(this.workspace, b.path), { recursive: true }))
+      )
     );
 
     await new Promise(async (resolve, reject) => {
