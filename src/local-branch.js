@@ -33,7 +33,7 @@ export class LocalBranch extends Branch {
   async writeContent(content) {
     await Promise.all(
       content.map(b =>
-        mkdir(dirname(join(this.workspace, b.path), { recursive: true }))
+        mkdir(dirname(join(this.workspace, b.name), { recursive: true }))
       )
     );
 
@@ -41,7 +41,7 @@ export class LocalBranch extends Branch {
       let ongoing = 0;
 
       for (const u of content) {
-        const o = createWriteStream(join(this.workspace, u.path));
+        const o = createWriteStream(join(this.workspace, u.name));
         o.on("error", error => reject(error));
 
         o.on("finish", () => {
@@ -56,12 +56,12 @@ export class LocalBranch extends Branch {
       }
     });
 
-    await execa("git", ["add", ...content.map(b => b.path)], this.execOptions);
+    await execa("git", ["add", ...content.map(b => b.name)], this.execOptions);
 
     return content;
     /*
     return Promise.all(
-      updates.map(b => writeFile(join(this.workspace, b.path), b.content))
+      updates.map(b => writeFile(join(this.workspace, b.name), b.content))
     );
     */
   }
@@ -91,7 +91,7 @@ export class LocalBranch extends Branch {
    * @param {string[]} matchingPatterns
    * @return {Content} matching branch path names
    */
-  async *list(matchingPatterns = ["**/.*", "**/*"]) {
+  async *entries(matchingPatterns = ["**/.*", "**/*"]) {
     for (const entry of await globby(matchingPatterns, {
       cwd: this.workspace
     })) {
