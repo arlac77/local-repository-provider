@@ -90,16 +90,16 @@ test.serial("local provider list files", async t => {
 
   const files = [];
 
-  for await (const entry of branch.list()) {
+  for await (const entry of branch.entries()) {
     files.push(entry);
   }
 
-  const file1 = files.find(f => f.path == "README.md");
-  t.is(file1.path, "README.md");
+  const file1 = files.find(f => f.name == "README.md");
+  t.is(file1.name, "README.md");
   t.true(file1.isFile);
 
-  const file2 = files.find(f => f.path === ".gitignore");
-  t.is(file2.path, ".gitignore");
+  const file2 = files.find(f => f.name === ".gitignore");
+  t.is(file2.name, ".gitignore");
   t.true(file2.isFile);
 });
 
@@ -110,13 +110,13 @@ test.serial("local provider list files with pattern", async t => {
 
   const files = [];
 
-  for await (const entry of branch.list(["README.md"])) {
+  for await (const entry of branch.entries(["README.md"])) {
     files.push(entry);
   }
 
   const file = files[0];
 
-  t.is(file.path, "README.md");
+  t.is(file.name, "README.md");
   t.true(file.isFile);
 });
 
@@ -127,7 +127,7 @@ test.serial("local provider get none exiting file", async t => {
     const repository = await provider.repository(REPOSITORY_NAME_GIT);
     const branch = await repository.defaultBranch;
 
-    await t.throwsAsync(async () => branch.content("missing file"), {
+    await t.throwsAsync(async () => branch.entry("missing file"), {
       instanceOf: Error
     });
   } else {

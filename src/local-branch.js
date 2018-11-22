@@ -18,13 +18,6 @@ export class LocalBranch extends Branch {
     return this.repository.execOptions;
   }
 
-  async content(fileName, options = { encoding: "utf8" }) {
-    return new Content(
-      fileName,
-      await readFile(join(this.workspace, fileName), options)
-    );
-  }
-
   /**
    * writes content into the branch
    * @param {Content[]} content
@@ -97,6 +90,13 @@ export class LocalBranch extends Branch {
     })) {
       yield new Content(entry);
     }
+  }
+
+  async entry(name, options = { encoding: "utf8" }) {
+    return new Content(
+      name,
+      await readFile(join(this.workspace, name), options)
+    );
   }
 
   async createPullRequest(to, message) {

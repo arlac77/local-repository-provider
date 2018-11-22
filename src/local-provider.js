@@ -8,6 +8,8 @@ const { stat } = require("fs").promises;
 
 /**
  * Provider using native git executable
+ *
+ * @property {string} workspace
  */
 export class LocalProvider extends Provider {
   /**
@@ -30,7 +32,7 @@ export class LocalProvider extends Provider {
   }
 
   get workspace() {
-    return this.config.workspace;
+    return this.workspace;
   }
 
   get repositoryClass() {
