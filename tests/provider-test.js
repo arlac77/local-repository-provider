@@ -78,9 +78,9 @@ test.serial("local get file", async t => {
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
 
-  const file = await branch.content("README.md");
+  const file = await branch.entry("README.md");
 
-  t.is(file.content.substring(0, 3), `fil`);
+  t.is((await file.getString()).substring(0, 3), `fil`);
 });
 
 test.serial("local provider list files", async t => {
@@ -141,13 +141,13 @@ test.serial("local provider commit files", async t => {
   if (process.env.SSH_AUTH_SOCK) {
     const repository = await provider.repository(REPOSITORY_NAME_GIT);
     const branch = await repository.defaultBranch;
-    const file = await branch.content("README.md");
+    const file = await branch.entry("README.md");
 
     file.content += `\n${new Date()}`;
 
     await branch.commit("test: ignore", [file]);
 
-    const file2 = await branch.content("README.md");
+    const file2 = await branch.entry("README.md");
 
     t.is(file.content, file2.content);
   } else {

@@ -1,4 +1,4 @@
-import { Branch, Content } from "repository-provider";
+import { Branch, Entry } from "repository-provider";
 import { join, dirname } from "path";
 import globby from "globby";
 import execa from "execa";
@@ -19,13 +19,13 @@ export class LocalBranch extends Branch {
   }
 
   /**
-   * writes content into the branch
-   * @param {Content[]} content
-   * @return {Promise<Content[]>} written content
+   * writes Entry into the branch
+   * @param {Entry[]} entry
+   * @return {Promise<Entry[]>} written entries
    */
-  async writeContent(content) {
+  async writeEntries(entry) {
     await Promise.all(
-      content.map(b =>
+      entry.map(b =>
         mkdir(dirname(join(this.workspace, b.name), { recursive: true }))
       )
     );
@@ -33,14 +33,14 @@ export class LocalBranch extends Branch {
     await new Promise(async (resolve, reject) => {
       let ongoing = 0;
 
-      for (const u of content) {
+      for (const u of entry) {
         const o = createWriteStream(join(this.workspace, u.name));
         o.on("error", error => reject(error));
 
         o.on("finish", () => {
           ongoing--;
           if (ongoing <= 0) {
-            resolve(content);
+            resolve(entry);
           }
         });
 
@@ -49,14 +49,9 @@ export class LocalBranch extends Branch {
       }
     });
 
-    await execa("git", ["add", ...content.map(b => b.name)], this.execOptions);
+    await execa("git", ["add", ...entry.map(b => b.name)], this.execOptions);
 
-    return content;
-    /*
-    return Promise.all(
-      updates.map(b => writeFile(join(this.workspace, b.name), b.content))
-    );
-    */
+    return entry;
   }
 
   /**
@@ -66,11 +61,11 @@ export class LocalBranch extends Branch {
    * - git commit
    * - git push
    * @param {string} message commit message
-   * @param {Content[]} updates file content to be commited
+   * @param {Entry[]} updates file entry to be commited
    * @param {Object} options
    */
-  async commit(message, updates, options) {
-    await this.writeContent(updates);
+  async commit(message, entries, options) {
+    await this.writeEntries(entries);
     await execa("git", ["commit", "-m", message], this.execOptions);
     await execa(
       "git",
@@ -82,18 +77,18 @@ export class LocalBranch extends Branch {
   /**
    * Search for patch in the branch
    * @param {string[]} matchingPatterns
-   * @return {Content} matching branch path names
+   * @return {Entry} matching branch path names
    */
   async *entries(matchingPatterns = ["**/.*", "**/*"]) {
     for (const entry of await globby(matchingPatterns, {
       cwd: this.workspace
     })) {
-      yield new Content(entry);
+      yield new Entry(entry);
     }
   }
 
   async entry(name, options = { encoding: "utf8" }) {
-    return new Content(
+    return new Entry(
       name,
       await readFile(join(this.workspace, name), options)
     );
