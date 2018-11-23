@@ -1,4 +1,4 @@
-import { Branch, Entry } from "repository-provider";
+import { Branch } from "repository-provider";
 import { join, dirname } from "path";
 import globby from "globby";
 import execa from "execa";
@@ -80,17 +80,17 @@ export class LocalBranch extends Branch {
    * @return {Entry} matching branch path names
    */
   async *entries(matchingPatterns = ["**/.*", "**/*"]) {
-    for (const entry of await globby(matchingPatterns, {
+    for (const name of await globby(matchingPatterns, {
       cwd: this.workspace
     })) {
-      yield new Entry(entry);
+      yield new this.entryClass(name, await readFile(join(this.workspace, name)));
     }
   }
 
-  async entry(name, options = { encoding: "utf8" }) {
-    return new Entry(
+  async entry(name) {
+    return new this.entryClass(
       name,
-      await readFile(join(this.workspace, name), options)
+      await readFile(join(this.workspace, name))
     );
   }
 
