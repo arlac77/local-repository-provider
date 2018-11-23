@@ -61,7 +61,7 @@ export class LocalBranch extends Branch {
    * - git commit
    * - git push
    * @param {string} message commit message
-   * @param {Entry[]} updates file entry to be commited
+   * @param {Entry[]} entries file entries to be commited
    * @param {Object} options
    */
   async commit(message, entries, options) {

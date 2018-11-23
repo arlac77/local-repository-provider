@@ -26,6 +26,7 @@ repository provider using local (native) git commands
 ### Table of Contents
 
 -   [LocalProvider](#localprovider)
+    -   [Properties](#properties)
     -   [newWorkspacePath](#newworkspacepath)
     -   [repository](#repository)
         -   [Parameters](#parameters)
@@ -33,19 +34,19 @@ repository provider using local (native) git commands
         -   [Parameters](#parameters-1)
     -   [defaultOptions](#defaultoptions)
 -   [LocalRepository](#localrepository)
-    -   [Properties](#properties)
+    -   [Properties](#properties-1)
     -   [\_initialize](#_initialize)
         -   [Parameters](#parameters-2)
     -   [refId](#refid)
         -   [Parameters](#parameters-3)
 -   [workspace](#workspace)
 -   [LocalBranch](#localbranch)
-    -   [Properties](#properties-1)
-    -   [writeContent](#writecontent)
+    -   [Properties](#properties-2)
+    -   [writeEntries](#writeentries)
         -   [Parameters](#parameters-4)
     -   [commit](#commit)
         -   [Parameters](#parameters-5)
-    -   [list](#list)
+    -   [entries](#entries)
         -   [Parameters](#parameters-6)
 
 ## LocalProvider
@@ -53,6 +54,10 @@ repository provider using local (native) git commands
 **Extends Provider**
 
 Provider using native git executable
+
+### Properties
+
+-   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### newWorkspacePath
 
@@ -130,15 +135,15 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-### writeContent
+### writeEntries
 
-writes content into the branch
+writes Entry into the branch
 
 #### Parameters
 
--   `content` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Content>** 
+-   `entry` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Entry>** 
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Content>>** written content
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Entry>>** written entries
 
 ### commit
 
@@ -152,10 +157,10 @@ Excutes:
 #### Parameters
 
 -   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** commit message
--   `updates` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Content>** file content to be commited
+-   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Entry>** file entries to be commited
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
-### list
+### entries
 
 Search for patch in the branch
 
@@ -163,7 +168,7 @@ Search for patch in the branch
 
 -   `matchingPatterns` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>**  (optional, default `["**/.*","**/*"]`)
 
-Returns **Content** matching branch path names
+Returns **Entry** matching branch path names
 
 # install
 
