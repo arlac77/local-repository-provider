@@ -24,11 +24,18 @@ export class LocalBranch extends Branch {
    * @return {Promise<Entry[]>} written entries
    */
   async writeEntries(entry) {
-    await Promise.all(
-      entry.map(b =>
-        mkdir(dirname(join(this.workspace, b.name), { recursive: true }))
-      )
-    );
+    try {
+      await Promise.all(
+        entry.map(b =>
+          mkdir(dirname(join(this.workspace, b.name), { recursive: true }))
+        )
+      );
+    } catch (e) {
+      // TODO how can this happen ?
+      if (e.code !== "EEXIST") {
+        throw e;
+      }
+    }
 
     await new Promise(async (resolve, reject) => {
       let ongoing = 0;
@@ -83,7 +90,10 @@ export class LocalBranch extends Branch {
     for (const name of await globby(matchingPatterns, {
       cwd: this.workspace
     })) {
-      yield new this.entryClass(name, await readFile(join(this.workspace, name)));
+      yield new this.entryClass(
+        name,
+        await readFile(join(this.workspace, name))
+      );
     }
   }
 
