@@ -135,21 +135,21 @@ test.serial("local provider get none exiting file", async t => {
   }
 });
 
-test.serial("local provider commit files", async t => {
+test("local provider commit files", async t => {
   const provider = new LocalProvider({ workspace });
 
   if (process.env.SSH_AUTH_SOCK) {
     const repository = await provider.repository(REPOSITORY_NAME_GIT);
     const branch = await repository.defaultBranch;
-    const file = await branch.entry("README.md");
+    const file = await branch.entry("README.md", { encoding: "utf8" });
 
     file.content += `\n${new Date()}`;
 
     await branch.commit("test: ignore", [file]);
 
-    const file2 = await branch.entry("README.md");
+    const file2 = await branch.entry("README.md", { encoding: "utf8" });
 
-    t.is(file.content, file2.content);
+    t.is(await file.getString(), await file2.getString());
   } else {
     t.is(1, 1, "skip git@ test without SSH_AUTH_SOCK");
   }
