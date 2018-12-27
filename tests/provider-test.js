@@ -73,7 +73,7 @@ test.serial("local provider create & delete branch", async t => {
   t.is(branches.get(newName), undefined);
 });
 
-test.serial("local get file", async t => {
+test("local get file", async t => {
   const provider = new LocalProvider({ workspace: directory() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
@@ -96,11 +96,11 @@ test.serial("local provider list files", async t => {
 
   const file1 = files.find(f => f.name == "README.md");
   t.is(file1.name, "README.md");
-  t.true(file1.isFile);
+  t.true(file1.isBlob);
 
   const file2 = files.find(f => f.name === ".gitignore");
   t.is(file2.name, ".gitignore");
-  t.true(file2.isFile);
+  t.true(file2.isBlob);
 });
 
 test.serial("local provider list files with pattern", async t => {
@@ -117,11 +117,11 @@ test.serial("local provider list files with pattern", async t => {
   const file = files[0];
 
   t.is(file.name, "README.md");
-  t.true(file.isFile);
+  t.true(file.isBlob);
 });
 
-test.serial("local provider get none exiting file", async t => {
-  const provider = new LocalProvider({ workspace });
+test("local provider get none exiting file", async t => {
+  const provider = new LocalProvider({ workspace: directory() });
 
   if (process.env.SSH_AUTH_SOCK) {
     const repository = await provider.repository(REPOSITORY_NAME_GIT);
@@ -141,15 +141,17 @@ test("local provider commit files", async t => {
   if (process.env.SSH_AUTH_SOCK) {
     const repository = await provider.repository(REPOSITORY_NAME_GIT);
     const branch = await repository.defaultBranch;
-    const file = await branch.entry("README.md", { encoding: "utf8" });
+    const file = await branch.entry("README.md");
+    const options = { encoding: "utf8" };
+    const old = await file.getString(options);
 
-    file.content += `\n${new Date()}`;
+    file.setString(`${old}\n${new Date()}`);
 
     await branch.commit("test: ignore", [file]);
 
-    const file2 = await branch.entry("README.md", { encoding: "utf8" });
+    const file2 = await branch.entry("README.md");
 
-    t.is(await file.getString(), await file2.getString());
+    t.is(await file.getString(options), await file2.getString(options));
   } else {
     t.is(1, 1, "skip git@ test without SSH_AUTH_SOCK");
   }

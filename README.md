@@ -48,6 +48,8 @@ repository provider using local (native) git commands
         -   [Parameters](#parameters-5)
     -   [entries](#entries)
         -   [Parameters](#parameters-6)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-7)
 
 ## LocalProvider
 
@@ -167,6 +169,16 @@ Search for patch in the branch
 #### Parameters
 
 -   `matchingPatterns` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>**  (optional, default `["**/.*","**/*"]`)
+
+Returns **Iterable&lt;Entry>** matching branch path names
+
+### entry
+
+Search for patch in the branch
+
+#### Parameters
+
+-   `name`  
 
 Returns **Entry** matching branch path names
 

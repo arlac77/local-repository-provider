@@ -3,6 +3,7 @@ import { join, dirname } from "path";
 import globby from "globby";
 import execa from "execa";
 import { createWriteStream } from "fs";
+import { FileSystemEntry } from "content-entry/src/file-system-entry";
 
 const { readFile, mkdir } = require("fs").promises;
 
@@ -84,29 +85,36 @@ export class LocalBranch extends Branch {
   /**
    * Search for patch in the branch
    * @param {string[]} matchingPatterns
-   * @return {Entry} matching branch path names
+   * @return {Iterable<Entry>} matching branch path names
    */
   async *entries(matchingPatterns = ["**/.*", "**/*"]) {
     for (const name of await globby(matchingPatterns, {
       cwd: this.workspace
     })) {
-      yield new this.entryClass(
-        name,
-        await readFile(join(this.workspace, name))
-      );
+      yield new this.entryClass(name, this.workspace);
     }
   }
 
+  /**
+   * Search for patch in the branch
+   * @return {Entry} matching branch path names
+   */
   async entry(name) {
-    return new this.entryClass(
-      name,
-      await readFile(join(this.workspace, name))
-    );
+    const entry = new FileSystemEntry(name, this.workspace);
+    console.log(entry);
+    if (await entry.getExists()) {
+      return entry;
+    }
+    throw new Error(`file not found: ${name}`);
   }
 
   async createPullRequest(to, message) {
     return new this.provider.pullRequestClass(this, to, "0", {
       title: "please create pull request manually"
     });
+  }
+
+  get entryClass() {
+    return FileSystemEntry;
   }
 }
