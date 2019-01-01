@@ -30,7 +30,7 @@
     "content-entry": "^2.0.1",
     "execa": "^1.0.0",
     "globby": "^8.0.1",
-    "repository-provider": "^9.0.4",
+    "repository-provider": "^10.0.0",
     "tempy": "^0.2.1"
   },
   "devDependencies": {
