@@ -3,7 +3,7 @@ import { join, dirname } from "path";
 import globby from "globby";
 import execa from "execa";
 import { createWriteStream } from "fs";
-import { FileSystemEntry } from "content-entry/src/file-system-entry";
+import { FileSystemEntry } from "content-entry";
 
 const { readFile, mkdir } = require("fs").promises;
 
