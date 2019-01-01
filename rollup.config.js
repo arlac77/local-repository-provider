@@ -12,18 +12,6 @@ export default {
     format: "cjs",
     interop: false
   },
-  plugins: [
-    resolve(),
-    commonjs(),
-    cleanup()
-  ],
-  external: [
-    "fs",
-    "util",
-    "path",
-    "os",
-    "globby",
-    "execa",
-    "repository-provider"
-  ]
+  plugins: [resolve(), commonjs(), cleanup()],
+  external: ["fs", "util", "path", "os", "globby", "execa"]
 };
