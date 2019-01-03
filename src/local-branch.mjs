@@ -4,8 +4,8 @@ import globby from "globby";
 import execa from "execa";
 import { createWriteStream } from "fs";
 import { FileSystemEntry } from "content-entry";
-
-const { readFile, mkdir } = require("fs").promises;
+import fs from "fs";
+const { readFile, mkdir } = fs.promises;
 
 /**
  * @property {string} workspace

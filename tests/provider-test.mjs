@@ -1,9 +1,11 @@
 import test from "ava";
 import { LocalProvider } from "../src/local-provider";
-import { join } from "path";
-import { directory } from "tempy";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+import { tmpdir } from "os";
 
-const workspace = join(__dirname, "..", "build", "workspace");
+const here = dirname(fileURLToPath(import.meta.url));
+const workspace = join(here, "..", "build", "workspace");
 
 const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 const REPOSITORY_NAME_GIT = "git@github.com:arlac77/sync-test-repository.git";
@@ -24,7 +26,7 @@ test("local provider", async t => {
   t.deepEqual(provider.cloneOptions, []);
 });
 
-test("local provider workspacePaths", async t => {
+test.serial("local provider workspacePaths", async t => {
   const provider = new LocalProvider({ workspace: "/tmp" });
 
   t.is(await provider.newWorkspacePath(), "/tmp/r1");
@@ -40,7 +42,7 @@ test("local provider repo undefined", async t => {
 
 test.serial("local provider git@", async t => {
   if (process.env.SSH_AUTH_SOCK) {
-    const provider = new LocalProvider({ workspace: directory() });
+    const provider = new LocalProvider({ workspace: tmpdir() });
 
     const repository = await provider.repository(REPOSITORY_NAME_GIT);
 
@@ -50,7 +52,7 @@ test.serial("local provider git@", async t => {
   }
 });
 
-test("local provider with default workspace", async t => {
+test.serial("local provider with default workspace", async t => {
   const provider = new LocalProvider();
 
   const repository = await provider.repository(REPOSITORY_NAME);
@@ -60,7 +62,7 @@ test("local provider with default workspace", async t => {
 });
 
 test.serial("local provider create & delete branch", async t => {
-  const provider = new LocalProvider({ workspace: directory() });
+  const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branches = await repository.branches();
 
@@ -73,8 +75,8 @@ test.serial("local provider create & delete branch", async t => {
   t.is(branches.get(newName), undefined);
 });
 
-test("local get file", async t => {
-  const provider = new LocalProvider({ workspace: directory() });
+test.serial("local get file", async t => {
+  const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
 
@@ -84,7 +86,7 @@ test("local get file", async t => {
 });
 
 test.serial("local provider list files", async t => {
-  const provider = new LocalProvider({ workspace: directory() });
+  const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
 
@@ -104,7 +106,7 @@ test.serial("local provider list files", async t => {
 });
 
 test.serial("local provider list files with pattern", async t => {
-  const provider = new LocalProvider({ workspace: directory() });
+  const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
 
@@ -120,8 +122,8 @@ test.serial("local provider list files with pattern", async t => {
   t.true(file.isBlob);
 });
 
-test("local provider get none exiting file", async t => {
-  const provider = new LocalProvider({ workspace: directory() });
+test.serial("local provider get none exiting file", async t => {
+  const provider = new LocalProvider({ workspace: tmpdir() });
 
   if (process.env.SSH_AUTH_SOCK) {
     const repository = await provider.repository(REPOSITORY_NAME_GIT);
@@ -135,8 +137,8 @@ test("local provider get none exiting file", async t => {
   }
 });
 
-test("local provider commit files", async t => {
-  const provider = new LocalProvider({ workspace });
+test.serial("local provider commit files", async t => {
+  const provider = new LocalProvider({ workspace: tmpdir() });
 
   if (process.env.SSH_AUTH_SOCK) {
     const repository = await provider.repository(REPOSITORY_NAME_GIT);

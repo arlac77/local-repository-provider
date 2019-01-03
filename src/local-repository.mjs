@@ -1,7 +1,7 @@
 import { Repository } from "repository-provider";
 import execa from "execa";
-
-const { stat } = require("fs").promises;
+import fs from "fs";
+const { stat } = fs.promises;
 
 /**
  * @property {string} workspace
@@ -31,6 +31,7 @@ export class LocalRepository extends Repository {
   async _initialize(workspace) {
     await super._initialize();
     try {
+      console.log(`${this.name} -> ${this.workspace}`);
       await stat(this.workspace);
 
       const remoteResult = await execa(
@@ -38,7 +39,6 @@ export class LocalRepository extends Repository {
         ["remote", "-v"],
         this.execOptions
       );
-      console.log(remoteResult.stdout);
       const m = remoteResult.stdout.match(/origin\s+([^\s]+)\s+/);
       if (m && m[1] === this.name) {
         this.provider.trace(`git pull ${this.name} @${this.workspace}`);

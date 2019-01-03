@@ -1,15 +1,17 @@
 import test from "ava";
 import { LocalProvider } from "../src/local-provider";
-import { join } from "path";
-import { directory } from "tempy";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+import { tmpdir } from "os";
 
-const workspace = join(__dirname, "..", "build", "workspace");
+const here = dirname(fileURLToPath(import.meta.url));
+const workspace = join(here, "..", "build", "workspace");
 
 const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 const REPOSITORY_NAME_GIT = "git@github.com:arlac77/sync-test-repository.git";
 
 test.serial("local provider https", async t => {
-  const provider = new LocalProvider({ workspace: directory() });
+  const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME);
 
   t.is(repository.name, REPOSITORY_NAME);
@@ -17,7 +19,7 @@ test.serial("local provider https", async t => {
 });
 
 test.serial("local provider reuse workspace", async t => {
-  const wd = directory();
+  const wd = tmpdir();
   const provider1 = new LocalProvider({ workspace: wd });
   const provider2 = new LocalProvider({ workspace: wd });
 

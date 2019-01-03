@@ -3,8 +3,8 @@ import { LocalRepository } from "./local-repository";
 import { LocalBranch } from "./local-branch";
 import { join } from "path";
 import { tmpdir } from "os";
-
-const { stat } = require("fs").promises;
+import fs from "fs";
+const { stat } = fs.promises;
 
 /**
  * Provider using native git executable
