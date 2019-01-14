@@ -2,9 +2,8 @@ import { Branch } from "repository-provider";
 import { join, dirname } from "path";
 import globby from "globby";
 import execa from "execa";
-import { createWriteStream } from "fs";
+import fs, { createWriteStream } from "fs";
 import { FileSystemEntry } from "content-entry";
-import fs from "fs";
 const { readFile, mkdir } = fs.promises;
 
 /**
