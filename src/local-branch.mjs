@@ -100,7 +100,6 @@ export class LocalBranch extends Branch {
    */
   async entry(name) {
     const entry = new FileSystemEntry(name, this.workspace);
-    console.log(entry);
     if (await entry.getExists()) {
       return entry;
     }

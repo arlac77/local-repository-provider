@@ -31,7 +31,6 @@ export class LocalRepository extends Repository {
   async _initialize(workspace) {
     await super._initialize();
     try {
-      console.log(`${this.name} -> ${this.workspace}`);
       await stat(this.workspace);
 
       const remoteResult = await execa(
@@ -49,6 +48,7 @@ export class LocalRepository extends Repository {
     } catch (e) {
       if (e.code === "ENOENT") {
         this.provider.trace(`git clone ${this.name} ${this.workspace}`);
+
         const result = await execa("git", [
           "clone",
           ...this.provider.cloneOptions,
