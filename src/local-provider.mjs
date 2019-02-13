@@ -31,10 +31,6 @@ export class LocalProvider extends Provider {
     return { cloneOptions: [], workspace: tmpdir() };
   }
 
-  get workspace() {
-    return this.workspace;
-  }
-
   get repositoryClass() {
     return LocalRepository;
   }
