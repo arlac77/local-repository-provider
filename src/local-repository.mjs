@@ -7,6 +7,18 @@ const { stat } = fs.promises;
  * @property {string} workspace
  */
 export class LocalRepository extends Repository {
+  static get defaultOptions() {
+    return Object.assign(
+      {
+        /**
+         * workspace directory.
+         * @return {string}
+         */
+        workspace: undefined
+      },
+      super.defaultOptions
+    );
+  }
 
   get execOptions() {
     return { cwd: this.workspace };

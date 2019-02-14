@@ -25,6 +25,7 @@ export class LocalProvider extends Provider {
   /**
    * Default configuration options
    * - workspace
+   * - cloneOptions
    * @return {Object}
    */
   static get defaultOptions() {

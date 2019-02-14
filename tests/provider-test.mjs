@@ -24,6 +24,7 @@ test("local provider optionsFromEnvironment", t => {
 test("local provider", async t => {
   const provider = new LocalProvider();
   t.deepEqual(provider.cloneOptions, []);
+  t.truthy(provider.workspace.length > 2);
 });
 
 test.serial("local provider workspacePaths", async t => {
