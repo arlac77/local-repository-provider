@@ -28,7 +28,7 @@
   "dependencies": {
     "content-entry": "^2.1.0",
     "execa": "^1.0.0",
-    "globby": "^9.0.0",
+    "globby": "^9.1.0",
     "repository-provider": "^12.4.0"
   },
   "devDependencies": {
