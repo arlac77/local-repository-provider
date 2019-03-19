@@ -23,7 +23,7 @@ test("local provider optionsFromEnvironment", t => {
 
 test("local provider", async t => {
   const provider = new LocalProvider();
-  t.deepEqual(provider.cloneOptions, []);
+  t.deepEqual(provider.cloneOptions, ["--depth", "10"]);
   t.truthy(provider.workspace.length > 2);
 });
 

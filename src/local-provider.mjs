@@ -29,7 +29,7 @@ export class LocalProvider extends Provider {
    * @return {Object}
    */
   static get defaultOptions() {
-    return { cloneOptions: [], workspace: tmpdir() };
+    return { cloneOptions: ["--depth", "10"], workspace: tmpdir() };
   }
 
   get repositoryClass() {
