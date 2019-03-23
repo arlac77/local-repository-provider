@@ -21,7 +21,7 @@ test("local provider optionsFromEnvironment", t => {
   t.deepEqual(provider.cloneOptions, ["--depth", "1"]);
 });
 
-test("local provider", async t => {
+test("local provider", t => {
   const provider = new LocalProvider();
   t.deepEqual(provider.cloneOptions, ["--depth", "10"]);
   t.truthy(provider.workspace.length > 2);

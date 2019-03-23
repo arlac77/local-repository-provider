@@ -20,8 +20,8 @@ export class LocalRepository extends Repository {
     );
   }
 
-  get execOptions() {
-    return { cwd: this.workspace };
+  async exec(args, options = { cwd: this.workspace }) {
+    return await execa("git", args, options);
   }
 
   /**
@@ -33,15 +33,11 @@ export class LocalRepository extends Repository {
     try {
       await stat(this.workspace);
 
-      const remoteResult = await execa(
-        "git",
-        ["remote", "-v"],
-        this.execOptions
-      );
+      const remoteResult = await this.exec(["remote", "-v"]);
       const m = remoteResult.stdout.match(/origin\s+([^\s]+)\s+/);
       if (m && m[1] === this.name) {
         this.provider.trace(`git pull ${this.name} @${this.workspace}`);
-        const result = await execa("git", ["pull"], this.execOptions);
+        await this.exec(["pull"]);
       } else {
         throw new Error(`Unknown content in ${this.workspace}`);
       }
@@ -49,12 +45,10 @@ export class LocalRepository extends Repository {
       if (e.code === "ENOENT") {
         this.provider.trace(`git clone ${this.name} ${this.workspace}`);
 
-        const result = await execa("git", [
-          "clone",
-          ...this.provider.cloneOptions,
-          this.name,
-          this.workspace
-        ]);
+        await this.exec(
+          ["clone", ...this.provider.cloneOptions, this.name, this.workspace],
+          {}
+        );
       } else {
         throw e;
       }
@@ -63,7 +57,7 @@ export class LocalRepository extends Repository {
   }
 
   async initializeBranches() {
-    const result = await execa("git", ["branch", "--list"], this.execOptions);
+    const result = await this.exec(["branch", "--list"]);
 
     result.stdout.split(/\n/).forEach(b => {
       const m = b.match(/^(\*\s+)?([^\s]+)/);
@@ -80,22 +74,18 @@ export class LocalRepository extends Repository {
   }
 
   async push() {
-    return execa("git", ["push"], this.execOptions);
+    return this.exec(["push"]);
   }
 
   async _createBranch(name, from, options) {
-    const result = await execa(
-      "git",
-      ["checkout", "-b", name],
-      this.execOptions
-    );
+    await this.exec(["checkout", "-b", name]);
 
     return new this.provider.branchClass(this, name);
   }
 
   async deleteBranch(name) {
-    await execa("git", ["checkout", "master"], this.execOptions);
-    await execa("git", ["branch", "-D", name], this.execOptions);
+    await this.exec(["checkout", "master"]);
+    await this.exec(["branch", "-D", name]);
 
     this._branches.delete(name);
   }
@@ -110,7 +100,7 @@ export class LocalRepository extends Repository {
    * @return {string} sha of the ref
    */
   async refId(ref) {
-    const g = await execa("git", ["show-ref", ref], this.execOptions);
+    const g = await this.exec(["show-ref", ref], {});
     return g.stdout.split(/\s+/)[0];
   }
 }

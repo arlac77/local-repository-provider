@@ -1,7 +1,6 @@
 import { Branch } from "repository-provider";
 import { join, dirname } from "path";
 import globby from "globby";
-import execa from "execa";
 import fs, { createWriteStream } from "fs";
 import { FileSystemEntry } from "content-entry";
 const { readFile, mkdir } = fs.promises;
@@ -12,10 +11,6 @@ const { readFile, mkdir } = fs.promises;
 export class LocalBranch extends Branch {
   get workspace() {
     return this.repository.workspace;
-  }
-
-  get execOptions() {
-    return this.repository.execOptions;
   }
 
   /**
@@ -56,7 +51,7 @@ export class LocalBranch extends Branch {
       }
     });
 
-    await execa("git", ["add", ...entry.map(b => b.name)], this.execOptions);
+    await this.repository.exec(["add", ...entry.map(b => b.name)]);
 
     return entry;
   }
@@ -73,12 +68,8 @@ export class LocalBranch extends Branch {
    */
   async commit(message, entries, options) {
     await this.writeEntries(entries);
-    await execa("git", ["commit", "-m", message], this.execOptions);
-    await execa(
-      "git",
-      ["push", "--set-upstream", "origin", this.name],
-      this.execOptions
-    );
+    await this.repository.exec(["commit", "-m", message]);
+    await this.repository.exec(["push", "--set-upstream", "origin", this.name]);
   }
 
   /**
