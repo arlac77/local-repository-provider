@@ -16,6 +16,7 @@ test.serial("local provider https", async t => {
 
   t.is(repository.name, REPOSITORY_NAME);
   t.is(repository.url, REPOSITORY_NAME);
+  t.is(repository.condensedName, 'sync-test-repository');
 });
 
 test.serial("local provider reuse workspace", async t => {

@@ -34,6 +34,7 @@ repository provider using local (native) git commands
     -   [Properties](#properties-1)
     -   [\_initialize](#_initialize)
         -   [Parameters](#parameters-2)
+    -   [condensedName](#condensedname)
     -   [refId](#refid)
         -   [Parameters](#parameters-3)
 -   [workspace](#workspace)
@@ -105,6 +106,14 @@ exec git clone or git pull
 #### Parameters
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### condensedName
+
+most significant part of the url
+remove trailing .git
+only last directory of use pathname
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** name
 
 ### refId
 

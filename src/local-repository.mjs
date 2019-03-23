@@ -69,6 +69,21 @@ export class LocalRepository extends Repository {
     });
   }
 
+  /**
+   * most significant part of the url
+   * remove trailing .git
+   * only last directory of use pathname
+   * @return {string} name
+   */
+  get condensedName() {
+    let name = new URL(this.name);
+    const paths = name.pathname.split(/\//);
+    name = paths[paths.length - 1 ];
+    name = name.replace(/\.git$/,'');
+    return name;
+  }
+
+
   get urls() {
     return [this.name];
   }
