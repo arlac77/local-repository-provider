@@ -1,6 +1,7 @@
 import { Repository } from "repository-provider";
 import execa from "execa";
 import fs from "fs";
+import { branchNamesFromString } from "./util";
 const { stat } = fs.promises;
 
 /**
@@ -59,18 +60,9 @@ export class LocalRepository extends Repository {
   async initializeBranches() {
     const result = await this.exec(["branch", "--list", "--all"]);
 
-    result.stdout.split(/\n/).forEach(b => {
-      const m = b.match(/^\*?\s*([^\s]+)/);
-      if (m) {
-        let name = m[1];
-        const parts = name.split(/\//);
-        if (parts.length >= 3 && parts[0] === "remotes") {
-          name = parts[2];
-        }
-
-        const branch = new this.provider.branchClass(this, name);
-        this._branches.set(branch.name, branch);
-      }
+    branchNamesFromString(result.stdout).forEach(name => {
+      const branch = new this.provider.branchClass(this, name);
+      this._branches.set(branch.name, branch);
     });
   }
 
