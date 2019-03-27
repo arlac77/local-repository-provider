@@ -60,15 +60,14 @@ export class LocalRepository extends Repository {
     const result = await this.exec(["branch", "--list", "--all"]);
 
     result.stdout.split(/\n/).forEach(b => {
-      const m = b.match(/^(\*\s+)?([^\s]+)/);
+      const m = b.match(/^\*?\s*([^\s]+)/);
       if (m) {
-        let name = m[2];
+        let name = m[1];
         const parts = name.split(/\//);
         if (parts.length >= 3 && parts[0] === "remotes") {
           name = parts[2];
-        } else {
-          name = m[2];
         }
+
         const branch = new this.provider.branchClass(this, name);
         this._branches.set(branch.name, branch);
       }
