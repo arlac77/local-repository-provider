@@ -19,7 +19,7 @@ test.serial("local provider https", async t => {
   t.is(repository.condensedName, "sync-test-repository");
 });
 
-test.serial.only("local provider git@", async t => {
+test.serial("local provider git@", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME_GIT);
 
@@ -45,4 +45,16 @@ test.skip("local provider show ref", async t => {
   const repository = await provider.repository(REPOSITORY_NAME);
 
   t.is((await repository.refId("refs/heads/master")).length, 10);
+});
+
+test.serial("list branches", async t => {
+  const provider = new LocalProvider({ workspace });
+  const repository = await provider.repository(REPOSITORY_NAME);
+
+  const names = new Set();
+  for (const [name, branch] of await repository.branches()) {
+    names.add(name);
+  }
+
+  t.true(names.has("master"));
 });
