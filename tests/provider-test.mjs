@@ -93,7 +93,7 @@ test.serial("local provider list files", async t => {
 
   const files = [];
 
-  for await (const entry of branch.entries()) {
+  for await (const entry of branch) {
     files.push(entry);
   }
 

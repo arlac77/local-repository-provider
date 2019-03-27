@@ -16,7 +16,16 @@ test.serial("local provider https", async t => {
 
   t.is(repository.name, REPOSITORY_NAME);
   t.is(repository.url, REPOSITORY_NAME);
-  t.is(repository.condensedName, 'sync-test-repository');
+  t.is(repository.condensedName, "sync-test-repository");
+});
+
+test.serial.only("local provider git@", async t => {
+  const provider = new LocalProvider({ workspace: tmpdir() });
+  const repository = await provider.repository(REPOSITORY_NAME_GIT);
+
+  t.is(repository.name, REPOSITORY_NAME_GIT);
+  t.is(repository.url, REPOSITORY_NAME_GIT);
+  t.is(repository.condensedName, "sync-test-repository");
 });
 
 test.serial("local provider reuse workspace", async t => {

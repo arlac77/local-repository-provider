@@ -76,13 +76,22 @@ export class LocalRepository extends Repository {
    * @return {string} name
    */
   get condensedName() {
-    let name = new URL(this.name);
-    const paths = name.pathname.split(/\//);
-    name = paths[paths.length - 1 ];
-    name = name.replace(/\.git$/,'');
+    let name = this.name;
+    const m = name.match(/^git@([^:]+):([^:]+)\/(.*)/);
+
+    if (m) {
+      name = m[3];
+    } else {
+      try {
+        let url = new URL(name);
+        const paths = url.pathname.split(/\//);
+        name = paths[paths.length - 1];
+      } catch (e) {}
+    }
+
+    name = name.replace(/\.git$/, "");
     return name;
   }
-
 
   get urls() {
     return [this.name];
