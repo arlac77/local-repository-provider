@@ -23,7 +23,7 @@ test("local provider optionsFromEnvironment", t => {
 
 test("local provider", t => {
   const provider = new LocalProvider();
-  t.deepEqual(provider.cloneOptions, ["--depth", "10"]);
+  t.deepEqual(provider.cloneOptions, ["--depth", "10", "--no-single-branch"]);
   t.truthy(provider.workspace.length > 2);
 });
 

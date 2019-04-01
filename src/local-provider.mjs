@@ -25,11 +25,14 @@ export class LocalProvider extends Provider {
   /**
    * Default configuration options
    * - workspace
-   * - cloneOptions defaults to ["--depth", "10"]
+   * - cloneOptions defaults to ["--depth", "10", "--no-single-branch"]
    * @return {Object}
    */
   static get defaultOptions() {
-    return { cloneOptions: ["--depth", "10"], workspace: tmpdir() };
+    return {
+      cloneOptions: ["--depth", "10", "--no-single-branch"],
+      workspace: tmpdir()
+    };
   }
 
   get repositoryClass() {
