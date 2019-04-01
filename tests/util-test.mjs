@@ -3,32 +3,19 @@ import { branchNamesFromString } from "../src/util";
 
 test("branchNamesFromString 1", t => {
   t.deepEqual(
-    branchNamesFromString(`  fs-entry
-* master
-  remotes/origin/HEAD -> origin/master
-  remotes/origin/master
+    branchNamesFromString(`From https://github.com/arlac77/local-repository-provider.git
+a0fd4e406680de7d1153bdecb432f1202f9afce8	refs/heads/master
 `),
-    ["fs-entry", "master"]
+    ["master"]
   );
 });
 
 test("branchNamesFromString 2", t => {
   t.deepEqual(
-    branchNamesFromString(`* master
-      remotes/origin/HEAD -> origin/master
-      remotes/origin/greenkeeper/ava-1.4.0
-      remotes/origin/greenkeeper/ava-pin-1.3.1
-      remotes/origin/greenkeeper/rollup-1.7.1
-      remotes/origin/greenkeeper/rollup-1.7.2
-      remotes/origin/greenkeeper/rollup-pin-1.7.0
-      remotes/origin/master`),
-    [
-      "master",
-      "greenkeeper/ava-1.4.0",
-      "greenkeeper/ava-pin-1.3.1",
-      "greenkeeper/rollup-1.7.1",
-      "greenkeeper/rollup-1.7.2",
-      "greenkeeper/rollup-pin-1.7.0"
-    ]
+    branchNamesFromString(`From https://github.com/arlac77/node-symatem.git
+175ed3ec4ad9246e96ec69c7809d20d47c21646f	refs/heads/master
+ef7bfd57dae29ea31fe7d5b86674730e3cceaceb	refs/heads/wasm
+`),
+    ["master", "wasm"]
   );
 });

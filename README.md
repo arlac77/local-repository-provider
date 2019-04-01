@@ -34,6 +34,7 @@ repository provider using local (native) git commands
     -   [Properties](#properties-1)
     -   [\_initialize](#_initialize)
         -   [Parameters](#parameters-2)
+    -   [initializeBranches](#initializebranches)
     -   [condensedName](#condensedname)
     -   [refId](#refid)
         -   [Parameters](#parameters-3)
@@ -106,6 +107,14 @@ exec git clone or git pull
 #### Parameters
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### initializeBranches
+
+build lookup of all remote branches
+
+```sh
+git ls-remote --heads
+```
 
 ### condensedName
 

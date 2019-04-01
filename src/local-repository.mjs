@@ -57,8 +57,14 @@ export class LocalRepository extends Repository {
     await this.initializeBranches();
   }
 
+  /**
+   * build lookup of all remote branches
+   * ```sh
+   * git ls-remote --heads
+   * ```
+   */
   async initializeBranches() {
-    const result = await this.exec(["branch", "--list", "--all"]);
+    const result = await this.exec(["ls-remote", "--heads"]);
 
     branchNamesFromString(result.stdout).forEach(name => {
       const branch = new this.provider.branchClass(this, name);
