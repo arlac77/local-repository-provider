@@ -26,9 +26,9 @@
     "test": "ava"
   },
   "dependencies": {
-    "content-entry": "^2.1.0",
+    "content-entry": "^2.1.1",
     "execa": "^1.0.0",
-    "globby": "^9.1.0",
+    "globby": "^9.2.0",
     "repository-provider": "^12.4.0"
   },
   "devDependencies": {
