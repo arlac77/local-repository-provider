@@ -3,7 +3,7 @@ import { join, dirname } from "path";
 import globby from "globby";
 import fs, { createWriteStream } from "fs";
 import { FileSystemEntry } from "content-entry";
-const { readFile, mkdir } = fs.promises;
+const { mkdir } = fs.promises;
 
 /**
  * @property {string} workspace

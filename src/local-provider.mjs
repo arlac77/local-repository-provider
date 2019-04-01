@@ -65,8 +65,9 @@ export class LocalProvider extends Provider {
   /**
    * using provider workspace and number of repositories to create repository workspace
    * @param {string} name
+   * @param {string} workspace where to place the repos workspace @see #newWorkspacePath
    */
-  async repository(name) {
+  async repository(name, workspace) {
     if (name === undefined) {
       return undefined;
     }
@@ -74,7 +75,7 @@ export class LocalProvider extends Provider {
     let repository = this._repositories.get(name);
     if (repository === undefined) {
       repository = new this.repositoryClass(this, name, {
-        workspace: await this.newWorkspacePath()
+        workspace: workspace ? workspace : await this.newWorkspacePath()
       });
 
       this._repositories.set(repository.name, repository);
