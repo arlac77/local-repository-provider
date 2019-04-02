@@ -106,12 +106,18 @@ export class LocalRepository extends Repository {
 
   async _createBranch(name, from, options) {
     await this.exec(["checkout", "-b", name]);
-
     return new this.provider.branchClass(this, name);
   }
 
+  async setActiveBranch(branch) {
+    if (this._activeBranch !== branch) {
+      await this.exec(["checkout", "-q", "-f", /*"-b",*/ branch.name]);
+      this._activeBranch = branch;
+    }
+  }
+
   async deleteBranch(name) {
-    await this.exec(["checkout", "master"]);
+    await this.setActiveBranch(await this.defaultBranch);
     await this.exec(["branch", "-D", name]);
 
     this._branches.delete(name);

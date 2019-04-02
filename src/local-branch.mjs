@@ -13,10 +13,6 @@ export class LocalBranch extends Branch {
     return this.repository.workspace;
   }
 
-  async activate() {
-    await this.repository.exec(["checkout", this.name]);
-  }
-
   /**
    * writes Entry into the branch
    * @param {Entry[]} entry
@@ -82,7 +78,7 @@ export class LocalBranch extends Branch {
    * @return {Iterable<Entry>} matching branch path names
    */
   async *entries(matchingPatterns = ["**/.*", "**/*"]) {
-    await this.activate();
+    await this.repository.setActiveBranch(this);
     for (const name of await globby(matchingPatterns, {
       cwd: this.workspace
     })) {
@@ -95,7 +91,7 @@ export class LocalBranch extends Branch {
    * @return {Entry} matching branch path names
    */
   async entry(name) {
-    await this.activate();
+    await this.repository.setActiveBranch(this);
 
     const entry = new FileSystemEntry(name, this.workspace);
     if (await entry.getExists()) {
