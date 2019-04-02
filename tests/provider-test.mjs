@@ -62,7 +62,7 @@ test.serial("local provider with default workspace", async t => {
   t.is(repository.url, REPOSITORY_NAME);
 });
 
-test.serial.only("local provider create & delete branch", async t => {
+test.serial("local provider create & delete branch", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branches = await repository.branches();
