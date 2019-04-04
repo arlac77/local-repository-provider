@@ -69,7 +69,7 @@ export class LocalBranch extends Branch {
   async commit(message, entries, options) {
     await this.writeEntries(entries);
     await this.repository.exec(["commit", "-m", message]);
-    await this.repository.exec(["push", "--set-upstream", "origin", this.name]);
+    await this.repository.push();
   }
 
   /**
