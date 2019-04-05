@@ -100,8 +100,8 @@ export class LocalRepository extends Repository {
     return [this.name];
   }
 
-  async push() {
-    return this.exec(["push"]);
+  async push(...args) {
+    return this.exec(["push", ...args]);
   }
 
   async _createBranch(name, from, options) {
