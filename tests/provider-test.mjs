@@ -1,5 +1,5 @@
 import test from "ava";
-import { LocalProvider } from "../src/local-provider";
+import { LocalProvider } from "../src/local-provider.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { tmpdir } from "os";

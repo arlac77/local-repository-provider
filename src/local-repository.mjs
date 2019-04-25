@@ -1,7 +1,7 @@
 import { Repository } from "repository-provider";
 import execa from "execa";
 import fs from "fs";
-import { branchNamesFromString } from "./util";
+import { branchNamesFromString } from "./util.mjs";
 const { stat } = fs.promises;
 
 /**

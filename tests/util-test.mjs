@@ -1,5 +1,5 @@
 import test from "ava";
-import { branchNamesFromString } from "../src/util";
+import { branchNamesFromString } from "../src/util.mjs";
 
 test("branchNamesFromString 1", t => {
   t.deepEqual(
