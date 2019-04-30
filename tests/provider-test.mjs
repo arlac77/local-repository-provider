@@ -148,7 +148,7 @@ test.serial("local provider commit files", async t => {
     const options = { encoding: "utf8" };
     const old = await file.getString(options);
 
-    file.setString(`${old}\n${new Date()}`);
+    await file.setString(`${old}\n${new Date()}`);
 
     await branch.commit("test: ignore", [file]);
 
