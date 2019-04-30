@@ -1,8 +1,8 @@
-import { Branch } from "repository-provider";
 import { join, dirname } from "path";
 import globby from "globby";
 import fs, { createWriteStream } from "fs";
 import { FileSystemEntry } from "content-entry";
+import { Branch } from "repository-provider";
 const { mkdir } = fs.promises;
 
 /**
@@ -14,14 +14,15 @@ export class LocalBranch extends Branch {
   }
 
   /**
-   * writes Entry into the branch
-   * @param {Entry[]} entry
-   * @return {Promise<Entry[]>} written entries
+   * writes ContentEntries into the branch
+   * @param {ContentEntry[]} entries
+   * @return {Promise<ContentEntry[]>} written entries
    */
-  async writeEntries(entry) {
+  async writeEntries(entries) {
+    await this.repository.setCurrentBranch(this);
     try {
       await Promise.all(
-        entry.map(b =>
+        entries.map(b =>
           mkdir(dirname(join(this.workspace, b.name), { recursive: true }))
         )
       );
@@ -35,14 +36,14 @@ export class LocalBranch extends Branch {
     await new Promise(async (resolve, reject) => {
       let ongoing = 0;
 
-      for (const u of entry) {
+      for (const u of entries) {
         const o = createWriteStream(join(this.workspace, u.name));
         o.on("error", error => reject(error));
 
         o.on("finish", () => {
           ongoing--;
           if (ongoing <= 0) {
-            resolve(entry);
+            resolve();
           }
         });
 
@@ -51,9 +52,9 @@ export class LocalBranch extends Branch {
       }
     });
 
-    await this.repository.exec(["add", ...entry.map(b => b.name)]);
+    await this.repository.exec(["add", ...entries.map(b => b.name)]);
 
-    return entry;
+    return entries;
   }
 
   /**
@@ -61,9 +62,9 @@ export class LocalBranch extends Branch {
    * - writes all updates into the workspace
    * - git add
    * - git commit
-   * - git push
+   * - git push --set-upstream origin
    * @param {string} message commit message
-   * @param {Entry[]} entries file entries to be commited
+   * @param {ContentEntry[]} entries file entries to be commited
    * @param {Object} options
    */
   async commit(message, entries, options) {
@@ -78,7 +79,7 @@ export class LocalBranch extends Branch {
    * @return {Iterable<Entry>} matching branch path names
    */
   async *entries(matchingPatterns = ["**/.*", "**/*"]) {
-    await this.repository.setActiveBranch(this);
+    await this.repository.setCurrentBranch(this);
     for (const name of await globby(matchingPatterns, {
       cwd: this.workspace
     })) {
@@ -88,10 +89,11 @@ export class LocalBranch extends Branch {
 
   /**
    * Search for patch in the branch
+   * @param {string} name
    * @return {Entry} matching branch path names
    */
   async entry(name) {
-    await this.repository.setActiveBranch(this);
+    await this.repository.setCurrentBranch(this);
 
     const entry = new FileSystemEntry(name, this.workspace);
     if (await entry.getExists()) {

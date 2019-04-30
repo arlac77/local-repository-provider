@@ -1,11 +1,12 @@
-import { Repository } from "repository-provider";
 import execa from "execa";
 import fs from "fs";
+import { Repository } from "repository-provider";
 import { branchNamesFromString } from "./util.mjs";
 const { stat } = fs.promises;
 
 /**
  * @property {string} workspace
+ * @property {Branch} currentBranch
  */
 export class LocalRepository extends Repository {
   static get defaultOptions() {
@@ -109,15 +110,19 @@ export class LocalRepository extends Repository {
     return new this.provider.branchClass(this, name);
   }
 
-  async setActiveBranch(branch) {
-    if (this._activeBranch !== branch) {
+  /**
+   * Set the current active branch (workspace)
+   * @param {Branch} branch
+   */
+  async setCurrentBranch(branch) {
+    if (this.currentBranch !== branch) {
       await this.exec(["checkout", "-q", "-f", /*"-b",*/ branch.name]);
-      this._activeBranch = branch;
+      this.currentBranch = branch;
     }
   }
 
   async deleteBranch(name) {
-    await this.setActiveBranch(await this.defaultBranch);
+    await this.setCurrentBranch(await this.defaultBranch);
     await this.exec(["branch", "-D", name]);
 
     this._branches.delete(name);

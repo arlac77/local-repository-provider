@@ -1,8 +1,8 @@
 import test from "ava";
-import { LocalProvider } from "../src/local-provider.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { tmpdir } from "os";
+import { LocalProvider } from "../src/local-provider.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const workspace = join(here, "..", "build", "workspace");

@@ -1,9 +1,10 @@
-import { Provider, Repository, Branch } from "repository-provider";
-import { LocalRepository } from "./local-repository.mjs";
-import { LocalBranch } from "./local-branch.mjs";
 import { join } from "path";
 import { tmpdir } from "os";
 import fs from "fs";
+import { Provider, Repository, Branch } from "repository-provider";
+import { LocalRepository } from "./local-repository.mjs";
+import { LocalBranch } from "./local-branch.mjs";
+
 const { stat } = fs.promises;
 
 /**
