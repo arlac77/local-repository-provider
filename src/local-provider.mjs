@@ -85,3 +85,5 @@ export class LocalProvider extends Provider {
     return repository;
   }
 }
+
+export default LocalProvider;
