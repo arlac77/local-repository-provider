@@ -138,6 +138,19 @@ test.serial("local provider get none exiting file", async t => {
   }
 });
 
+test.serial("local provider get none exiting file maybeEntry", async t => {
+  const provider = new LocalProvider({ workspace: tmpdir() });
+
+  if (process.env.SSH_AUTH_SOCK) {
+    const repository = await provider.repository(REPOSITORY_NAME_GIT);
+    const branch = await repository.defaultBranch;
+
+    t.is(await branch.maybeEntry("missing file"), undefined);
+  } else {
+    t.is(1, 1, "skip git@ test without SSH_AUTH_SOCK");
+  }
+});
+
 test.serial("local provider commit files", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
 

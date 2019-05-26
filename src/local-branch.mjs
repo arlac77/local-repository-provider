@@ -102,6 +102,21 @@ export class LocalBranch extends Branch {
     throw new Error(`file not found: ${name}`);
   }
 
+    /**
+   * Search for patch in the branch
+   * @param {string} name
+   * @return {Entry} matching branch path names
+   */
+  async maybeEntry(name) {
+    await this.repository.setCurrentBranch(this);
+
+    const entry = new FileSystemEntry(name, this.workspace);
+    if (await entry.getExists()) {
+      return entry;
+    }
+    return undefined;
+  }
+
   async createPullRequest(to, message) {
     return new this.provider.pullRequestClass(this, to, "0", {
       title: `please create pull request manually from ${this.url}`
