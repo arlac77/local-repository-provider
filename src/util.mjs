@@ -1,7 +1,8 @@
-export function refNamesFromString(str) {
+
+export function* refNamesFromString(str) {
   const refNames = new Set();
 
-  str.split(/\n/).forEach(b => {
+  for (const b of str.split(/\n/)) {
     const m = b.match(/[0-9a-f]{40}?\s+(.+)/);
     if (m) {
       let name = m[1];
@@ -10,10 +11,11 @@ export function refNamesFromString(str) {
         parts.shift();
         parts.shift();
         name = parts.join("/");
-        refNames.add(name);
+        if (!refNames.has(name)) {
+          refNames.add(name);
+          yield name;
+        }
       }
     }
-  });
-
-  return [...refNames.values()];
+  }
 }

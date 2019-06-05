@@ -64,10 +64,10 @@ export class LocalRepository extends Repository {
   async initializeBranches() {
     const result = await this.exec(["ls-remote", "--heads"]);
 
-    refNamesFromString(result.stdout).forEach(name => {
+    for(const name of refNamesFromString(result.stdout)) {
       const branch = new this.provider.branchClass(this, name);
       this._branches.set(branch.name, branch);
-    });
+    };
   }
 
   /**
