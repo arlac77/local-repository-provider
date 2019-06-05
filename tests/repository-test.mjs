@@ -52,9 +52,21 @@ test.serial("list branches", async t => {
   const repository = await provider.repository(REPOSITORY_NAME);
 
   const names = new Set();
-  for (const [name, branch] of await repository.branches()) {
+  for (const [name] of await repository.branches()) {
     names.add(name);
   }
 
   t.true(names.has("master"));
+});
+
+test.serial("list tags", async t => {
+  const provider = new LocalProvider({ workspace });
+  const repository = await provider.repository(REPOSITORY_NAME);
+
+  const tags = new Set();
+  for await (const name of repository.tags()) {
+    tags.add(name);
+  }
+
+  t.true(tags.has("v1.0.0"));
 });

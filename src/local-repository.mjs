@@ -1,7 +1,7 @@
 import execa from "execa";
 import fs from "fs";
 import { Repository } from "repository-provider";
-import { branchNamesFromString } from "./util.mjs";
+import { refNamesFromString } from "./util.mjs";
 const { stat } = fs.promises;
 
 /**
@@ -26,9 +26,8 @@ export class LocalRepository extends Repository {
 
   /**
    * exec git clone or git pull
-   * @param {string} workspace
    */
-  async _initialize(workspace) {
+  async _initialize() {
     await super._initialize();
     try {
       await stat(this.workspace);
@@ -65,7 +64,7 @@ export class LocalRepository extends Repository {
   async initializeBranches() {
     const result = await this.exec(["ls-remote", "--heads"]);
 
-    branchNamesFromString(result.stdout).forEach(name => {
+    refNamesFromString(result.stdout).forEach(name => {
       const branch = new this.provider.branchClass(this, name);
       this._branches.set(branch.name, branch);
     });
@@ -88,7 +87,7 @@ export class LocalRepository extends Repository {
         let url = new URL(name);
         const paths = url.pathname.split(/\//);
         name = paths[paths.length - 1];
-      } catch (e) {}
+      } catch (e) { }
     }
 
     name = name.replace(/\.git$/, "");
@@ -138,5 +137,16 @@ export class LocalRepository extends Repository {
   async refId(ref) {
     const g = await this.exec(["show-ref", ref], {});
     return g.stdout.split(/\s+/)[0];
+  }
+
+
+  async *tags(pattern) {
+    await this.initialize();
+
+    const result = await this.exec(["ls-remote", "--tags"]);
+
+    for (const name of refNamesFromString(result.stdout)) {
+      yield name;
+    }
   }
 }

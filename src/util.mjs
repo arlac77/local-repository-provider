@@ -1,8 +1,8 @@
-export function branchNamesFromString(str) {
-  const branchNames = new Set();
+export function refNamesFromString(str) {
+  const refNames = new Set();
 
   str.split(/\n/).forEach(b => {
-    const m = b.match(/^\w{40}?\s*(.+)/);
+    const m = b.match(/[0-9a-f]{40}?\s+(.+)/);
     if (m) {
       let name = m[1];
       const parts = name.split(/\//);
@@ -10,10 +10,10 @@ export function branchNamesFromString(str) {
         parts.shift();
         parts.shift();
         name = parts.join("/");
-        branchNames.add(name);
+        refNames.add(name);
       }
     }
   });
 
-  return [...branchNames.values()];
+  return [...refNames.values()];
 }
