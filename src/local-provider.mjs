@@ -13,14 +13,17 @@ const { stat } = fs.promises;
  * @property {string} workspace
  */
 export class LocalProvider extends Provider {
+
   /**
    * - GIT_CLONE_OPTIONS
    */
-  static optionsFromEnvironment(env) {
-    if (env.GIT_CLONE_OPTIONS !== undefined) {
-      return { cloneOptions: env.GIT_CLONE_OPTIONS.split(/\s+/) };
-    }
-    return undefined;
+  static get environmentOptions() {
+    return {
+      GIT_CLONE_OPTIONS: {
+        path: 'cloneOptions',
+        parse: value => value.split(/\s+/)
+      }
+    };
   }
 
   /**
