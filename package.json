@@ -30,7 +30,7 @@
     "content-entry": "^2.1.4",
     "execa": "^2.0.0",
     "globby": "^10.0.0",
-    "repository-provider": "^14.5.0"
+    "repository-provider": "^14.6.0"
   },
   "devDependencies": {
     "ava": "^2.1.0",
