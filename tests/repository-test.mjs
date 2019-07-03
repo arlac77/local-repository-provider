@@ -52,8 +52,8 @@ test.serial("list branches", async t => {
   const repository = await provider.repository(REPOSITORY_NAME);
 
   const names = new Set();
-  for (const [name] of await repository.branches()) {
-    names.add(name);
+  for await(const branch of repository.branches()) {
+    names.add(branch.name);
   }
 
   t.true(names.has("master"));

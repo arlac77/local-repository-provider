@@ -65,15 +65,19 @@ test.serial("local provider with default workspace", async t => {
 test.serial("local provider create & delete branch", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME);
-  const branches = await repository.branches();
 
-  const newName = `test-${branches.size}`;
+  let n = 0;
+  for await(const branch of repository.branches()) {
+    n++;
+  }
+
+  const newName = `test-${n}`;
   const branch = await repository.createBranch(newName);
 
   t.is(branch.name, newName);
 
   await repository.deleteBranch(newName);
-  t.is(branches.get(newName), undefined);
+  t.is(await repository.branch(newName), undefined);
 });
 
 test.serial("local get file", async t => {
