@@ -35,14 +35,14 @@ export class LocalRepository extends Repository {
       const remoteResult = await this.exec(["remote", "-v"]);
       const m = remoteResult.stdout.match(/origin\s+([^\s]+)\s+/);
       if (m && m[1] === this.name) {
-        this.provider.trace(`git pull ${this.name} @${this.workspace}`);
+        this.trace(`git pull ${this.name} @${this.workspace}`);
         await this.exec(["pull"]);
       } else {
         throw new Error(`Unknown content in ${this.workspace}`);
       }
     } catch (e) {
       if (e.code === "ENOENT") {
-        this.provider.trace(`git clone ${this.name} ${this.workspace}`);
+        this.trace(`git clone ${this.name} ${this.workspace}`);
 
         await this.exec(
           ["clone", ...this.provider.cloneOptions, this.name, this.workspace],
