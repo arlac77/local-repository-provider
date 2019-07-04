@@ -28,7 +28,6 @@ export class LocalRepository extends Repository {
    * exec git clone or git pull
    */
   async _initialize() {
-    await super._initialize();
     try {
       await stat(this.workspace);
 
@@ -52,7 +51,7 @@ export class LocalRepository extends Repository {
         throw e;
       }
     }
-    await this.initializeBranches();
+    await super._initialize();
   }
 
   /**
@@ -61,7 +60,7 @@ export class LocalRepository extends Repository {
    * git ls-remote --heads
    * ```
    */
-  async initializeBranches() {
+  async _fetchBranches() {
     const result = await this.exec(["ls-remote", "--heads"]);
 
     for(const name of refNamesFromString(result.stdout)) {
