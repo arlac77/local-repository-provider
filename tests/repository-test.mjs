@@ -1,4 +1,5 @@
 import test from "ava";
+import { assertRepo } from "./util.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { tmpdir } from "os";
@@ -10,30 +11,38 @@ const workspace = join(here, "..", "build", "workspace");
 const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 const REPOSITORY_NAME_GIT = "git@github.com:arlac77/sync-test-repository.git";
 
-test("local provider empty name", async t => {
+const repoFixtures = {
+  "": undefined,
+  "  x  ": undefined,
+
+  // "git@mfelten.de/github-repository-provider.git": undefined,
+  //"http://www.heise.de/index.html": undefined,
+
+  "https://github.com/arlac77/sync-test-repository.git": {
+    condensedName: "sync-test-repository",
+    provider: LocalProvider
+  },
+  "git@github.com:arlac77/sync-test-repository.git": {
+    condensedName: "sync-test-repository",
+    provider: LocalProvider
+  },
+
+  "https://mfelten.dynv6.net/services/git/markus/de.mfelten.archlinux.git": {
+    condensedName: "de.mfelten.archlinux",
+    provider: LocalProvider
+  }
+};
+
+test("locate repository several", async t => {
   const provider = new LocalProvider();
-  let repository = await provider.repository("");
-  t.is(repository, undefined);
-  repository = await provider.repository();
-  t.is(repository, undefined);
-});
 
-test.serial("local provider https", async t => {
-  const provider = new LocalProvider({ workspace: tmpdir() });
-  const repository = await provider.repository(REPOSITORY_NAME);
+  t.plan(8);
 
-  t.is(repository.name, REPOSITORY_NAME);
-  t.is(repository.url, REPOSITORY_NAME);
-  t.is(repository.condensedName, "sync-test-repository");
-});
-
-test.serial("local provider git@", async t => {
-  const provider = new LocalProvider({ workspace: tmpdir() });
-  const repository = await provider.repository(REPOSITORY_NAME_GIT);
-
-  t.is(repository.name, REPOSITORY_NAME_GIT);
-  t.is(repository.url, REPOSITORY_NAME_GIT);
-  t.is(repository.condensedName, "sync-test-repository");
+  for (const rn of Object.keys(repoFixtures)) {
+    const r = repoFixtures[rn];
+    const repository = await provider.repository(rn);
+    await assertRepo(t, repository, r);
+  }
 });
 
 test.serial("local provider reuse workspace", async t => {

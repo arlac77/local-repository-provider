@@ -116,7 +116,7 @@ git ls-remote --heads
 
 most significant part of the url
 remove trailing .git
-only last directory of use pathname
+only use last directory of pathname
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** name
 

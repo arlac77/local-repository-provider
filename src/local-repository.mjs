@@ -72,7 +72,7 @@ export class LocalRepository extends Repository {
   /**
    * most significant part of the url
    * remove trailing .git
-   * only last directory of use pathname
+   * only use last directory of pathname
    * @return {string} name
    */
   get condensedName() {

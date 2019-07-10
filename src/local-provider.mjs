@@ -66,6 +66,12 @@ export class LocalProvider extends Provider {
     } while (true);
   }
 
+  normalizeRepositoryName(name)
+  {
+    name = name.trim();
+    return name;
+  }
+
   /**
    * using provider workspace and number of repositories to create repository workspace
    * @param {string} name
@@ -75,7 +81,7 @@ export class LocalProvider extends Provider {
     if (name === undefined) {
       return undefined;
     }
-    //name = this.normalizeRepositoryName();
+    name = this.normalizeRepositoryName(name);
     if(name.length < 2) {
       return undefined;
     }
