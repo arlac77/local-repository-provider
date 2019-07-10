@@ -75,6 +75,10 @@ export class LocalProvider extends Provider {
     if (name === undefined) {
       return undefined;
     }
+    //name = this.normalizeRepositoryName();
+    if(name.length < 2) {
+      return undefined;
+    }
 
     let repository = this._repositories.get(name);
     if (repository === undefined) {

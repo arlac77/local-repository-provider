@@ -10,6 +10,14 @@ const workspace = join(here, "..", "build", "workspace");
 const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 const REPOSITORY_NAME_GIT = "git@github.com:arlac77/sync-test-repository.git";
 
+test("local provider empty name", async t => {
+  const provider = new LocalProvider();
+  let repository = await provider.repository("");
+  t.is(repository, undefined);
+  repository = await provider.repository();
+  t.is(repository, undefined);
+});
+
 test.serial("local provider https", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME);
@@ -52,7 +60,7 @@ test.serial("list branches", async t => {
   const repository = await provider.repository(REPOSITORY_NAME);
 
   const names = new Set();
-  for await(const branch of repository.branches()) {
+  for await (const branch of repository.branches()) {
     names.add(branch.name);
   }
 

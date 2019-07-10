@@ -27,27 +27,29 @@ repository provider using local (native) git commands
     -   [newWorkspacePath](#newworkspacepath)
     -   [repository](#repository)
         -   [Parameters](#parameters)
-    -   [optionsFromEnvironment](#optionsfromenvironment)
-        -   [Parameters](#parameters-1)
+    -   [environmentOptions](#environmentoptions)
     -   [defaultOptions](#defaultoptions)
 -   [LocalRepository](#localrepository)
     -   [Properties](#properties-1)
     -   [\_initialize](#_initialize)
-        -   [Parameters](#parameters-2)
-    -   [initializeBranches](#initializebranches)
+    -   [\_fetchBranches](#_fetchbranches)
     -   [condensedName](#condensedname)
+    -   [setCurrentBranch](#setcurrentbranch)
+        -   [Parameters](#parameters-1)
     -   [refId](#refid)
-        -   [Parameters](#parameters-3)
+        -   [Parameters](#parameters-2)
 -   [workspace](#workspace)
 -   [LocalBranch](#localbranch)
     -   [Properties](#properties-2)
     -   [writeEntries](#writeentries)
-        -   [Parameters](#parameters-4)
+        -   [Parameters](#parameters-3)
     -   [commit](#commit)
-        -   [Parameters](#parameters-5)
+        -   [Parameters](#parameters-4)
     -   [entries](#entries)
-        -   [Parameters](#parameters-6)
+        -   [Parameters](#parameters-5)
     -   [entry](#entry)
+        -   [Parameters](#parameters-6)
+    -   [maybeEntry](#maybeentry)
         -   [Parameters](#parameters-7)
 
 ## LocalProvider
@@ -76,13 +78,9 @@ using provider workspace and number of repositories to create repository workspa
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** where to place the repos workspace @see #newWorkspacePath
 
-### optionsFromEnvironment
+### environmentOptions
 
 -   GIT_CLONE_OPTIONS
-
-#### Parameters
-
--   `env`  
 
 ### defaultOptions
 
@@ -100,16 +98,13 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 ### Properties
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `currentBranch` **Branch** 
 
 ### \_initialize
 
 exec git clone or git pull
 
-#### Parameters
-
--   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-### initializeBranches
+### \_fetchBranches
 
 build lookup of all remote branches
 
@@ -124,6 +119,14 @@ remove trailing .git
 only last directory of use pathname
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** name
+
+### setCurrentBranch
+
+Set the current active branch (workspace)
+
+#### Parameters
+
+-   `branch` **Branch** 
 
 ### refId
 
@@ -156,13 +159,13 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ### writeEntries
 
-writes Entry into the branch
+writes ContentEntries into the branch
 
 #### Parameters
 
--   `entry` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Entry>** 
+-   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;ContentEntry>** 
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Entry>>** written entries
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;ContentEntry>>** written entries
 
 ### commit
 
@@ -171,12 +174,12 @@ Excutes:
 -   writes all updates into the workspace
 -   git add
 -   git commit
--   git push
+-   git push --set-upstream origin
 
 #### Parameters
 
 -   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** commit message
--   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Entry>** file entries to be commited
+-   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;ContentEntry>** file entries to be commited
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ### entries
@@ -195,7 +198,17 @@ Search for patch in the branch
 
 #### Parameters
 
--   `name`  
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **Entry** matching branch path names
+
+### maybeEntry
+
+Search for patch in the branch
+
+#### Parameters
+
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 Returns **Entry** matching branch path names
 
