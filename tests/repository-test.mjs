@@ -1,5 +1,5 @@
 import test from "ava";
-import { assertRepo } from "./util.mjs";
+import { assertRepo } from "repository-provider-test-support";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { tmpdir } from "os";
