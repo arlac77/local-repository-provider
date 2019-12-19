@@ -117,6 +117,10 @@ export class LocalBranch extends Branch {
     return undefined;
   }
 
+  async removeEntries(entries) {
+    await this.repository.exec(["delete", ...entries.map(entry => entry.name)]);
+  }
+
   async createPullRequest(to, message) {
     return new this.provider.pullRequestClass(this, to, "0", {
       title: `please create pull request manually from ${this.url}`
