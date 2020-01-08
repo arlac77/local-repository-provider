@@ -25,7 +25,8 @@
     "docs": "documentation readme src/local-provider.mjs --section=API",
     "lint": "documentation lint src/local-provider.mjs",
     "posttest": "markdown-doctest",
-    "test": "ava"
+    "test": "ava",
+    "prepare": "rollup -c"
   },
   "dependencies": {
     "content-entry": "^2.2.5",
