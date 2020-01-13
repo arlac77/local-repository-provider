@@ -28,10 +28,10 @@
     "test": "ava"
   },
   "dependencies": {
-    "content-entry": "^2.2.5",
+    "content-entry": "^2.2.6",
     "execa": "^4.0.0",
-    "globby": "^10.0.1",
-    "repository-provider": "^16.11.0"
+    "globby": "^11.0.0",
+    "repository-provider": "^16.11.1"
   },
   "devDependencies": {
     "ava": "^2.4.0",
