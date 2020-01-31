@@ -1,0 +1,10 @@
+{
+  "name": "local-repository-provider",
+  "description": "repository provider using local (native) git commands",
+  "icons": [
+    {
+      "src": "facicon.ico",
+      "sizes": "16x16"
+    }
+  ]
+}
