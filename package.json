@@ -27,7 +27,7 @@
     "test": "ava --timeout 2m"
   },
   "dependencies": {
-    "content-entry": "^2.2.6",
+    "content-entry": "^2.3.0",
     "execa": "^4.0.0",
     "globby": "^11.0.0",
     "repository-provider": "^16.12.1"
