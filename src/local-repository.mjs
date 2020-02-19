@@ -113,6 +113,8 @@ export class LocalRepository extends Repository {
   async setCurrentBranch(branch) {
     if (this.currentBranch !== branch) {
       await this.exec(["checkout", "-q", "-f", /*"-b",*/ branch.name]);
+      //here is git pull needed after switching to new branch, else works with entries from previous branch
+      await this.exec(["pull"]);
       this.currentBranch = branch;
     }
   }
