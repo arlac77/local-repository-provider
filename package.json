@@ -50,7 +50,6 @@
     "url": "https://github.com/arlac77/local-repository-provider/issues"
   },
   "homepage": "https://github.com/arlac77/local-repository-provider#readme",
-  "release": {},
   "template": {
     "inheritFrom": "arlac77/template-esm-only"
   }
