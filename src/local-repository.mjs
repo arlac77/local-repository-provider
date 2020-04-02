@@ -1,6 +1,8 @@
 import execa from "execa";
 import fs from "fs";
+import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 import { Repository } from "repository-provider";
+
 import { refNamesFromString } from "./util.mjs";
 const { stat } = fs.promises;
 
@@ -25,51 +27,6 @@ export class LocalRepository extends Repository {
   }
 
   /**
-   * exec git clone or git pull
-   */
-  async _initialize() {
-    try {
-      await stat(this.workspace);
-
-      const remoteResult = await this.exec(["remote", "-v"]);
-      const m = remoteResult.stdout.match(/origin\s+([^\s]+)\s+/);
-      if (m && m[1] === this.name) {
-        this.trace(`git pull ${this.name} @${this.workspace}`);
-        await this.exec(["pull"]);
-      } else {
-        throw new Error(`Unknown content in ${this.workspace}`);
-      }
-    } catch (e) {
-      if (e.code === "ENOENT") {
-        this.trace(`git clone ${this.name} ${this.workspace}`);
-
-        await this.exec(
-          ["clone", ...this.provider.cloneOptions, this.name, this.workspace],
-          {}
-        );
-      } else {
-        throw e;
-      }
-    }
-    await super._initialize();
-  }
-
-  /**
-   * build lookup of all remote branches
-   * ```sh
-   * git ls-remote --heads
-   * ```
-   */
-  async _fetchBranches() {
-    const result = await this.exec(["ls-remote", "--heads"]);
-
-    for(const name of refNamesFromString(result.stdout)) {
-      const branch = new this.provider.branchClass(this, name);
-      this._branches.set(branch.name, branch);
-    };
-  }
-
-  /**
    * most significant part of the url
    * remove trailing .git
    * only use last directory of pathname
@@ -86,7 +43,7 @@ export class LocalRepository extends Repository {
         let url = new URL(name);
         const paths = url.pathname.split(/\//);
         name = paths[paths.length - 1];
-      } catch (e) { }
+      } catch (e) {}
     }
 
     name = name.replace(/\.git$/, "");
@@ -140,7 +97,6 @@ export class LocalRepository extends Repository {
     return g.stdout.split(/\s+/)[0];
   }
 
-
   async *tags(pattern) {
     await this.initialize();
 
@@ -150,4 +106,51 @@ export class LocalRepository extends Repository {
       yield name;
     }
   }
+
+  async initialize() {
+    try {
+      await stat(this.workspace);
+
+      const remoteResult = await this.exec(["remote", "-v"]);
+      const m = remoteResult.stdout.match(/origin\s+([^\s]+)\s+/);
+      if (m && m[1] === this.name) {
+        this.trace(`git pull ${this.name} @${this.workspace}`);
+        await this.exec(["pull"]);
+      } else {
+        throw new Error(`Unknown content in ${this.workspace}`);
+      }
+    } catch (e) {
+      if (e.code === "ENOENT") {
+        this.trace(`git clone ${this.name} ${this.workspace}`);
+
+        await this.exec(
+          ["clone", ...this.provider.cloneOptions, this.name, this.workspace],
+          {}
+        );
+      } else {
+        throw e;
+      }
+    }
+  }
+
+  /**
+   * build lookup of all remote branches
+   * ```sh
+   * git ls-remote --heads
+   * ```
+   */
+  async initializeBranches() {
+    await this.initialize();
+
+    const result = await this.exec(["ls-remote", "--heads"]);
+
+    for (const name of refNamesFromString(result.stdout)) {
+      const branch = new this.provider.branchClass(this, name);
+      this._branches.set(branch.name, branch);
+    }
+  }
 }
+
+replaceWithOneTimeExecutionMethod(LocalRepository.prototype, "initialize");
+replaceWithOneTimeExecutionMethod( LocalRepository.prototype, "initializeBranches");
+

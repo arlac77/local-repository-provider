@@ -30,13 +30,12 @@ repository provider using local (native) git commands
     -   [defaultOptions](#defaultoptions)
 -   [LocalRepository](#localrepository)
     -   [Properties](#properties-1)
-    -   [\_initialize](#_initialize)
-    -   [\_fetchBranches](#_fetchbranches)
     -   [condensedName](#condensedname)
     -   [setCurrentBranch](#setcurrentbranch)
         -   [Parameters](#parameters-1)
     -   [refId](#refid)
         -   [Parameters](#parameters-2)
+    -   [initializeBranches](#initializebranches)
 -   [workspace](#workspace)
 -   [LocalBranch](#localbranch)
     -   [Properties](#properties-2)
@@ -99,18 +98,6 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `currentBranch` **Branch** 
 
-### \_initialize
-
-exec git clone or git pull
-
-### \_fetchBranches
-
-build lookup of all remote branches
-
-```sh
-git ls-remote --heads
-```
-
 ### condensedName
 
 most significant part of the url
@@ -141,6 +128,14 @@ git show-ref <ref>
 -   `ref` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** sha of the ref
+
+### initializeBranches
+
+build lookup of all remote branches
+
+```sh
+git ls-remote --heads
+```
 
 ## workspace
 

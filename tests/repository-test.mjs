@@ -9,7 +9,6 @@ const here = dirname(fileURLToPath(import.meta.url));
 const workspace = join(here, "..", "build", "workspace");
 
 const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
-const REPOSITORY_NAME_GIT = "git@github.com:arlac77/sync-test-repository.git";
 
 const repoFixtures = {
   "": undefined,
@@ -36,7 +35,7 @@ const repoFixtures = {
 test("locate repository several", async t => {
   const provider = new LocalProvider();
 
-  t.plan(8);
+  t.plan(11);
 
   for (const rn of Object.keys(repoFixtures)) {
     const r = repoFixtures[rn];
