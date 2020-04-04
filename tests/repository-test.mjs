@@ -37,10 +37,8 @@ test("locate repository several", async t => {
 
   t.plan(11);
 
-  for (const rn of Object.keys(repoFixtures)) {
-    const r = repoFixtures[rn];
-    const repository = await provider.repository(rn);
-    await assertRepo(t, repository, r);
+  for (const [url, repoFixture] of Object.entries(repoFixtures)) {
+    await assertRepo(t, await provider.repository(url), repoFixture, url);
   }
 });
 
