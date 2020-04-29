@@ -1,11 +1,6 @@
 import test from "ava";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
 import { tmpdir } from "os";
 import { LocalProvider } from "../src/local-provider.mjs";
-
-const here = dirname(fileURLToPath(import.meta.url));
-const workspace = join(here, "..", "build", "workspace");
 
 const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 const REPOSITORY_NAME_GIT = "git@github.com:arlac77/sync-test-repository.git";
@@ -165,16 +160,22 @@ test.serial("local provider commit files", async t => {
     const options = { encoding: "utf8" };
     const old = await file.getString(options);
 
+    t.false(! await file.isEmpty());
     await file.setString(`${old}\n${new Date()}`);
+    t.false(! await file.isEmpty());
+
     const file2 = await branch.entry("README.md");
+    t.false(! await file2.isEmpty());
+
     t.is(await file.getString(options), await file2.getString(options));
 
     await branch.commit("test: ignore", [file]);
 
     const file3 = await branch.entry("README.md");
-
     t.is(await file.getString(options), await file3.getString(options));
   } else {
     t.is(1, 1, "skip git@ test without SSH_AUTH_SOCK");
   }
+
+
 });
