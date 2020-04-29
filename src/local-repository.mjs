@@ -40,7 +40,7 @@ export class LocalRepository extends Repository {
       name = m[3];
     } else {
       try {
-        let url = new URL(name);
+        const url = new URL(name);
         const paths = url.pathname.split(/\//);
         name = paths[paths.length - 1];
       } catch (e) {}

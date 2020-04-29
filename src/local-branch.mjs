@@ -52,7 +52,7 @@ export class LocalBranch extends Branch {
       }
     });
 
-    await this.repository.exec(["add", ...entries.map(b => b.name)]);
+    await this.repository.exec(["add", ...entries.map(entry => entry.name)]);
 
     return entries;
   }
