@@ -1,6 +1,8 @@
 import { join, dirname } from "path";
-import globby from "globby";
 import fs, { createWriteStream } from "fs";
+import { pipeline } from "stream";
+import globby from "globby";
+
 import { FileSystemEntry } from "content-entry";
 import { Branch } from "repository-provider";
 const { mkdir } = fs.promises;
@@ -37,18 +39,22 @@ export class LocalBranch extends Branch {
       let ongoing = 0;
 
       for (const u of entries) {
-        const o = createWriteStream(join(this.workspace, u.name));
-        o.on("error", error => reject(error));
-
-        o.on("finish", () => {
-          ongoing--;
-          if (ongoing <= 0) {
-            resolve();
-          }
-        });
-
-        (await u.getReadStream()).pipe(o);
         ongoing++;
+
+        pipeline(
+          await u.getReadStream(),
+          createWriteStream(join(this.workspace, u.name)),
+          err => {
+            if (err) {
+              reject(err);
+            } else {
+              ongoing--;
+              if (ongoing <= 0) {
+                resolve();
+              }
+            }
+          }
+        );
       }
     });
 
@@ -58,7 +64,7 @@ export class LocalBranch extends Branch {
   }
 
   /**
-   * Excutes:
+   * Executes:
    * - writes all updates into the workspace
    * - git add
    * - git commit
@@ -102,7 +108,7 @@ export class LocalBranch extends Branch {
     throw new Error(`file not found: ${name}`);
   }
 
-    /**
+  /**
    * Search for patch in the branch
    * @param {string} name
    * @return {Entry} matching branch path names
