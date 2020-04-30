@@ -58,9 +58,9 @@ export class LocalRepository extends Repository {
     return this.exec(["push", ...args]);
   }
 
-  async _createBranch(name, from, options) {
+  async createBranch(name, from, options) {
     await this.exec(["checkout", "-b", name]);
-    return new this.provider.branchClass(this, name);
+    return super.addBranch(name, options);
   }
 
   /**
