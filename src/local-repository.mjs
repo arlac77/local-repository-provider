@@ -79,8 +79,7 @@ export class LocalRepository extends Repository {
   async deleteBranch(name) {
     await this.setCurrentBranch(await this.defaultBranch);
     await this.exec(["branch", "-D", name]);
-
-    this._branches.delete(name);
+    super.deleteBranch(name);
   }
 
   /**
