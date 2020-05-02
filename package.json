@@ -6,7 +6,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "src/local-provider.mjs",
+  "main": "./src/local-provider.mjs",
   "exports": {
     ".": "./src/local-provider.mjs",
     "./": "./"
