@@ -8,8 +8,7 @@
   "type": "module",
   "main": "./src/local-provider.mjs",
   "exports": {
-    ".": "./src/local-provider.mjs",
-    "./": "./"
+    ".": "./src/local-provider.mjs"
   },
   "description": "repository provider using local (native) git commands",
   "keywords": [
