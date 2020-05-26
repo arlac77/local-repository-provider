@@ -29,7 +29,7 @@
     "lint": "documentation lint ./src/local-provider.mjs"
   },
   "dependencies": {
-    "content-entry": "^2.4.2",
+    "content-entry-filesystem": "^1.0.0",
     "execa": "^4.0.2",
     "globby": "^11.0.0",
     "one-time-execution-method": "^2.0.1",

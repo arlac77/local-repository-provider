@@ -3,7 +3,7 @@ import fs, { createWriteStream } from "fs";
 import { pipeline } from "stream";
 import globby from "globby";
 
-import { FileSystemEntry } from "content-entry";
+import { FileSystemEntry } from "content-entry-filesystem";
 import { Branch } from "repository-provider";
 const { mkdir } = fs.promises;
 
