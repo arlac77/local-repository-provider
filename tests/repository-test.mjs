@@ -3,7 +3,7 @@ import { assertRepo } from "repository-provider-test-support";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { tmpdir } from "os";
-import { LocalProvider } from "../src/local-provider.mjs";
+import { LocalProvider } from "local-repository-provider";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const workspace = join(here, "..", "build", "workspace");
@@ -35,7 +35,7 @@ const repoFixtures = {
 test("locate repository several", async t => {
   const provider = new LocalProvider();
 
-  t.plan(11);
+  t.plan(71);
 
   for (const [url, repoFixture] of Object.entries(repoFixtures)) {
     await assertRepo(t, await provider.repository(url), repoFixture, url);
