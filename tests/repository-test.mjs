@@ -3,7 +3,7 @@ import { assertRepo } from "repository-provider-test-support";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { tmpdir } from "os";
-import { LocalProvider } from "local-repository-provider";
+import LocalProvider from "local-repository-provider";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const workspace = join(here, "..", "build", "workspace");
