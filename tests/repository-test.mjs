@@ -61,17 +61,6 @@ test.skip("local provider show ref", async t => {
   t.is((await repository.refId("refs/heads/master")).length, 10);
 });
 
-test.serial("list branches", async t => {
-  const provider = new LocalProvider({ workspace });
-  const repository = await provider.repository(REPOSITORY_NAME);
-
-  const names = new Set();
-  for await (const branch of repository.branches()) {
-    names.add(branch.name);
-  }
-
-  t.true(names.has("master"));
-});
 
 test.serial("list tags", async t => {
   const provider = new LocalProvider({ workspace });
