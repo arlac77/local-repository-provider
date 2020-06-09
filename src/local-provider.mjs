@@ -51,18 +51,8 @@ export class LocalProvider extends SingleGroupProvider {
    * For the livetime of the provider always genrate new names
    * @return {string} path
    */
-  async newWorkspacePath() {
-    do {
-      this._nextWorkspace =
-        this._nextWorkspace === undefined ? 1 : this._nextWorkspace + 1;
-
-      let w = join(this.workspace, `r${this._nextWorkspace}`);
-      try {
-        const s = await stat(w);
-      } catch (e) {
-        return w;
-      }
-    } while (true);
+   newWorkspacePath() {
+    return join(this.workspace, `r-${process.hrtime.bigint()}`);
   }
 
   normalizeRepositoryName(name) {
@@ -110,7 +100,7 @@ export class LocalProvider extends SingleGroupProvider {
     if (repository === undefined) {
       try {
         repository = new this.repositoryClass(this, name, {
-          workspace: workspace ? workspace : await this.newWorkspacePath()
+          workspace: workspace ? workspace : this.newWorkspacePath()
         });
 
         await repository.initialize();

@@ -22,12 +22,19 @@ test("local provider", t => {
   t.truthy(provider.workspace.length > 2);
 });
 
-test.serial("local provider workspacePaths", async t => {
+test("local provider workspacePaths", async t => {
   const provider = new LocalProvider({ workspace: "/tmp" });
 
-  t.is(await provider.newWorkspacePath(), "/tmp/r1");
-  t.is(await provider.newWorkspacePath(), "/tmp/r2");
-  t.is(await provider.newWorkspacePath(), "/tmp/r3");
+  const w1 = provider.newWorkspacePath();
+  const w2 = provider.newWorkspacePath();
+  const w3 = provider.newWorkspacePath();
+
+  t.true(w1 !== w2);
+  t.true(w1 !== w3);
+  t.true(w2 !== w3);
+  t.true(w1.startsWith('/tmp/r'));
+  t.true(w2.startsWith('/tmp/r'));
+  t.true(w3.startsWith('/tmp/r'));
 });
 
 test("local provider repo undefined", async t => {
