@@ -1,7 +1,7 @@
 import { join } from "path";
 import { tmpdir } from "os";
 import fs from "fs";
-import { Provider } from "repository-provider";
+import { SingleGroupProvider, asArray } from "repository-provider";
 import { LocalRepository } from "./local-repository.mjs";
 import { LocalBranch } from "./local-branch.mjs";
 
@@ -12,15 +12,14 @@ const { stat } = fs.promises;
  *
  * @property {string} workspace
  */
-export class LocalProvider extends Provider {
-
+export class LocalProvider extends SingleGroupProvider {
   /**
    * - GIT_CLONE_OPTIONS
    */
   static get environmentOptions() {
     return {
       GIT_CLONE_OPTIONS: {
-        path: 'cloneOptions',
+        path: "cloneOptions",
         parse: value => value.split(/\s+/)
       }
     };
@@ -66,10 +65,29 @@ export class LocalProvider extends Provider {
     } while (true);
   }
 
-  normalizeRepositoryName(name)
-  {
+  normalizeRepositoryName(name) {
     name = name.trim();
     return name;
+  }
+
+  async *repositoryGroups(name) {
+    console.log("X repositoryGroups",name);
+    if (name !== undefined) {
+      if (name.match("^(git|http)")) {
+        yield this;
+      }
+    }
+  }
+
+  async *branches(pattern) {
+    for(const name of asArray(pattern)) {
+      console.log("X branches",name);
+      if (name !== undefined) {
+        if (name.match("^(git|http)")) {
+          yield this.branch(name);
+        }
+      }
+    }
   }
 
   /**
@@ -78,24 +96,50 @@ export class LocalProvider extends Provider {
    * @param {string} workspace where to place the repos workspace @see #newWorkspacePath
    */
   async repository(name, workspace) {
+    console.log("REPOSITORY", name);
+
     if (name === undefined) {
       return undefined;
     }
     name = this.normalizeRepositoryName(name);
-    if(name.length < 2) {
+    if (name.length < 2) {
       return undefined;
     }
 
     let repository = this._repositories.get(name);
     if (repository === undefined) {
-      repository = new this.repositoryClass(this, name, {
-        workspace: workspace ? workspace : await this.newWorkspacePath()
-      });
+      try {
+        repository = new this.repositoryClass(this, name, {
+          workspace: workspace ? workspace : await this.newWorkspacePath()
+        });
 
-      this._repositories.set(repository.name, repository);
+        await repository.initialize();
+
+        this._repositories.set(repository.name, repository);
+      } catch {}
     }
 
     return repository;
+  }
+
+  async branch(name) {
+    console.log("BRANCH", name);
+
+    if (name === undefined) {
+      return undefined;
+    }
+
+    const repository = await this.repository(name);
+
+    console.log("BRANCH REPOSITORY", repository);
+
+    if (repository === undefined) {
+      return undefined;
+    }
+
+    const m = name.match(/#(.+)$/);
+
+    return repository.branch(m ? m[1] : repository.defaultBranchName);
   }
 }
 
