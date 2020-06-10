@@ -51,7 +51,7 @@ repository provider using local (native) git commands
 
 ## LocalProvider
 
-**Extends Provider**
+**Extends SingleGroupProvider**
 
 Provider using native git executable
 
@@ -162,7 +162,7 @@ Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 ### commit
 
-Excutes:
+Executes:
 
 -   writes all updates into the workspace
 -   git add
