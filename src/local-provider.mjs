@@ -9,31 +9,24 @@ const { stat } = fs.promises;
 
 /**
  * Provider using native git executable
- *
+ * Known environment variables
+ * - GIT_CLONE_OPTIONS
  * @property {string} workspace
  */
 export class LocalProvider extends SingleGroupProvider {
-  /**
-   * - GIT_CLONE_OPTIONS
-   */
-  static get environmentOptions() {
-    return {
-      GIT_CLONE_OPTIONS: {
-        path: "cloneOptions",
-        parse: value => value.split(/\s+/)
-      }
-    };
-  }
-
   /**
    * Default configuration options
    * - workspace
    * - cloneOptions defaults to ["--depth", "10", "--no-single-branch"]
    * @return {Object}
    */
-  static get defaultOptions() {
+  static get attributes() {
     return {
-      cloneOptions: ["--depth", "10", "--no-single-branch"],
+      cloneOptions: {
+        env: "GIT_CLONE_OPTIONS",
+        set: value => typeof value != "object" ? value.split(/\s+/) : value,
+        default: ["--depth", "10", "--no-single-branch"]
+      },
       workspace: tmpdir()
     };
   }
@@ -51,7 +44,7 @@ export class LocalProvider extends SingleGroupProvider {
    * For the livetime of the provider always genrate new names
    * @return {string} path
    */
-   newWorkspacePath() {
+  newWorkspacePath() {
     return join(this.workspace, `r-${process.hrtime.bigint()}`);
   }
 
@@ -61,7 +54,7 @@ export class LocalProvider extends SingleGroupProvider {
   }
 
   async *repositoryGroups(name) {
-    console.log("X repositoryGroups",name);
+    console.log("X repositoryGroups", name);
     if (name !== undefined) {
       if (name.match("^(git|http)")) {
         yield this;
@@ -70,8 +63,8 @@ export class LocalProvider extends SingleGroupProvider {
   }
 
   async *branches(pattern) {
-    for(const name of asArray(pattern)) {
-      console.log("X branches",name);
+    for (const name of asArray(pattern)) {
+      console.log("X branches", name);
       if (name !== undefined) {
         if (name.match("^(git|http)")) {
           yield this.branch(name);

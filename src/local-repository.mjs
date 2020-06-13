@@ -11,14 +11,14 @@ const { stat } = fs.promises;
  * @property {Branch} currentBranch
  */
 export class LocalRepository extends Repository {
-  static get defaultOptions() {
+  static get attributes() {
     return {
+      ...super.attributes,
       /**
        * workspace directory.
        * @return {string}
        */
-      workspace: undefined,
-      ...super.defaultOptions
+      workspace: undefined
     };
   }
 

@@ -10,7 +10,7 @@ test("local provider optionsFromEnvironment", t => {
     GIT_CLONE_OPTIONS: "--depth 1"
   });
 
-  t.deepEqual(options.cloneOptions, ["--depth", "1"]);
+  t.deepEqual(options.cloneOptions, "--depth 1");
 
   const provider = new LocalProvider(options);
   t.deepEqual(provider.cloneOptions, ["--depth", "1"]);
