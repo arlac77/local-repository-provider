@@ -33,7 +33,7 @@
     "execa": "^4.0.2",
     "globby": "^11.0.1",
     "one-time-execution-method": "^2.0.1",
-    "repository-provider": "^21.0.1"
+    "repository-provider": "^21.0.4"
   },
   "devDependencies": {
     "ava": "^3.8.2",
@@ -43,7 +43,7 @@
     "semantic-release": "^17.0.8"
   },
   "engines": {
-    "node": ">=12.17.0"
+    "node": ">=12.18.0"
   },
   "repository": {
     "type": "git",
