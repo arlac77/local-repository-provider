@@ -25,8 +25,7 @@ repository provider using local (native) git commands
     -   [newWorkspacePath](#newworkspacepath)
     -   [repository](#repository)
         -   [Parameters](#parameters)
-    -   [environmentOptions](#environmentoptions)
-    -   [defaultOptions](#defaultoptions)
+    -   [attributes](#attributes)
 -   [LocalRepository](#localrepository)
     -   [Properties](#properties-1)
     -   [condensedName](#condensedname)
@@ -54,6 +53,9 @@ repository provider using local (native) git commands
 **Extends SingleGroupProvider**
 
 Provider using native git executable
+Known environment variables
+
+-   GIT_CLONE_OPTIONS
 
 ### Properties
 
@@ -75,11 +77,7 @@ using provider workspace and number of repositories to create repository workspa
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** where to place the repos workspace @see #newWorkspacePath
 
-### environmentOptions
-
--   GIT_CLONE_OPTIONS
-
-### defaultOptions
+### attributes
 
 Default configuration options
 
