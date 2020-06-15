@@ -27,7 +27,9 @@ export class LocalProvider extends SingleGroupProvider {
         set: value => typeof value != "object" ? value.split(/\s+/) : value,
         default: ["--depth", "10", "--no-single-branch"]
       },
-      workspace: tmpdir()
+      workspace: {
+        default: tmpdir()
+      }
     };
   }
 
