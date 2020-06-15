@@ -81,7 +81,6 @@ export class LocalProvider extends SingleGroupProvider {
    * @param {string} workspace where to place the repos workspace @see #newWorkspacePath
    */
   async repository(name, workspace) {
-    console.log("REPOSITORY", name);
 
     if (name === undefined) {
       return undefined;
@@ -90,6 +89,8 @@ export class LocalProvider extends SingleGroupProvider {
     if (name.length < 2) {
       return undefined;
     }
+
+    console.log("REPOSITORY", name);
 
     let repository = this._repositories.get(name);
     if (repository === undefined) {

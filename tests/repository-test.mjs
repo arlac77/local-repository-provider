@@ -42,10 +42,9 @@ test("locate repository several", async t => {
   }
 });
 
-test.serial("local provider reuse workspace", async t => {
-  const wd = tmpdir();
-  const provider1 = new LocalProvider({ workspace: wd });
-  const provider2 = new LocalProvider({ workspace: wd });
+test("local provider reuse workspace", async t => {
+  const provider1 = new LocalProvider();
+  const provider2 = new LocalProvider();
 
   const repository1 = await provider1.repository(REPOSITORY_NAME);
   const repository2 = await provider2.repository(REPOSITORY_NAME);
@@ -60,7 +59,6 @@ test.skip("local provider show ref", async t => {
 
   t.is((await repository.refId("refs/heads/master")).length, 10);
 });
-
 
 test.serial("list tags", async t => {
   const provider = new LocalProvider({ workspace });
