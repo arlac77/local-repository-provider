@@ -5,8 +5,6 @@ import { SingleGroupProvider, asArray } from "repository-provider";
 import { LocalRepository } from "./local-repository.mjs";
 import { LocalBranch } from "./local-branch.mjs";
 
-const { stat } = fs.promises;
-
 /**
  * Provider using native git executable
  * Known environment variables
@@ -81,7 +79,6 @@ export class LocalProvider extends SingleGroupProvider {
    * @param {string} workspace where to place the repos workspace @see #newWorkspacePath
    */
   async repository(name, workspace) {
-
     if (name === undefined) {
       return undefined;
     }
@@ -109,8 +106,6 @@ export class LocalProvider extends SingleGroupProvider {
   }
 
   async branch(name) {
-    console.log("BRANCH", name);
-
     if (name === undefined) {
       return undefined;
     }
