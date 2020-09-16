@@ -18,7 +18,7 @@ export class LocalRepository extends Repository {
        * workspace directory.
        * @return {string}
        */
-      workspace: {}
+      workspace: { type: "string" }
     };
   }
 
