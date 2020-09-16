@@ -25,7 +25,8 @@ export class LocalProvider extends SingleGroupProvider {
         default: ["--depth", "10", "--no-single-branch"]
       },
       workspace: {
-        default: tmpdir()
+        default: tmpdir(),
+        type: "string"
       }
     };
   }
@@ -53,7 +54,6 @@ export class LocalProvider extends SingleGroupProvider {
   }
 
   async *repositoryGroups(name) {
-    console.log("X repositoryGroups", name);
     if (name !== undefined) {
       if (name.match("^(git|http)")) {
         yield this;
@@ -63,7 +63,6 @@ export class LocalProvider extends SingleGroupProvider {
 
   async *branches(pattern) {
     for (const name of asArray(pattern)) {
-      console.log("X branches", name);
       if (name !== undefined) {
         if (name.match("^(git|http)")) {
           yield this.branch(name);
@@ -73,7 +72,7 @@ export class LocalProvider extends SingleGroupProvider {
   }
 
   /**
-   * using provider workspace and number of repositories to create repository workspace
+   * Using provider workspace and number of repositories to create repository workspace
    * @param {string} name
    * @param {string} workspace where to place the repos workspace @see #newWorkspacePath
    */
@@ -110,8 +109,6 @@ export class LocalProvider extends SingleGroupProvider {
     }
 
     const repository = await this.repository(name);
-
-    console.log("BRANCH REPOSITORY", repository);
 
     if (repository === undefined) {
       return undefined;
