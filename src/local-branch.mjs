@@ -94,7 +94,7 @@ export class LocalBranch extends Branch {
   }
 
   /**
-   * Search for patch in the branch
+   * Search for path in the branch
    * @param {string} name
    * @return {Entry} matching branch path names
    */
@@ -109,7 +109,7 @@ export class LocalBranch extends Branch {
   }
 
   /**
-   * Search for patch in the branch
+   * Search for path in the branch
    * @param {string} name
    * @return {Entry} matching branch path names
    */
