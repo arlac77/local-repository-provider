@@ -70,7 +70,7 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ### repository
 
-using provider workspace and number of repositories to create repository workspace
+Using provider workspace and number of repositories to create repository workspace
 
 #### Parameters
 
@@ -185,7 +185,7 @@ Returns **Iterable&lt;Entry>** matching branch path names
 
 ### entry
 
-Search for patch in the branch
+Search for path in the branch
 
 #### Parameters
 
@@ -195,7 +195,7 @@ Returns **Entry** matching branch path names
 
 ### maybeEntry
 
-Search for patch in the branch
+Search for path in the branch
 
 #### Parameters
 
