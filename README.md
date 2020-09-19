@@ -82,7 +82,7 @@ Using provider workspace and number of repositories to create repository workspa
 Default configuration options
 
 -   workspace
--   cloneOptions defaults to ["--depth", "10", "--no-single-branch"]
+-   cloneOptions defaults to ["--depth", "8", "--no-single-branch"]
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
