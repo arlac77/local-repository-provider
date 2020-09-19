@@ -85,8 +85,6 @@ export class LocalProvider extends SingleGroupProvider {
       return undefined;
     }
 
-    //console.log("REPOSITORY", name);
-
     let repository = this._repositories.get(name);
     if (repository === undefined) {
       try {
