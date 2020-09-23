@@ -1,10 +1,8 @@
 import execa from "execa";
-import fs from "fs";
+import { stat } from "fs/promises";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 import { Repository } from "repository-provider";
-
 import { refNamesFromString } from "./util.mjs";
-const { stat } = fs.promises;
 
 /**
  * @property {string} workspace
