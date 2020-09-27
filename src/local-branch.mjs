@@ -1,6 +1,6 @@
 import { join, dirname } from "path";
 import { createWriteStream } from "fs";
-import  { mkdir } from "fs/promises";
+import { mkdir } from "fs/promises";
 import { pipeline } from "stream";
 import globby from "globby";
 import { FileSystemEntry } from "content-entry-filesystem";
@@ -15,7 +15,7 @@ export class LocalBranch extends Branch {
   }
 
   /**
-   * writes ContentEntries into the branch
+   * Writes ContentEntries into the branch
    * @param {ContentEntry[]} entries
    * @return {Promise<ContentEntry[]>} written entries
    */
@@ -81,7 +81,7 @@ export class LocalBranch extends Branch {
   /**
    * Search for patch in the branch
    * @param {string[]} matchingPatterns
-   * @return {Iterable<Entry>} matching branch path names
+   * @return {Iterable<ContentEntry>} matching branch path names
    */
   async *entries(matchingPatterns = ["**/.*", "**/*"]) {
     await this.repository.setCurrentBranch(this);
@@ -95,7 +95,7 @@ export class LocalBranch extends Branch {
   /**
    * Search for path in the branch
    * @param {string} name
-   * @return {Entry} matching branch path names
+   * @return {ContentEntry} matching branch path names
    */
   async entry(name) {
     await this.repository.setCurrentBranch(this);
@@ -110,7 +110,7 @@ export class LocalBranch extends Branch {
   /**
    * Search for path in the branch
    * @param {string} name
-   * @return {Entry} matching branch path names
+   * @return {ContentEntry} matching branch path names
    */
   async maybeEntry(name) {
     await this.repository.setCurrentBranch(this);
