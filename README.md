@@ -150,7 +150,7 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ### writeEntries
 
-writes ContentEntries into the branch
+Writes ContentEntries into the branch
 
 #### Parameters
 
@@ -181,7 +181,7 @@ Search for patch in the branch
 
 -   `matchingPatterns` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>**  (optional, default `["**/.*","**/*"]`)
 
-Returns **Iterable&lt;Entry>** matching branch path names
+Returns **Iterable&lt;ContentEntry>** matching branch path names
 
 ### entry
 
@@ -191,7 +191,7 @@ Search for path in the branch
 
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-Returns **Entry** matching branch path names
+Returns **ContentEntry** matching branch path names
 
 ### maybeEntry
 
@@ -201,7 +201,7 @@ Search for path in the branch
 
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-Returns **Entry** matching branch path names
+Returns **ContentEntry** matching branch path names
 
 # install
 
