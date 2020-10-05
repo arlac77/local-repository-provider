@@ -44,8 +44,7 @@ export class LocalRepository extends Repository {
       } catch (e) {}
     }
 
-    name = name.replace(/\.git$/, "");
-    return name;
+    return name.replace(/\.git$/, "");
   }
 
   get urls() {
