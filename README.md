@@ -52,7 +52,7 @@ repository provider using local (native) git commands
 
 **Extends SingleGroupProvider**
 
-Provider using native git executable
+Provider using native git executable.
 Known environment variables
 
 -   GIT_CLONE_OPTIONS
@@ -63,7 +63,7 @@ Known environment variables
 
 ### newWorkspacePath
 
-Generate path for a new workspace
+Generate path for a new workspace.
 For the livetime of the provider always genrate new names
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** path
