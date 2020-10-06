@@ -82,7 +82,7 @@ test.serial("local provider create & delete branch", async t => {
   t.is(await repository.branch(newName), undefined);
 });
 
-test.serial("local get file", async t => {
+test("local get file", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
@@ -112,7 +112,7 @@ test.serial("local provider list files", async t => {
   t.true(file2.isBlob);
 });
 
-test.serial("local provider list files with pattern", async t => {
+test("local provider list files with pattern", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.defaultBranch;
