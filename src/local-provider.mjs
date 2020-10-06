@@ -1,5 +1,7 @@
 import { join } from "path";
 import { tmpdir } from "os";
+import { mkdir } from "fs/promises";
+import execa from "execa";
 import { SingleGroupProvider, asArray } from "repository-provider";
 import { LocalRepository } from "./local-repository.mjs";
 import { LocalBranch } from "./local-branch.mjs";
@@ -21,7 +23,7 @@ export class LocalProvider extends SingleGroupProvider {
     return {
       cloneOptions: {
         env: "GIT_CLONE_OPTIONS",
-        set: value => typeof value != "object" ? value.split(/\s+/) : value,
+        set: value => (typeof value != "object" ? value.split(/\s+/) : value),
         default: ["--depth", "8", "--no-single-branch"]
       },
       workspace: {
@@ -69,6 +71,15 @@ export class LocalProvider extends SingleGroupProvider {
         }
       }
     }
+  }
+
+  async createRepository(name, options) {
+    const workspace = this.newWorkspacePath();
+    await mkdir(workspace, { recursive: true });
+    const repo = await super.createRepository(name, { workspace });
+    await execa("git", ["init"], { cwd: workspace });
+    console.log(workspace);
+    return repo;
   }
 
   /**
