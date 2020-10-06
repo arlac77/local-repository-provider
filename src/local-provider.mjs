@@ -5,7 +5,7 @@ import { LocalRepository } from "./local-repository.mjs";
 import { LocalBranch } from "./local-branch.mjs";
 
 /**
- * Provider using native git executable
+ * Provider using native git executable.
  * Known environment variables
  * - GIT_CLONE_OPTIONS
  * @property {string} workspace
@@ -40,7 +40,7 @@ export class LocalProvider extends SingleGroupProvider {
   }
 
   /**
-   * Generate path for a new workspace
+   * Generate path for a new workspace.
    * For the livetime of the provider always genrate new names
    * @return {string} path
    */
