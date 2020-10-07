@@ -34,7 +34,7 @@
     "content-entry-filesystem": "^2.0.0",
     "execa": "^4.0.3",
     "globby": "^11.0.1",
-    "one-time-execution-method": "^2.0.2",
+    "one-time-execution-method": "^2.0.3",
     "repository-provider": "^23.10.1"
   },
   "devDependencies": {
