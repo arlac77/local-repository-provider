@@ -31,7 +31,7 @@
     "lint:docs": "documentation lint ./src/local-provider.mjs"
   },
   "dependencies": {
-    "content-entry-filesystem": "^1.0.0",
+    "content-entry-filesystem": "^2.0.0",
     "execa": "^4.0.3",
     "globby": "^11.0.1",
     "one-time-execution-method": "^2.0.2",
