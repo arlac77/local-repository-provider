@@ -78,7 +78,6 @@ export class LocalProvider extends SingleGroupProvider {
     await mkdir(workspace, { recursive: true });
     const repo = await super.createRepository(name, { workspace });
     await execa("git", ["init"], { cwd: workspace });
-    console.log(workspace);
     return repo;
   }
 
