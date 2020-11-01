@@ -102,10 +102,15 @@ export class LocalProvider extends SingleGroupProvider {
           workspace: workspace ? workspace : this.newWorkspacePath()
         });
 
-        await repository.initialize();
-
-        this._repositories.set(repository.name, repository);
-      } catch {}
+        if(await repository.initialize()) {
+          this._repositories.set(repository.name, repository);
+        }
+        else {
+          return undefined;
+        }
+      } catch {
+        return undefined;
+      }
     }
 
     return repository;

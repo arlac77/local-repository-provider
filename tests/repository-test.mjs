@@ -41,6 +41,14 @@ test("locate repository several", async t => {
   }
 });
 
+test("locate invalid repository", async t => {
+  const provider = new LocalProvider();
+  t.is(
+    await provider.repository("git@mfelten.de/github-repository-provider.git"),
+    undefined
+  );
+});
+
 test("local provider reuse workspace", async t => {
   const provider1 = new LocalProvider();
   const provider2 = new LocalProvider();

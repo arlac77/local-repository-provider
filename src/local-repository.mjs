@@ -116,14 +116,26 @@ export class LocalRepository extends Repository {
       }
     } catch (e) {
       if (e.code === "ENOENT") {
-        await this.exec(
-          ["clone", ...this.provider.cloneOptions, this.name, this.workspace],
-          {}
-        );
+        try {
+          await this.exec(
+            ["clone", ...this.provider.cloneOptions, this.name, this.workspace],
+            {}
+          );
+        } catch (cloneException) {
+          if (
+            cloneException.stderr ===
+            `fatal: repository '${this.name}' does not exist`
+          ) {
+            return undefined;
+          }
+          throw cloneException;
+        }
       } else {
         throw e;
       }
     }
+
+    return this;
   }
 
   /**
