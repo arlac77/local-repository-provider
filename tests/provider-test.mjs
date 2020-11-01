@@ -20,6 +20,7 @@ test("local provider", t => {
   const provider = new LocalProvider();
   t.deepEqual(provider.cloneOptions, ["--depth", "8", "--no-single-branch"]);
   t.truthy(provider.workspace.length > 2);
+  t.is(provider.priority, 0);
 });
 
 test("local provider workspacePaths", async t => {

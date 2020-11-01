@@ -21,6 +21,7 @@ export class LocalProvider extends SingleGroupProvider {
    */
   static get attributes() {
     return {
+      ...super.attributes,
       cloneOptions: {
         env: "GIT_CLONE_OPTIONS",
         set: value => (typeof value != "object" ? value.split(/\s+/) : value),
