@@ -14,7 +14,7 @@ const repoFixtures = {
   "  x  ": undefined,
 
   // export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-  "git@mfelten.de/github-repository-provider.git": undefined,
+  //"git@mfelten.de/github-repository-provider.git": undefined,
   "http://www.heise.de/index.html": undefined,
   "https://github.com/arlac77/sync-test-repository.git": {
     condensedName: "sync-test-repository",
@@ -33,7 +33,7 @@ const repoFixtures = {
 test("locate repository several", async t => {
   const provider = new LocalProvider();
 
-  t.plan(16);
+  t.plan(15);
 
   for (const [url, repoFixture] of Object.entries(repoFixtures)) {
     await assertRepo(t, await provider.repository(url), repoFixture, url);
