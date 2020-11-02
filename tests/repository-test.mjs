@@ -12,6 +12,8 @@ const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 const repoFixtures = {
   "": undefined,
   "  x  ": undefined,
+
+  // export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
   "git@mfelten.de/github-repository-provider.git": undefined,
   "http://www.heise.de/index.html": undefined,
   "https://github.com/arlac77/sync-test-repository.git": {
