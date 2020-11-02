@@ -12,10 +12,8 @@ const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 const repoFixtures = {
   "": undefined,
   "  x  ": undefined,
-
-  // "git@mfelten.de/github-repository-provider.git": undefined,
-  //"http://www.heise.de/index.html": undefined,
-
+  "git@mfelten.de/github-repository-provider.git": undefined,
+  "http://www.heise.de/index.html": undefined,
   "https://github.com/arlac77/sync-test-repository.git": {
     condensedName: "sync-test-repository",
     provider: LocalProvider
@@ -24,7 +22,6 @@ const repoFixtures = {
     condensedName: "sync-test-repository",
     provider: LocalProvider
   },
-
   "https://mfelten.dynv6.net/services/git/markus/de.mfelten.archlinux.git": {
     condensedName: "de.mfelten.archlinux",
     provider: LocalProvider
@@ -34,7 +31,7 @@ const repoFixtures = {
 test("locate repository several", async t => {
   const provider = new LocalProvider();
 
-  t.plan(14);
+  t.plan(16);
 
   for (const [url, repoFixture] of Object.entries(repoFixtures)) {
     await assertRepo(t, await provider.repository(url), repoFixture, url);
