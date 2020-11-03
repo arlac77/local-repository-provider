@@ -52,17 +52,15 @@ export class LocalProvider extends SingleGroupProvider {
   }
 
   normalizeRepositoryName(name) {
-    name = name.trim();
-    return name;
+    return name.trim();
   }
 
-  async *repositoryGroups(name) {
-    if (name !== undefined) {
-      if (name.match("^(git|http)")) {
-        yield this;
-      }
-    }
-  }
+  /**
+   * We do not provide any groups
+   * @param {any} pattern 
+   * @return {AsyncIterator<RepositoryGroup>} always empty
+   */
+  async *repositoryGroups(pattern) {}
 
   async *branches(pattern) {
     for (const name of asArray(pattern)) {
