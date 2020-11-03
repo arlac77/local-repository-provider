@@ -6,6 +6,7 @@ const provider = LocalProvider.initialize(undefined, process.env);
 
 test(branchListTest, provider, undefined, 0);
 test(branchListTest, provider, "invalid", 0);
+test(branchListTest, provider, "*", 0);
 
 test(branchListTest, provider, "https://github.com/arlac77/local-repository-provider.git", {
   "https://github.com/arlac77/local-repository-provider.git" : {
