@@ -57,17 +57,21 @@ export class LocalProvider extends SingleGroupProvider {
 
   /**
    * We do not provide any groups
-   * @param {any} pattern 
+   * @param {any} pattern
    * @return {AsyncIterator<RepositoryGroup>} always empty
    */
   async *repositoryGroups(pattern) {}
 
-  async *branches(pattern) {
-    for (const name of asArray(pattern)) {
-      if (name !== undefined) {
-        if (name.match("^(git|http)")) {
-          yield this.branch(name);
-        }
+  /**
+   * List branches for a given set of patterns.
+   * Only delivers branches for valid complete git urls.
+   * @param {string|string[]} patterns
+   */
+  async *branches(patterns) {
+    for (const pattern of asArray(patterns)) {
+      const branch = await this.branch(pattern);
+      if (branch) {
+        yield branch;
       }
     }
   }
@@ -78,6 +82,20 @@ export class LocalProvider extends SingleGroupProvider {
     const repo = await super.createRepository(name, { workspace });
     await execa("git", ["init"], { cwd: workspace });
     return repo;
+  }
+
+  /**
+   * List repositories for a given set of patterns.
+   * Only delivers repositories for valid complete git urls.
+   * @param {string|string[]} patterns
+   */
+  async *repositories(patterns) {
+    for (const pattern of asArray(patterns)) {
+      const repository = await this.repository(pattern);
+      if (repository) {
+        yield repository;
+      }
+    }
   }
 
   /**
@@ -101,10 +119,9 @@ export class LocalProvider extends SingleGroupProvider {
           workspace: workspace ? workspace : this.newWorkspacePath()
         });
 
-        if(await repository.initialize()) {
+        if (await repository.initialize()) {
           this._repositories.set(repository.name, repository);
-        }
-        else {
+        } else {
           return undefined;
         }
       } catch {
