@@ -19,30 +19,36 @@ repository provider using local (native) git commands
 -   [LocalProvider](#localprovider)
     -   [Properties](#properties)
     -   [newWorkspacePath](#newworkspacepath)
-    -   [repository](#repository)
+    -   [repositoryGroups](#repositorygroups)
         -   [Parameters](#parameters)
+    -   [branches](#branches)
+        -   [Parameters](#parameters-1)
+    -   [repositories](#repositories)
+        -   [Parameters](#parameters-2)
+    -   [repository](#repository)
+        -   [Parameters](#parameters-3)
     -   [attributes](#attributes)
 -   [LocalRepository](#localrepository)
     -   [Properties](#properties-1)
     -   [condensedName](#condensedname)
     -   [setCurrentBranch](#setcurrentbranch)
-        -   [Parameters](#parameters-1)
+        -   [Parameters](#parameters-4)
     -   [refId](#refid)
-        -   [Parameters](#parameters-2)
+        -   [Parameters](#parameters-5)
     -   [initializeBranches](#initializebranches)
 -   [workspace](#workspace)
 -   [LocalBranch](#localbranch)
     -   [Properties](#properties-2)
     -   [writeEntries](#writeentries)
-        -   [Parameters](#parameters-3)
-    -   [commit](#commit)
-        -   [Parameters](#parameters-4)
-    -   [entries](#entries)
-        -   [Parameters](#parameters-5)
-    -   [entry](#entry)
         -   [Parameters](#parameters-6)
-    -   [maybeEntry](#maybeentry)
+    -   [commit](#commit)
         -   [Parameters](#parameters-7)
+    -   [entries](#entries)
+        -   [Parameters](#parameters-8)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-9)
+    -   [maybeEntry](#maybeentry)
+        -   [Parameters](#parameters-10)
 
 ## LocalProvider
 
@@ -63,6 +69,34 @@ Generate path for a new workspace.
 For the livetime of the provider always genrate new names
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** path
+
+### repositoryGroups
+
+We do not provide any groups
+
+#### Parameters
+
+-   `pattern` **any** 
+
+Returns **AsyncIterator&lt;RepositoryGroup>** always empty
+
+### branches
+
+List branches for a given set of patterns.
+Only delivers branches for valid complete git urls.
+
+#### Parameters
+
+-   `patterns` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>)** 
+
+### repositories
+
+List repositories for a given set of patterns.
+Only delivers repositories for valid complete git urls.
+
+#### Parameters
+
+-   `patterns` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>)** 
 
 ### repository
 
