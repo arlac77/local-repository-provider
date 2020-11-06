@@ -130,7 +130,7 @@ test("local provider list files with pattern", async t => {
   t.true(file.isBlob);
 });
 
-test.serial("local provider get none exiting file", async t => {
+test.serial("local provider get none existing file", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
 
   if (process.env.SSH_AUTH_SOCK) {
