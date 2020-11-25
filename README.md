@@ -18,6 +18,7 @@ repository provider using local (native) git commands
 
 -   [LocalProvider](#localprovider)
     -   [Properties](#properties)
+    -   [name](#name)
     -   [newWorkspacePath](#newworkspacepath)
     -   [repositoryGroups](#repositorygroups)
         -   [Parameters](#parameters)
@@ -62,6 +63,12 @@ Known environment variables
 ### Properties
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### name
+
+We are called local
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** local
 
 ### newWorkspacePath
 
