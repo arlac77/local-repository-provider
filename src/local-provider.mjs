@@ -34,6 +34,14 @@ export class LocalProvider extends SingleGroupProvider {
     };
   }
 
+  /**
+   * We are called local
+   * @return {string} local
+   */
+  get name() {
+    return "local";
+  }
+
   get repositoryClass() {
     return LocalRepository;
   }
