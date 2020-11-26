@@ -64,13 +64,6 @@ export class LocalProvider extends SingleGroupProvider {
   }
 
   /**
-   * We do not provide any groups
-   * @param {any} pattern
-   * @return {AsyncIterator<RepositoryGroup>} always empty
-   */
-  async *repositoryGroups(pattern) {}
-
-  /**
    * List branches for a given set of patterns.
    * Only delivers branches for valid complete git urls.
    * @param {string|string[]} patterns
