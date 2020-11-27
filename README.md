@@ -19,36 +19,34 @@ repository provider using local (native) git commands
     -   [Properties](#properties)
     -   [name](#name)
     -   [newWorkspacePath](#newworkspacepath)
-    -   [repositoryGroups](#repositorygroups)
-        -   [Parameters](#parameters)
     -   [branches](#branches)
-        -   [Parameters](#parameters-1)
+        -   [Parameters](#parameters)
     -   [repositories](#repositories)
-        -   [Parameters](#parameters-2)
+        -   [Parameters](#parameters-1)
     -   [repository](#repository)
-        -   [Parameters](#parameters-3)
+        -   [Parameters](#parameters-2)
     -   [attributes](#attributes)
 -   [LocalRepository](#localrepository)
     -   [Properties](#properties-1)
     -   [condensedName](#condensedname)
     -   [setCurrentBranch](#setcurrentbranch)
-        -   [Parameters](#parameters-4)
+        -   [Parameters](#parameters-3)
     -   [refId](#refid)
-        -   [Parameters](#parameters-5)
+        -   [Parameters](#parameters-4)
     -   [initializeBranches](#initializebranches)
 -   [workspace](#workspace)
 -   [LocalBranch](#localbranch)
     -   [Properties](#properties-2)
     -   [writeEntries](#writeentries)
-        -   [Parameters](#parameters-6)
+        -   [Parameters](#parameters-5)
     -   [commit](#commit)
-        -   [Parameters](#parameters-7)
+        -   [Parameters](#parameters-6)
     -   [entries](#entries)
-        -   [Parameters](#parameters-8)
+        -   [Parameters](#parameters-7)
     -   [entry](#entry)
-        -   [Parameters](#parameters-9)
+        -   [Parameters](#parameters-8)
     -   [maybeEntry](#maybeentry)
-        -   [Parameters](#parameters-10)
+        -   [Parameters](#parameters-9)
 
 ## LocalProvider
 
@@ -75,16 +73,6 @@ Generate path for a new workspace.
 For the livetime of the provider always genrate new names
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** path
-
-### repositoryGroups
-
-We do not provide any groups
-
-#### Parameters
-
--   `pattern` **any** 
-
-Returns **AsyncIterator&lt;RepositoryGroup>** always empty
 
 ### branches
 
