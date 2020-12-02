@@ -17,7 +17,6 @@ repository provider using local (native) git commands
 
 -   [LocalProvider](#localprovider)
     -   [Properties](#properties)
-    -   [name](#name)
     -   [newWorkspacePath](#newworkspacepath)
     -   [branches](#branches)
         -   [Parameters](#parameters)
@@ -25,6 +24,7 @@ repository provider using local (native) git commands
         -   [Parameters](#parameters-1)
     -   [repository](#repository)
         -   [Parameters](#parameters-2)
+    -   [name](#name)
     -   [attributes](#attributes)
 -   [LocalRepository](#localrepository)
     -   [Properties](#properties-1)
@@ -53,19 +53,13 @@ repository provider using local (native) git commands
 **Extends SingleGroupProvider**
 
 Provider using native git executable.
-Known environment variables
+Known environment variables.
 
 -   GIT_CLONE_OPTIONS
 
 ### Properties
 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-### name
-
-We are called local
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** local
 
 ### newWorkspacePath
 
@@ -94,16 +88,22 @@ Only delivers repositories for valid complete git urls.
 
 ### repository
 
-Using provider workspace and number of repositories to create repository workspace
+Using provider workspace and number of repositories to create repository workspace.
 
 #### Parameters
 
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** where to place the repos workspace @see #newWorkspacePath
 
+### name
+
+We are called local.
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** local
+
 ### attributes
 
-Default configuration options
+Default configuration options.
 
 -   workspace
 -   cloneOptions defaults to ["--depth", "8", "--no-single-branch"]
