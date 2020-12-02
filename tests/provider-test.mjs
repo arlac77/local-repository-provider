@@ -5,6 +5,8 @@ import LocalProvider from "local-repository-provider";
 const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 const REPOSITORY_NAME_GIT = "git@github.com:arlac77/sync-test-repository.git";
 
+test("provider factory name", t => t.is(LocalProvider.name, "local"));
+
 test("local provider optionsFromEnvironment", t => {
   const options = LocalProvider.optionsFromEnvironment({
     GIT_CLONE_OPTIONS: "--depth 1"

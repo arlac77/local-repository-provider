@@ -8,13 +8,21 @@ import { LocalBranch } from "./local-branch.mjs";
 
 /**
  * Provider using native git executable.
- * Known environment variables
+ * Known environment variables.
  * - GIT_CLONE_OPTIONS
  * @property {string} workspace
  */
 export class LocalProvider extends SingleGroupProvider {
   /**
-   * Default configuration options
+   * We are called local.
+   * @return {string} local
+   */
+  static get name() {
+    return "local";
+  }
+
+  /**
+   * Default configuration options.
    * - workspace
    * - cloneOptions defaults to ["--depth", "8", "--no-single-branch"]
    * @return {Object}
@@ -32,14 +40,6 @@ export class LocalProvider extends SingleGroupProvider {
         type: "string"
       }
     };
-  }
-
-  /**
-   * We are called local
-   * @return {string} local
-   */
-  get name() {
-    return "local";
   }
 
   get repositoryClass() {
@@ -100,7 +100,7 @@ export class LocalProvider extends SingleGroupProvider {
   }
 
   /**
-   * Using provider workspace and number of repositories to create repository workspace
+   * Using provider workspace and number of repositories to create repository workspace.
    * @param {string} name
    * @param {string} workspace where to place the repos workspace @see #newWorkspacePath
    */
