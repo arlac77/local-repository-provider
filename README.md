@@ -19,38 +19,101 @@ repository provider using local (native) git commands
 
 ### Table of Contents
 
--   [LocalProvider](#localprovider)
+-   [LocalBranch](#localbranch)
     -   [Properties](#properties)
+    -   [writeEntries](#writeentries)
+        -   [Parameters](#parameters)
+    -   [commit](#commit)
+        -   [Parameters](#parameters-1)
+    -   [entries](#entries)
+        -   [Parameters](#parameters-2)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-3)
+    -   [maybeEntry](#maybeentry)
+        -   [Parameters](#parameters-4)
+-   [LocalProvider](#localprovider)
+    -   [Properties](#properties-1)
     -   [newWorkspacePath](#newworkspacepath)
     -   [branches](#branches)
-        -   [Parameters](#parameters)
+        -   [Parameters](#parameters-5)
     -   [repositories](#repositories)
-        -   [Parameters](#parameters-1)
+        -   [Parameters](#parameters-6)
     -   [repository](#repository)
-        -   [Parameters](#parameters-2)
+        -   [Parameters](#parameters-7)
     -   [name](#name)
     -   [attributes](#attributes)
 -   [LocalRepository](#localrepository)
-    -   [Properties](#properties-1)
+    -   [Properties](#properties-2)
     -   [condensedName](#condensedname)
     -   [setCurrentBranch](#setcurrentbranch)
-        -   [Parameters](#parameters-3)
+        -   [Parameters](#parameters-8)
     -   [refId](#refid)
-        -   [Parameters](#parameters-4)
+        -   [Parameters](#parameters-9)
     -   [initializeBranches](#initializebranches)
 -   [workspace](#workspace)
--   [LocalBranch](#localbranch)
-    -   [Properties](#properties-2)
-    -   [writeEntries](#writeentries)
-        -   [Parameters](#parameters-5)
-    -   [commit](#commit)
-        -   [Parameters](#parameters-6)
-    -   [entries](#entries)
-        -   [Parameters](#parameters-7)
-    -   [entry](#entry)
-        -   [Parameters](#parameters-8)
-    -   [maybeEntry](#maybeentry)
-        -   [Parameters](#parameters-9)
+
+## LocalBranch
+
+**Extends Branch**
+
+### Properties
+
+-   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### writeEntries
+
+Writes ContentEntries into the branch
+
+#### Parameters
+
+-   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;ContentEntry>** 
+
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;ContentEntry>>** written entries
+
+### commit
+
+Executes:
+
+-   writes all updates into the workspace
+-   git add
+-   git commit
+-   git push --set-upstream origin
+
+#### Parameters
+
+-   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** commit message
+-   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;ContentEntry>** file entries to be commited
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### entries
+
+Search for patch in the branch
+
+#### Parameters
+
+-   `matchingPatterns` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>**  (optional, default `["**/.*","**/*"]`)
+
+Returns **Iterable&lt;ContentEntry>** matching branch path names
+
+### entry
+
+Search for path in the branch
+
+#### Parameters
+
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **ContentEntry** matching branch path names
+
+### maybeEntry
+
+Search for path in the branch
+
+#### Parameters
+
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **ContentEntry** matching branch path names
 
 ## LocalProvider
 
@@ -167,69 +230,6 @@ git ls-remote --heads
 workspace directory.
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## LocalBranch
-
-**Extends Branch**
-
-### Properties
-
--   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-### writeEntries
-
-Writes ContentEntries into the branch
-
-#### Parameters
-
--   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;ContentEntry>** 
-
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;ContentEntry>>** written entries
-
-### commit
-
-Executes:
-
--   writes all updates into the workspace
--   git add
--   git commit
--   git push --set-upstream origin
-
-#### Parameters
-
--   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** commit message
--   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;ContentEntry>** file entries to be commited
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-### entries
-
-Search for patch in the branch
-
-#### Parameters
-
--   `matchingPatterns` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>**  (optional, default `["**/.*","**/*"]`)
-
-Returns **Iterable&lt;ContentEntry>** matching branch path names
-
-### entry
-
-Search for path in the branch
-
-#### Parameters
-
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-Returns **ContentEntry** matching branch path names
-
-### maybeEntry
-
-Search for path in the branch
-
-#### Parameters
-
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-Returns **ContentEntry** matching branch path names
 
 # install
 
