@@ -32,14 +32,14 @@
     "content-entry-filesystem": "^2.0.4",
     "execa": "^5.0.0",
     "globby": "^11.0.3",
-    "one-time-execution-method": "^2.0.6",
-    "repository-provider": "^25.2.1"
+    "one-time-execution-method": "^2.0.7",
+    "repository-provider": "^25.2.2"
   },
   "devDependencies": {
     "ava": "^3.15.0",
     "c8": "^7.7.1",
     "documentation": "^13.2.4",
-    "repository-provider-test-support": "^1.4.0",
+    "repository-provider-test-support": "^1.4.1",
     "semantic-release": "^17.4.2"
   },
   "engines": {
