@@ -32,7 +32,7 @@ export class LocalRepository extends Repository {
    */
   get condensedName() {
     let name = this.name;
-    const m = name.match(/^git@([^:]+):([^:]+)\/(.*)/);
+    const m = name.match(/^(ssh:|git)@([^:]+):([^:]+)\/(.*)/);
 
     if (m) {
       name = m[3];
