@@ -8,8 +8,8 @@ test(branchListTest, provider, undefined, 0);
 test(branchListTest, provider, "invalid", 0);
 test(branchListTest, provider, "*", 0);
 
-test.only(branchListTest, provider, "local-repository-provider", {
-  "https://github.com/arlac77/local-repository-provider.git" : {
+test(branchListTest, provider, "https://github.com/arlac77/local-repository-provider.git", {
+  "local-repository-provider" : {
     name: "master",
     fullName: "https://github.com/arlac77/local-repository-provider.git#master",
     fullCondensedName: "local-repository-provider"
