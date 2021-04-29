@@ -79,6 +79,8 @@ test.serial("local provider create & delete branch", async t => {
   const newName = `test-${n}`;
   const branch = await repository.createBranch(newName);
 
+  t.is(branch.fullCondensedName,"sync-test-repository");
+
   t.is(branch.name, newName);
 
   await repository.deleteBranch(newName);

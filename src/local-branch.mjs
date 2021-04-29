@@ -135,4 +135,8 @@ export class LocalBranch extends Branch {
   get entryClass() {
     return FileSystemEntry;
   }
+
+  get fullCondensedName() {
+    return this.repository.condensedName
+  }
 }
