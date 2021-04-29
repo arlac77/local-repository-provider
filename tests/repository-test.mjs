@@ -30,17 +30,18 @@ const repoFixtures = {
   "https://github.com/arlac77/sync-test-repository.git": {
     condensedName: "sync-test-repository",
     provider: LocalProvider
-  },
+  }
+  /*,
   "ssh://git@github.com/arlac77/sync-test-repository.git": {
     condensedName: "sync-test-repository",
     provider: LocalProvider
-  }
+  }*/
 };
 
 test.serial("locate repository several", async t => {
   const provider = new LocalProvider();
 
-  t.plan(11);
+  t.plan(7);
 
   for (const [url, repoFixture] of Object.entries(repoFixtures)) {
     await assertRepo(t, await provider.repository(url), repoFixture, url);
