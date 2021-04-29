@@ -137,6 +137,8 @@ export class LocalBranch extends Branch {
   }
 
   get fullCondensedName() {
-    return this.repository.condensedName
+    return this.isDefault
+      ? this.repository.condensedName
+      : `${this.repository.condensedName}#${this.name}`;
   }
 }
