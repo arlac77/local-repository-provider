@@ -13,32 +13,30 @@ const repoFixtures = {
   // export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
   /*
   "git@mfelten.de/github-repository-provider.git": undefined,
-  "git@github.com:arlac77/sync-test-repository.git": {
-    condensedName: "sync-test-repository",
-    provider: LocalProvider
-  },
     "https://mfelten.dynv6.net/services/git/markus/de.mfelten.archlinux.git": {
     condensedName: "de.mfelten.archlinux",
     provider: LocalProvider
   },
-
 */
   "http://www.heise.de/index.html": undefined,
   "https://github.com/arlac77/sync-test-repository.git": {
     condensedName: "sync-test-repository",
     provider: LocalProvider
-  }
-  ,
+  },
+  "git@github.com:arlac77/sync-test-repository.git": {
+    condensedName: "sync-test-repository",
+    provider: LocalProvider
+  },
   "ssh://git@github.com/arlac77/sync-test-repository.git": {
     condensedName: "sync-test-repository",
     provider: LocalProvider
   }
 };
 
-test("locate repository several", async t => {
+test.only("locate repository several", async t => {
   const provider = new LocalProvider();
 
-  t.plan(11);
+  t.plan(15);
 
   for (const [url, repoFixture] of Object.entries(repoFixtures)) {
     await assertRepo(t, await provider.repository(url), repoFixture, url);

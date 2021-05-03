@@ -35,7 +35,7 @@ export class LocalRepository extends Repository {
     const m = name.match(/^(ssh:|git)@([^:]+):([^:]+)\/(.*)/);
 
     if (m) {
-      name = m[3];
+      name = m[4];
     } else {
       try {
         const url = new URL(name);
