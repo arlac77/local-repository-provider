@@ -1,11 +1,8 @@
 import test from "ava";
 import { assertRepo } from "repository-provider-test-support";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
 import LocalProvider from "local-repository-provider";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const workspace = join(here, "..", "build", "workspace");
+const workspace = new URL("../build/workspace",import.meta.url).pathname;
 
 const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 
