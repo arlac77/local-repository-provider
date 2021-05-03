@@ -35,7 +35,7 @@ const repoFixtures = {
   }*/
 };
 
-test.serial("locate repository several", async t => {
+test("locate repository several", async t => {
   const provider = new LocalProvider();
 
   t.plan(7);
@@ -64,11 +64,11 @@ test("local provider reuse workspace", async t => {
   t.is(repository2.name, REPOSITORY_NAME);
 });
 
-test.skip("local provider show ref", async t => {
+test("local provider show ref", async t => {
   const provider = new LocalProvider({ workspace });
   const repository = await provider.repository(REPOSITORY_NAME);
-
-  t.is((await repository.refId("refs/heads/master")).length, 10);
+  const refid = await repository.refId("refs/heads/master");
+  t.is(refid.length, 40);
 });
 
 test.serial("list tags", async t => {
