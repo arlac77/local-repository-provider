@@ -71,7 +71,7 @@ test("local provider show ref", async t => {
   t.is(refid.length, 40);
 });
 
-test.serial("list tags", async t => {
+test("list tags", async t => {
   const provider = new LocalProvider({ workspace });
   const repository = await provider.repository(REPOSITORY_NAME);
 
