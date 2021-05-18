@@ -24,29 +24,6 @@ export class LocalRepository extends Repository {
     return await execa("git", args, options);
   }
 
-  /**
-   * Most significant part of the url.
-   * - remove trailing .git.
-   * - only use last directory of pathname
-   * @return {string} name
-   */
-  get condensedName() {
-    let name = this.name;
-    const m = name.match(/^(ssh:|git)@([^:]+):([^:]+)\/(.*)/);
-
-    if (m) {
-      name = m[4];
-    } else {
-      try {
-        const url = new URL(name);
-        const paths = url.pathname.split(/\//);
-        name = paths[paths.length - 1];
-      } catch (e) {}
-    }
-
-    return name.replace(/\.git$/, "");
-  }
-
   get urls() {
     return [this.name];
   }

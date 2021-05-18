@@ -9,9 +9,9 @@ test(branchListTest, provider, "invalid", 0);
 test(branchListTest, provider, "*", 0);
 
 test(branchListTest, provider, "https://github.com/arlac77/local-repository-provider.git", {
-  "local-repository-provider" : {
+  "https://github.com/arlac77/local-repository-provider.git" : {
     name: "master",
     fullName: "https://github.com/arlac77/local-repository-provider.git#master",
-    fullCondensedName: "local-repository-provider"
+    fullCondensedName: "https://github.com/arlac77/local-repository-provider.git"
   }
 });

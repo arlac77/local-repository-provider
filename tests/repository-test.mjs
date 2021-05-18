@@ -20,23 +20,23 @@ const repoFixtures = {
 */
   "http://www.heise.de/index.html": undefined,
   "https://github.com/arlac77/sync-test-repository.git": {
-    condensedName: "sync-test-repository",
+    condensedName: "https://github.com/arlac77/sync-test-repository.git",
     provider: LocalProvider
   },
-  /*"git@github.com:arlac77/sync-test-repository.git": {
-    condensedName: "sync-test-repository",
+  "git@github.com:arlac77/sync-test-repository.git": {
+    condensedName: "git@github.com:arlac77/sync-test-repository.git",
     provider: LocalProvider
   },
   "ssh://git@github.com/arlac77/sync-test-repository.git": {
-    condensedName: "sync-test-repository",
+    condensedName: "ssh://git@github.com/arlac77/sync-test-repository.git",
     provider: LocalProvider
-  }*/
+  }
 };
 
 test("locate repository several", async t => {
   const provider = new LocalProvider();
 
-  t.plan(7);
+  t.plan(15);
 
   for (const [url, repoFixture] of Object.entries(repoFixtures)) {
     await assertRepo(t, await provider.repository(url), repoFixture, url);
