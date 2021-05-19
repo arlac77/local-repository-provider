@@ -44,7 +44,6 @@ repository provider using local (native) git commands
     *   [attributes](#attributes)
 *   [LocalRepository](#localrepository)
     *   [Properties](#properties-2)
-    *   [condensedName](#condensedname)
     *   [setCurrentBranch](#setcurrentbranch)
         *   [Parameters](#parameters-8)
     *   [refId](#refid)
@@ -185,15 +184,6 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 *   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 *   `currentBranch` **Branch** 
-
-### condensedName
-
-Most significant part of the url.
-
-*   remove trailing .git.
-*   only use last directory of pathname
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** name
 
 ### setCurrentBranch
 
