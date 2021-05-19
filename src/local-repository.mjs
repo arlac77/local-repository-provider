@@ -38,6 +38,7 @@ export class LocalRepository extends Repository {
 
   async createBranch(name, from, options) {
     await this.exec(["checkout", "-b", name]);
+    await this.exec(["push", "--set-upstream", "origin", name]);
     return super.addBranch(name, options);
   }
 
