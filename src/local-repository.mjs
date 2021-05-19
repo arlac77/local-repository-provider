@@ -20,6 +20,10 @@ export class LocalRepository extends Repository {
     };
   }
 
+  get displayName() {
+    return this.name.replace(/\.git$/,'').replace(/^[^:]+:\/\/([^\/]+\/)?/,'').replace(/\w+@([\.\w]+:)?/,'')
+  }
+
   async exec(args, options = { cwd: this.workspace }) {
     return await execa("git", args, options);
   }
