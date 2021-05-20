@@ -83,10 +83,10 @@ export class LocalBranch extends Branch {
    * @param {string[]} matchingPatterns
    * @return {Iterable<ContentEntry>} matching branch path names
    */
-  async *entries(matchingPatterns = ["**/.*", "**/*"]) {
+  async *entries(matchingPatterns = ["**/*"]) {
     await this.repository.setCurrentBranch(this);
     for (const name of await globby(matchingPatterns, {
-      cwd: this.workspace
+      cwd: this.workspace, dot: true
     })) {
       yield new this.entryClass(name, this.workspace);
     }
