@@ -68,15 +68,13 @@ test.serial("local provider with default workspace", async t => {
   t.is(repository.url, REPOSITORY_NAME);
 });
 
-test.skip("local provider branchname", async t => {
+test("local provider branchname", async t => {
   const provider = new LocalProvider();
 
   const repository = await provider.repository(REPOSITORY_NAME_BRANCH);
-  console.log(repository)
-
   t.is(repository.name, REPOSITORY_NAME);
   t.is(repository.url, REPOSITORY_NAME);
-  t.is(repository.branch("test-12"), "test-12");
+  t.is((await provider.branch(REPOSITORY_NAME_BRANCH)).name, "test-13");
 });
 
 test.serial("local provider create & delete branch", async t => {
