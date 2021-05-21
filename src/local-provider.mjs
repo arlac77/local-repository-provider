@@ -60,7 +60,7 @@ export class LocalProvider extends SingleGroupProvider {
   }
 
   normalizeRepositoryName(name) {
-    return name.trim();
+    return name.trim().replace(/#.*$/,'');
   }
 
   /**
