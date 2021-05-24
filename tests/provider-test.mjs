@@ -4,7 +4,7 @@ import LocalProvider from "local-repository-provider";
 
 const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 const REPOSITORY_NAME_GIT = "git@github.com:arlac77/sync-test-repository.git";
-const REPOSITORY_NAME_BRANCH = "https://github.com/arlac77/sync-test-repository.git#test-13";
+const REPOSITORY_NAME_BRANCH = "https://github.com/arlac77/sync-test-repository.git#preserve-for-test";
 
 test("provider factory name", t => t.is(LocalProvider.name, "local"));
 
@@ -74,7 +74,7 @@ test("local provider branchname", async t => {
   const repository = await provider.repository(REPOSITORY_NAME_BRANCH);
   t.is(repository.name, REPOSITORY_NAME);
   t.is(repository.url, REPOSITORY_NAME);
-  t.is((await provider.branch(REPOSITORY_NAME_BRANCH)).name, "test-13");
+  t.is((await provider.branch(REPOSITORY_NAME_BRANCH)).name, "preserve-for-test");
 });
 
 test.serial("local provider create & delete branch", async t => {
@@ -89,7 +89,7 @@ test.serial("local provider create & delete branch", async t => {
   const newName = `test-${n}`;
   const branch = await repository.createBranch(newName);
 
-  t.is(branch.fullCondensedName,"https://github.com/arlac77/sync-test-repository.git#test-12");
+  t.is(branch.fullCondensedName,"https://github.com/arlac77/sync-test-repository.git#" + newName);
 
   t.is(branch.name, newName);
 
