@@ -79,21 +79,27 @@ export class LocalBranch extends Branch {
   }
 
   /**
-   * Search for patch in the branch
+   * Deliver all matchine entires for a given pattern.
    * @param {string[]} matchingPatterns
    * @return {Iterable<ContentEntry>} matching branch path names
    */
-  async *entries(matchingPatterns = ["**/*", "!.git"]) {
+  async *entries(matchingPatterns = ["**/*"]) {
+    if (!Array.isArray(matchingPatterns)) {
+      matchingPatterns = [matchingPatterns];
+    }
+    matchingPatterns.push("!.git");
+
     await this.repository.setCurrentBranch(this);
     for (const name of await globby(matchingPatterns, {
-      cwd: this.workspace, dot: true
+      cwd: this.workspace,
+      dot: true
     })) {
       yield new this.entryClass(name, this.workspace);
     }
   }
 
   /**
-   * Search for path in the branch
+   * Search for path in the branch.
    * @param {string} name
    * @return {ContentEntry} matching branch path names
    */
@@ -108,7 +114,7 @@ export class LocalBranch extends Branch {
   }
 
   /**
-   * Search for path in the branch
+   * Search for path in the branch.
    * @param {string} name
    * @return {ContentEntry} matching branch path names
    */

@@ -4,13 +4,10 @@ import { entryListTest } from "repository-provider-test-support";
 
 const REPOSITORY_NAME_BRANCH = "https://github.com/arlac77/sync-test-repository.git#local-repository-provider-test";
 
-test("local provider branchname", async t => {
-  const provider = new LocalProvider();
+const provider = new LocalProvider();
 
-  const repository = await provider.repository(REPOSITORY_NAME_BRANCH);
-
-  const branch = await repository.branch("local-repository-provider-test");
-
+test("local provider branchname default pattern", async t => {
+  const branch = await provider.branch(REPOSITORY_NAME_BRANCH);
   
   await entryListTest(t, branch, undefined, {
     ".gitignore": { startsWith: "node" },
@@ -18,5 +15,13 @@ test("local provider branchname", async t => {
     ".github/workflows/update_readme_api.yml": { startsWith: "name" },
     "tests/rollup.config.mjs": { startsWith: "import babel" },
     "a/b/c/file.txt": { startsWith: "file content" }
+  });
+});
+
+test("local provider branchname pattern", async t => {
+  const branch = await provider.branch(REPOSITORY_NAME_BRANCH);
+  
+  await entryListTest(t, branch, "**/*ADME*", {
+    "README.md": { startsWith: "fil" }
   });
 });
