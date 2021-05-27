@@ -86,17 +86,17 @@ Executes:
 
 ### entries
 
-Search for patch in the branch
+Deliver all matchine entires for a given pattern.
 
 #### Parameters
 
-*   `matchingPatterns` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>**  (optional, default `["**/*","!.git"]`)
+*   `matchingPatterns` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>**  (optional, default `["**/*"]`)
 
 Returns **Iterable\<ContentEntry>** matching branch path names
 
 ### entry
 
-Search for path in the branch
+Search for path in the branch.
 
 #### Parameters
 
@@ -106,7 +106,7 @@ Returns **ContentEntry** matching branch path names
 
 ### maybeEntry
 
-Search for path in the branch
+Search for path in the branch.
 
 #### Parameters
 
