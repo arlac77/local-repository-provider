@@ -4,7 +4,8 @@ import LocalProvider from "local-repository-provider";
 
 const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 const REPOSITORY_NAME_GIT = "git@github.com:arlac77/sync-test-repository.git";
-const REPOSITORY_NAME_BRANCH = "https://github.com/arlac77/sync-test-repository.git#preserve-for-test";
+const REPOSITORY_NAME_BRANCH =
+  "https://github.com/arlac77/sync-test-repository.git#preserve-for-test";
 
 test("provider factory name", t => t.is(LocalProvider.name, "local"));
 
@@ -36,9 +37,9 @@ test("local provider workspacePaths", async t => {
   t.true(w1 !== w2);
   t.true(w1 !== w3);
   t.true(w2 !== w3);
-  t.true(w1.startsWith('/tmp/r'));
-  t.true(w2.startsWith('/tmp/r'));
-  t.true(w3.startsWith('/tmp/r'));
+  t.true(w1.startsWith("/tmp/r"));
+  t.true(w2.startsWith("/tmp/r"));
+  t.true(w3.startsWith("/tmp/r"));
 });
 
 test("local provider repo undefined", async t => {
@@ -74,27 +75,10 @@ test("local provider branchname", async t => {
   const repository = await provider.repository(REPOSITORY_NAME_BRANCH);
   t.is(repository.name, REPOSITORY_NAME);
   t.is(repository.url, REPOSITORY_NAME);
-  t.is((await provider.branch(REPOSITORY_NAME_BRANCH)).name, "preserve-for-test");
-});
-
-test.serial("local provider create & delete branch", async t => {
-  const provider = new LocalProvider({ workspace: tmpdir() });
-  const repository = await provider.repository(REPOSITORY_NAME);
-
-  let n = 0;
-  for await (const branch of repository.branches()) {
-    n++;
-  }
-
-  const newName = `test-${n}`;
-  const branch = await repository.createBranch(newName);
-
-  t.is(branch.fullCondensedName,"https://github.com/arlac77/sync-test-repository.git#" + newName);
-
-  t.is(branch.name, newName);
-
-  await repository.deleteBranch(newName);
-  t.is(await repository.branch(newName), undefined);
+  t.is(
+    (await provider.branch(REPOSITORY_NAME_BRANCH)).name,
+    "preserve-for-test"
+  );
 });
 
 test("local get file", async t => {
