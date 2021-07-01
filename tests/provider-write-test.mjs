@@ -11,11 +11,13 @@ test("local provider create & delete branch", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME);
 
+  /*
   writeFileSync(join(homedir(), '.git-credentials'), "https://someone:secret@github.com/\n", { encoding: "utf8" });
   const data = readFileSync(join(homedir(), '.git-credentials'), { encoding: "utf8" });
 
   console.log(data);
   t.log(data);
+*/
 
   let n = 0;
   for await (const branch of repository.branches()) {
