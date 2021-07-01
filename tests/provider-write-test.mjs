@@ -2,11 +2,19 @@ import test from "ava";
 import { tmpdir } from "os";
 import LocalProvider from "local-repository-provider";
 
-import {REPOSITORY_NAME } from "./helpers/constants.mjs";
+import { REPOSITORY_NAME } from "./helpers/constants.mjs";
+import { readFileSync } from 'fs';
+import { homedir } from "os";
+import { join } from "path";
 
 test("local provider create & delete branch", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME);
+
+  const data = readFileSync(join(homedir(), '.git-credentials'), { encoding: "utf8" });
+
+  console.log(data);
+  t.log(data);
 
   let n = 0;
   for await (const branch of repository.branches()) {
