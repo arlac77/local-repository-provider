@@ -4,8 +4,7 @@ import LocalProvider from "local-repository-provider";
 
 const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 const REPOSITORY_NAME_GIT = "git@github.com:arlac77/sync-test-repository.git";
-const REPOSITORY_NAME_BRANCH =
-  "https://github.com/arlac77/sync-test-repository.git#preserve-for-test";
+const REPOSITORY_NAME_WITH_BRANCH = REPOSITORY_NAME + "#preserve-for-test";
 
 test("provider factory name", t => t.is(LocalProvider.name, "local"));
 
@@ -69,14 +68,14 @@ test.serial("local provider with default workspace", async t => {
   t.is(repository.url, REPOSITORY_NAME);
 });
 
-test("local provider branchname", async t => {
+test("local provider branch name", async t => {
   const provider = new LocalProvider();
 
-  const repository = await provider.repository(REPOSITORY_NAME_BRANCH);
+  const repository = await provider.repository(REPOSITORY_NAME_WITH_BRANCH);
   t.is(repository.name, REPOSITORY_NAME);
   t.is(repository.url, REPOSITORY_NAME);
   t.is(
-    (await provider.branch(REPOSITORY_NAME_BRANCH)).name,
+    (await provider.branch(REPOSITORY_NAME_WITH_BRANCH)).name,
     "preserve-for-test"
   );
 });
