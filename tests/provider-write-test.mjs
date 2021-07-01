@@ -3,7 +3,7 @@ import { tmpdir } from "os";
 import LocalProvider from "local-repository-provider";
 
 import { REPOSITORY_NAME } from "./helpers/constants.mjs";
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { homedir } from "os";
 import { join } from "path";
 
