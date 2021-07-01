@@ -2,13 +2,15 @@ import test from "ava";
 import LocalProvider from "local-repository-provider";
 import { entryListTest } from "repository-provider-test-support";
 
-const REPOSITORY_NAME_BRANCH = "https://github.com/arlac77/sync-test-repository.git#local-repository-provider-test";
+import { REPOSITORY_NAME } from "./helpers/constants.mjs";
+
+const REPOSITORY_NAME_BRANCH = REPOSITORY_NAME + "#local-repository-provider-test";
 
 const provider = new LocalProvider();
 
 test("local provider branchname default pattern", async t => {
   const branch = await provider.branch(REPOSITORY_NAME_BRANCH);
-  
+
   await entryListTest(t, branch, undefined, {
     ".gitignore": { startsWith: "node" },
     "README.md": { startsWith: "fil" },
@@ -20,7 +22,7 @@ test("local provider branchname default pattern", async t => {
 
 test("local provider branchname pattern", async t => {
   const branch = await provider.branch(REPOSITORY_NAME_BRANCH);
-  
+
   await entryListTest(t, branch, "**/*ADME*", {
     "README.md": { startsWith: "fil" }
   });

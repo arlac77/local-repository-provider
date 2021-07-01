@@ -1,10 +1,10 @@
 import test from "ava";
 import { assertRepo } from "repository-provider-test-support";
 import LocalProvider from "local-repository-provider";
+import { REPOSITORY_NAME } from "./helpers/constants.mjs";
 
 const workspace = new URL("../build/workspace", import.meta.url).pathname;
 
-const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
 
 const repoFixtures = {
   "": undefined,

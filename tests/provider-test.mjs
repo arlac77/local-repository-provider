@@ -1,10 +1,7 @@
 import test from "ava";
 import { tmpdir } from "os";
 import LocalProvider from "local-repository-provider";
-
-const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
-const REPOSITORY_NAME_GIT = "git@github.com:arlac77/sync-test-repository.git";
-const REPOSITORY_NAME_WITH_BRANCH = REPOSITORY_NAME + "#preserve-for-test";
+import {REPOSITORY_NAME, REPOSITORY_NAME_GIT, REPOSITORY_NAME_WITH_BRANCH } from "./helpers/constants.mjs";
 
 test("provider factory name", t => t.is(LocalProvider.name, "local"));
 

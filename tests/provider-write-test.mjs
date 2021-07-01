@@ -2,7 +2,7 @@ import test from "ava";
 import { tmpdir } from "os";
 import LocalProvider from "local-repository-provider";
 
-const REPOSITORY_NAME = "https://github.com/arlac77/sync-test-repository.git";
+import {REPOSITORY_NAME } from "./helpers/constants.mjs";
 
 test("local provider create & delete branch", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
@@ -18,7 +18,7 @@ test("local provider create & delete branch", async t => {
 
   t.is(
     branch.fullCondensedName,
-    "https://github.com/arlac77/sync-test-repository.git#" + newName
+    REPOSITORY_NAME + "#" + newName
   );
 
   t.is(branch.name, newName);
