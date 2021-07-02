@@ -25,7 +25,7 @@ jobs:
       - uses: oleksiyrudenko/gha-git-credentials@v2.1
         with:
           global: true
-          token: '${{ secrets.GH_TOKEN }}'
+          token: ${{ secrets.GH_TOKEN }}
       - name: Build / Test Node ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
