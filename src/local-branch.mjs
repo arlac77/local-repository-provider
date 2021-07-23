@@ -2,7 +2,7 @@ import { join, dirname } from "path";
 import { createWriteStream } from "fs";
 import { mkdir } from "fs/promises";
 import { pipeline } from "stream";
-import globby from "globby";
+import { globby } from "globby";
 import { FileSystemEntry } from "content-entry-filesystem";
 import { Branch } from "repository-provider";
 
