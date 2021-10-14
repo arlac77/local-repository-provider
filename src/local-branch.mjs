@@ -107,7 +107,7 @@ export class LocalBranch extends Branch {
     await this.repository.setCurrentBranch(this);
 
     const entry = new FileSystemEntry(name, this.workspace);
-    if (await entry.getExists()) {
+    if (await entry.isExistent) {
       return entry;
     }
     throw new Error(`file not found: ${name}`);
@@ -122,7 +122,7 @@ export class LocalBranch extends Branch {
     await this.repository.setCurrentBranch(this);
 
     const entry = new FileSystemEntry(name, this.workspace);
-    if (await entry.getExists()) {
+    if (await entry.isExistent) {
       return entry;
     }
     return undefined;
