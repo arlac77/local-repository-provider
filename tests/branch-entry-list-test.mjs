@@ -1,10 +1,8 @@
 import test from "ava";
 import LocalProvider from "local-repository-provider";
-import { entryListTest } from "repository-provider-test-support";
+import { entryListTest, REPOSITORY_NAME_GITHUB_HTTP } from "repository-provider-test-support";
 
-import { REPOSITORY_NAME } from "./helpers/constants.mjs";
-
-const REPOSITORY_NAME_BRANCH = REPOSITORY_NAME + "#local-repository-provider-test";
+const REPOSITORY_NAME_BRANCH = REPOSITORY_NAME_GITHUB_HTTP + "#local-repository-provider-test";
 
 const provider = new LocalProvider();
 

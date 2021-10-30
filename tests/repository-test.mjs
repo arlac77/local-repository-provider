@@ -1,7 +1,6 @@
 import test from "ava";
-import { assertRepo } from "repository-provider-test-support";
+import { assertRepo, REPOSITORY_NAME_GITHUB_HTTP } from "repository-provider-test-support";
 import LocalProvider from "local-repository-provider";
-import { REPOSITORY_NAME } from "./helpers/constants.mjs";
 
 const workspace = new URL("../build/workspace", import.meta.url).pathname;
 
@@ -58,23 +57,23 @@ test("local provider reuse workspace", async t => {
   const provider1 = new LocalProvider();
   const provider2 = new LocalProvider();
 
-  const repository1 = await provider1.repository(REPOSITORY_NAME);
-  const repository2 = await provider2.repository(REPOSITORY_NAME);
+  const repository1 = await provider1.repository(REPOSITORY_NAME_GITHUB_HTTP);
+  const repository2 = await provider2.repository(REPOSITORY_NAME_GITHUB_HTTP);
 
-  t.is(repository1.name, REPOSITORY_NAME);
-  t.is(repository2.name, REPOSITORY_NAME);
+  t.is(repository1.name, REPOSITORY_NAME_GITHUB_HTTP);
+  t.is(repository2.name, REPOSITORY_NAME_GITHUB_HTTP);
 });
 
 test("local provider show ref", async t => {
   const provider = new LocalProvider({ workspace });
-  const repository = await provider.repository(REPOSITORY_NAME);
+  const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
   const refid = await repository.refId("refs/heads/master");
   t.is(refid.length, 40);
 });
 
 test("list tags", async t => {
   const provider = new LocalProvider({ workspace });
-  const repository = await provider.repository(REPOSITORY_NAME);
+  const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
 
   const tags = new Set();
   for await (const name of repository.tags()) {

@@ -1,15 +1,17 @@
 import test from "ava";
 import { tmpdir } from "os";
-import LocalProvider from "local-repository-provider";
-
-import { REPOSITORY_NAME } from "./helpers/constants.mjs";
 import { readFileSync, writeFileSync } from 'fs';
 import { homedir } from "os";
 import { join } from "path";
 
+import { REPOSITORY_NAME_GITHUB_HTTP } from "repository-provider-test-support";
+import LocalProvider from "local-repository-provider";
+
+
+
 test("local provider create & delete branch", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
-  const repository = await provider.repository(REPOSITORY_NAME);
+  const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
 
   /*
   writeFileSync(join(homedir(), '.git-credentials'), "https://someone:secret@github.com/\n", { encoding: "utf8" });
@@ -29,7 +31,7 @@ test("local provider create & delete branch", async t => {
 
   t.is(
     branch.fullCondensedName,
-    REPOSITORY_NAME + "#" + newName
+    REPOSITORY_NAME_GITHUB_HTTP + "#" + newName
   );
 
   t.is(branch.name, newName);

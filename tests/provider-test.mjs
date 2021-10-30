@@ -1,7 +1,8 @@
 import test from "ava";
 import { tmpdir } from "os";
 import LocalProvider from "local-repository-provider";
-import {REPOSITORY_NAME, REPOSITORY_NAME_GIT, REPOSITORY_NAME_WITH_BRANCH } from "./helpers/constants.mjs";
+import { REPOSITORY_NAME_WITH_BRANCH } from "./helpers/constants.mjs";
+import { REPOSITORY_NAME_GITHUB_HTTP, REPOSITORY_NAME_GITHUB_GIT } from "repository-provider-test-support";
 
 test("provider factory name", t => t.is(LocalProvider.name, "local"));
 
@@ -48,9 +49,9 @@ test.serial("local provider git@", async t => {
   if (process.env.SSH_AUTH_SOCK) {
     const provider = new LocalProvider({ workspace: tmpdir() });
 
-    const repository = await provider.repository(REPOSITORY_NAME_GIT);
+    const repository = await provider.repository(REPOSITORY_NAME_GITHUB_GIT);
 
-    t.is(repository.name, REPOSITORY_NAME_GIT);
+    t.is(repository.name, REPOSITORY_NAME_GITHUB_GIT);
   } else {
     t.is(1, 1, "skip git@ test without SSH_AUTH_SOCK");
   }
@@ -59,18 +60,18 @@ test.serial("local provider git@", async t => {
 test.serial("local provider with default workspace", async t => {
   const provider = new LocalProvider();
 
-  const repository = await provider.repository(REPOSITORY_NAME);
+  const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
 
-  t.is(repository.name, REPOSITORY_NAME);
-  t.is(repository.url, REPOSITORY_NAME);
+  t.is(repository.name, REPOSITORY_NAME_GITHUB_HTTP);
+  t.is(repository.url, REPOSITORY_NAME_GITHUB_HTTP);
 });
 
 test("local provider branch name", async t => {
   const provider = new LocalProvider();
 
   const repository = await provider.repository(REPOSITORY_NAME_WITH_BRANCH);
-  t.is(repository.name, REPOSITORY_NAME);
-  t.is(repository.url, REPOSITORY_NAME);
+  t.is(repository.name, REPOSITORY_NAME_GITHUB_HTTP);
+  t.is(repository.url, REPOSITORY_NAME_GITHUB_HTTP);
   t.is(
     (await provider.branch(REPOSITORY_NAME_WITH_BRANCH)).name,
     "preserve-for-test"
@@ -79,7 +80,7 @@ test("local provider branch name", async t => {
 
 test("local get file", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
-  const repository = await provider.repository(REPOSITORY_NAME);
+  const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
   const branch = await repository.defaultBranch;
 
   const file = await branch.entry("README.md");
@@ -89,7 +90,7 @@ test("local get file", async t => {
 
 test.serial("local provider list files", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
-  const repository = await provider.repository(REPOSITORY_NAME);
+  const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
   const branch = await repository.defaultBranch;
 
   const files = [];
@@ -109,7 +110,7 @@ test.serial("local provider list files", async t => {
 
 test("local provider list files with pattern", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
-  const repository = await provider.repository(REPOSITORY_NAME);
+  const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
   const branch = await repository.defaultBranch;
 
   const files = [];
@@ -128,7 +129,7 @@ test.serial("local provider get none existing file", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
 
   if (process.env.SSH_AUTH_SOCK) {
-    const repository = await provider.repository(REPOSITORY_NAME_GIT);
+    const repository = await provider.repository(REPOSITORY_NAME_GITHUB_GIT);
     const branch = await repository.defaultBranch;
 
     await t.throwsAsync(async () => branch.entry("missing file"), {
@@ -143,7 +144,7 @@ test.serial("local provider get none exiting file maybeEntry", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
 
   if (process.env.SSH_AUTH_SOCK) {
-    const repository = await provider.repository(REPOSITORY_NAME_GIT);
+    const repository = await provider.repository(REPOSITORY_NAME_GITHUB_GIT);
     const branch = await repository.defaultBranch;
 
     t.is(await branch.maybeEntry("missing file"), undefined);
@@ -156,7 +157,7 @@ test.serial.skip("local provider commit files", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
 
   if (process.env.SSH_AUTH_SOCK) {
-    const repository = await provider.repository(REPOSITORY_NAME_GIT);
+    const repository = await provider.repository(REPOSITORY_NAME_GITHUB_GIT);
     const branch = await repository.defaultBranch;
     const file = await branch.entry("README.md");
     const options = { encoding: "utf8" };
