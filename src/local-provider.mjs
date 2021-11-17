@@ -1,7 +1,7 @@
 import { join } from "path";
 import { tmpdir } from "os";
 import { mkdir } from "fs/promises";
-import execa from "execa";
+import { execa } from "execa";
 import { SingleGroupProvider, asArray } from "repository-provider";
 import { LocalRepository } from "./local-repository.mjs";
 import { LocalBranch } from "./local-branch.mjs";
