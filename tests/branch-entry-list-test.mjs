@@ -1,13 +1,11 @@
 import test from "ava";
 import LocalProvider from "local-repository-provider";
-import { entryListTest, REPOSITORY_NAME_GITHUB_HTTP } from "repository-provider-test-support";
-
-const REPOSITORY_NAME_BRANCH = REPOSITORY_NAME_GITHUB_HTTP + "#local-repository-provider-test";
+import { entryListTest, REPOSITORY_NAME_WITH_BRANCH_GITHUB_HTTP } from "repository-provider-test-support";
 
 const provider = new LocalProvider();
 
 test("local provider branchname default pattern", async t => {
-  const branch = await provider.branch(REPOSITORY_NAME_BRANCH);
+  const branch = await provider.branch(REPOSITORY_NAME_WITH_BRANCH_GITHUB_HTTP);
 
   await entryListTest(t, branch, undefined, {
     ".gitignore": { startsWith: "node" },
@@ -19,7 +17,7 @@ test("local provider branchname default pattern", async t => {
 });
 
 test("local provider branchname pattern", async t => {
-  const branch = await provider.branch(REPOSITORY_NAME_BRANCH);
+  const branch = await provider.branch(REPOSITORY_NAME_WITH_BRANCH_GITHUB_HTTP);
 
   await entryListTest(t, branch, "**/*ADME*", {
     "README.md": { startsWith: "fil" }
