@@ -1,6 +1,6 @@
 {
   "name": "local-repository-provider",
-  "version": "0.0.0-semantic-release",
+  "version": "7.0.108",
   "publishConfig": {
     "access": "public"
   },
