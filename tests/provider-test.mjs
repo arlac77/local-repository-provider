@@ -163,12 +163,12 @@ test.serial.skip("local provider commit files", async t => {
     const options = { encoding: "utf8" };
     const old = await file.getString(options);
 
-    t.false(!(await file.isEmpty()));
+    t.false(!(await file.isEmpty));
     await file.setString(`${old}\n${new Date()}`);
-    t.false(!(await file.isEmpty()));
+    t.false(!(await file.isEmpty));
 
     const file2 = await branch.entry("README.md");
-    t.false(!(await file2.isEmpty()));
+    t.false(!(await file2.isEmpty));
 
     t.is(await file.getString(options), await file2.getString(options));
 
