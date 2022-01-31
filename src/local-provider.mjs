@@ -42,14 +42,6 @@ export class LocalProvider extends SingleGroupProvider {
     };
   }
 
-  get repositoryClass() {
-    return LocalRepository;
-  }
-
-  get branchClass() {
-    return LocalBranch;
-  }
-
   /**
    * Generate path for a new workspace.
    * For the livetime of the provider always genrate new names
@@ -147,6 +139,18 @@ export class LocalProvider extends SingleGroupProvider {
     const m = name.match(/#(.+)$/);
 
     return repository.branch(m ? m[1] : repository.defaultBranchName);
+  }
+
+  get repositoryClass() {
+    return LocalRepository;
+  }
+
+  get branchClass() {
+    return LocalBranch;
+  }
+  
+  get entryClass() {
+    return FileSystemEntry;
   }
 }
 

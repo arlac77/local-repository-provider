@@ -138,10 +138,6 @@ export class LocalBranch extends Branch {
     });
   }
 
-  get entryClass() {
-    return FileSystemEntry;
-  }
-
   get fullCondensedName() {
     return this.isDefault
       ? this.repository.condensedName
