@@ -3,8 +3,8 @@ import { createWriteStream } from "fs";
 import { mkdir } from "fs/promises";
 import { pipeline } from "stream";
 import { globby } from "globby";
-import { FileSystemEntry } from "content-entry-filesystem";
 import { Branch } from "repository-provider";
+import { FileSystemEntry } from "content-entry-filesystem";
 
 /**
  * @property {string} workspace

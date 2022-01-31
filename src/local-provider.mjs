@@ -1,7 +1,9 @@
 import { join } from "path";
 import { tmpdir } from "os";
 import { mkdir } from "fs/promises";
+import { createHash } from "crypto";
 import { execa } from "execa";
+import { FileSystemEntry } from "content-entry-filesystem";
 import { SingleGroupProvider, asArray } from "repository-provider";
 import { LocalRepository } from "./local-repository.mjs";
 import { LocalBranch } from "./local-branch.mjs";
@@ -45,14 +47,17 @@ export class LocalProvider extends SingleGroupProvider {
   /**
    * Generate path for a new workspace.
    * For the livetime of the provider always genrate new names
+   * @param {string} repository name
    * @return {string} path
    */
-  newWorkspacePath() {
-    return join(this.workspace, `r-${process.hrtime.bigint()}`);
+  newWorkspacePath(name) {
+    const hash = createHash("sha256");
+    hash.update(name);
+    return join(this.workspace, hash.digest("hex"));
   }
 
   normalizeRepositoryName(name) {
-    return name.trim().replace(/#.*$/,'');
+    return name.trim().replace(/#.*$/, "");
   }
 
   /**
@@ -70,7 +75,7 @@ export class LocalProvider extends SingleGroupProvider {
   }
 
   async createRepository(name, options) {
-    const workspace = this.newWorkspacePath();
+    const workspace = this.newWorkspacePath(name);
     await mkdir(workspace, { recursive: true });
     const repo = await super.createRepository(name, { workspace });
     await execa("git", ["init"], { cwd: workspace });
@@ -109,7 +114,7 @@ export class LocalProvider extends SingleGroupProvider {
     if (repository === undefined) {
       try {
         repository = new this.repositoryClass(this, name, {
-          workspace: workspace ? workspace : this.newWorkspacePath()
+          workspace: workspace || this.newWorkspacePath(name)
         });
 
         if (await repository.initialize()) {
@@ -148,7 +153,7 @@ export class LocalProvider extends SingleGroupProvider {
   get branchClass() {
     return LocalBranch;
   }
-  
+
   get entryClass() {
     return FileSystemEntry;
   }

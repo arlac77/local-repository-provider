@@ -27,16 +27,16 @@ test("local provider", t => {
 test("local provider workspacePaths", async t => {
   const provider = new LocalProvider({ workspace: "/tmp" });
 
-  const w1 = provider.newWorkspacePath();
-  const w2 = provider.newWorkspacePath();
-  const w3 = provider.newWorkspacePath();
+  const w1 = provider.newWorkspacePath("a");
+  const w2 = provider.newWorkspacePath("b");
+  const w3 = provider.newWorkspacePath("c");
 
   t.true(w1 !== w2);
   t.true(w1 !== w3);
   t.true(w2 !== w3);
-  t.true(w1.startsWith("/tmp/r"));
-  t.true(w2.startsWith("/tmp/r"));
-  t.true(w3.startsWith("/tmp/r"));
+  t.true(w1.startsWith("/tmp/"));
+  t.true(w2.startsWith("/tmp/"));
+  t.true(w3.startsWith("/tmp/"));
 });
 
 test("local provider repo undefined", async t => {
