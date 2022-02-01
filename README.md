@@ -34,20 +34,21 @@ repository provider using local (native) git commands
 *   [LocalProvider](#localprovider)
     *   [Properties](#properties-1)
     *   [newWorkspacePath](#newworkspacepath)
-    *   [branches](#branches)
         *   [Parameters](#parameters-5)
-    *   [repositories](#repositories)
+    *   [branches](#branches)
         *   [Parameters](#parameters-6)
-    *   [repository](#repository)
+    *   [repositories](#repositories)
         *   [Parameters](#parameters-7)
+    *   [repository](#repository)
+        *   [Parameters](#parameters-8)
     *   [name](#name)
     *   [attributes](#attributes)
 *   [LocalRepository](#localrepository)
     *   [Properties](#properties-2)
     *   [setCurrentBranch](#setcurrentbranch)
-        *   [Parameters](#parameters-8)
-    *   [refId](#refid)
         *   [Parameters](#parameters-9)
+    *   [refId](#refid)
+        *   [Parameters](#parameters-10)
     *   [initializeBranches](#initializebranches)
 *   [workspace](#workspace)
 
@@ -131,6 +132,11 @@ Known environment variables.
 
 Generate path for a new workspace.
 For the livetime of the provider always genrate new names
+
+#### Parameters
+
+*   `name`  
+*   `repository` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** name
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** path
 
