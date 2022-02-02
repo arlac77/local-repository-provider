@@ -71,11 +71,14 @@ export class LocalBranch extends Branch {
    * @param {string} message commit message
    * @param {ContentEntry[]} entries file entries to be commited
    * @param {Object} options
+   * @param {boolean} options.push exec push after commit
    */
-  async commit(message, entries, options) {
+  async commit(message, entries, options = { push: true }) {
     await this.writeEntries(entries);
     await this.repository.exec(["commit", "-m", message]);
-    await this.repository.push("--set-upstream", "origin", this.name);
+    if (options.push) {
+      await this.repository.push("--set-upstream", "origin", this.name);
+    }
   }
 
   /**
