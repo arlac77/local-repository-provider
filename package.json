@@ -31,7 +31,7 @@
   "dependencies": {
     "content-entry-filesystem": "^4.0.3",
     "execa": "^6.0.0",
-    "globby": "^13.0.0",
+    "globby": "^13.1.1",
     "one-time-execution-method": "^2.0.10",
     "repository-provider": "^26.4.4"
   },
