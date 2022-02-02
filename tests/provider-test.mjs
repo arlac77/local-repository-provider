@@ -1,4 +1,5 @@
 import test from "ava";
+import { join } from "path";
 import { tmpdir } from "os";
 import LocalProvider from "local-repository-provider";
 import { REPOSITORY_NAME_WITH_BRANCH } from "./helpers/constants.mjs";
@@ -48,9 +49,9 @@ test("local provider repo undefined", async t => {
   t.true(repository === undefined);
 });
 
-test.serial("local provider git@", async t => {
+test("local provider git@", async t => {
   if (process.env.SSH_AUTH_SOCK) {
-    const provider = new LocalProvider({ workspace: tmpdir() });
+    const provider = new LocalProvider({ workspace: join(tmpdir(), "a") });
 
     const repository = await provider.repository(REPOSITORY_NAME_GITHUB_GIT);
 
@@ -60,7 +61,7 @@ test.serial("local provider git@", async t => {
   }
 });
 
-test.serial("local provider with default workspace", async t => {
+test("local provider with default workspace", async t => {
   const provider = new LocalProvider();
 
   const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
@@ -69,8 +70,8 @@ test.serial("local provider with default workspace", async t => {
   t.is(repository.url, REPOSITORY_NAME_GITHUB_HTTP);
 });
 
-test.serial("local provider branch name", async t => {
-  const provider = new LocalProvider();
+test("local provider branch name", async t => {
+  const provider = new LocalProvider({ workspace: join(tmpdir(), "b") });
 
   const repository = await provider.repository(REPOSITORY_NAME_WITH_BRANCH);
   t.is(repository.name, REPOSITORY_NAME_GITHUB_HTTP);
@@ -81,8 +82,8 @@ test.serial("local provider branch name", async t => {
   );
 });
 
-test.serial("local get file", async t => {
-  const provider = new LocalProvider({ workspace: tmpdir() });
+test("local get file", async t => {
+  const provider = new LocalProvider({ workspace: join(tmpdir(), "c") });
   const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
   const branch = await repository.defaultBranch;
 
@@ -91,8 +92,8 @@ test.serial("local get file", async t => {
   t.is((await file.string).substring(0, 3), "fil");
 });
 
-test.serial("local provider list files", async t => {
-  const provider = new LocalProvider({ workspace: tmpdir() });
+test("local provider list files", async t => {
+  const provider = new LocalProvider({ workspace: join(tmpdir(), "d") });
   const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
   const branch = await repository.defaultBranch;
 
@@ -111,8 +112,8 @@ test.serial("local provider list files", async t => {
   t.true(file2.isBlob);
 });
 
-test.serial("local provider list files with pattern", async t => {
-  const provider = new LocalProvider({ workspace: tmpdir() });
+test("local provider list files with pattern", async t => {
+  const provider = new LocalProvider({ workspace: join(tmpdir(), "e") });
   const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
   const branch = await repository.defaultBranch;
 
@@ -128,8 +129,8 @@ test.serial("local provider list files with pattern", async t => {
   t.true(file.isBlob);
 });
 
-test.serial("local provider get none existing file", async t => {
-  const provider = new LocalProvider({ workspace: tmpdir() });
+test("local provider get none existing file", async t => {
+  const provider = new LocalProvider({ workspace: join(tmpdir(), "f") });
 
   if (process.env.SSH_AUTH_SOCK) {
     const repository = await provider.repository(REPOSITORY_NAME_GITHUB_GIT);
@@ -143,8 +144,8 @@ test.serial("local provider get none existing file", async t => {
   }
 });
 
-test.serial("local provider get none exiting file maybeEntry", async t => {
-  const provider = new LocalProvider({ workspace: tmpdir() });
+test("local provider get none exiting file maybeEntry", async t => {
+  const provider = new LocalProvider({ workspace: join(tmpdir(), "g") });
 
   if (process.env.SSH_AUTH_SOCK) {
     const repository = await provider.repository(REPOSITORY_NAME_GITHUB_GIT);
@@ -157,7 +158,7 @@ test.serial("local provider get none exiting file maybeEntry", async t => {
 });
 
 test.serial.skip("local provider commit files", async t => {
-  const provider = new LocalProvider({ workspace: tmpdir() });
+  const provider = new LocalProvider({ workspace: join(tmpdir(), "h") });
 
   if (process.env.SSH_AUTH_SOCK) {
     const repository = await provider.repository(REPOSITORY_NAME_GITHUB_GIT);
