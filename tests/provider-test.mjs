@@ -2,7 +2,10 @@ import test from "ava";
 import { tmpdir } from "os";
 import LocalProvider from "local-repository-provider";
 import { REPOSITORY_NAME_WITH_BRANCH } from "./helpers/constants.mjs";
-import { REPOSITORY_NAME_GITHUB_HTTP, REPOSITORY_NAME_GITHUB_GIT } from "repository-provider-test-support";
+import {
+  REPOSITORY_NAME_GITHUB_HTTP,
+  REPOSITORY_NAME_GITHUB_GIT
+} from "repository-provider-test-support";
 
 test("provider factory name", t => t.is(LocalProvider.name, "local"));
 
@@ -66,7 +69,7 @@ test.serial("local provider with default workspace", async t => {
   t.is(repository.url, REPOSITORY_NAME_GITHUB_HTTP);
 });
 
-test("local provider branch name", async t => {
+test.serial("local provider branch name", async t => {
   const provider = new LocalProvider();
 
   const repository = await provider.repository(REPOSITORY_NAME_WITH_BRANCH);
@@ -78,14 +81,14 @@ test("local provider branch name", async t => {
   );
 });
 
-test("local get file", async t => {
+test.serial("local get file", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
   const branch = await repository.defaultBranch;
 
   const file = await branch.entry("README.md");
 
-  t.is((await file.string).substring(0, 3), `fil`);
+  t.is((await file.string).substring(0, 3), "fil");
 });
 
 test.serial("local provider list files", async t => {
@@ -108,7 +111,7 @@ test.serial("local provider list files", async t => {
   t.true(file2.isBlob);
 });
 
-test("local provider list files with pattern", async t => {
+test.serial("local provider list files with pattern", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
   const branch = await repository.defaultBranch;
