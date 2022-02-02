@@ -64,14 +64,14 @@ test("local provider reuse workspace", async t => {
   t.is(repository2.name, REPOSITORY_NAME_GITHUB_HTTP);
 });
 
-test("local provider show ref", async t => {
+test.serial("local provider show ref", async t => {
   const provider = new LocalProvider({ workspace });
   const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
   const refid = await repository.refId("refs/heads/master");
   t.is(refid.length, 40);
 });
 
-test("list tags", async t => {
+test.serial("list tags", async t => {
   const provider = new LocalProvider({ workspace });
   const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
 
