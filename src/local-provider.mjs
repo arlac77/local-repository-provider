@@ -51,7 +51,7 @@ export class LocalProvider extends SingleGroupProvider {
    * @return {string} path
    */
   newWorkspacePath(name) {
-    const hash = createHash("sha256");
+    const hash = createHash("md5");
     hash.update(name);
     return join(this.workspace, hash.digest("hex"));
   }
