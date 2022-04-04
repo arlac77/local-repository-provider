@@ -15,7 +15,7 @@ jobs:
           global: true
           token: ${{ secrets.GH_TOKEN }}
       - name: Build / Test Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v3.1
+        uses: actions/setup-node@v3.1.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.1
+      - uses: actions/setup-node@v3.1.0
         with:
           node-version: 16.14.2
           cache: npm
