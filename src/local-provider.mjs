@@ -122,7 +122,8 @@ export class LocalProvider extends SingleGroupProvider {
         } else {
           return undefined;
         }
-      } catch {
+      } catch(err) {
+        this.error(err);
         return undefined;
       }
     }
