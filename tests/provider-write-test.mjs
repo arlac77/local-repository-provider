@@ -9,7 +9,7 @@ import LocalProvider from "local-repository-provider";
 
 
 
-test("local provider create & delete branch", async t => {
+test.skip("local provider create & delete branch", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
 
