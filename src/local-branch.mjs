@@ -11,7 +11,7 @@ import { FileSystemEntry } from "content-entry-filesystem";
  */
 export class LocalBranch extends Branch {
   get workspace() {
-    return this.repository.workspace;
+    return this.owner.workspace;
   }
 
   /**
@@ -20,7 +20,7 @@ export class LocalBranch extends Branch {
    * @return {Promise<ContentEntry[]>} written entries
    */
   async writeEntries(entries) {
-    await this.repository.setCurrentBranch(this);
+    await this.owner.setCurrentBranch(this);
     try {
       await Promise.all(
         entries.map(b =>
@@ -57,7 +57,7 @@ export class LocalBranch extends Branch {
       }
     });
 
-    await this.repository.exec(["add", ...entries.map(entry => entry.name)]);
+    await this.owner.exec(["add", ...entries.map(entry => entry.name)]);
 
     return entries;
   }
@@ -75,9 +75,9 @@ export class LocalBranch extends Branch {
    */
   async commit(message, entries, options = { push: true }) {
     await this.writeEntries(entries);
-    await this.repository.exec(["commit", "-m", message]);
+    await this.owner.exec(["commit", "-m", message]);
     if (options.push) {
-      await this.repository.push("--set-upstream", "origin", this.name);
+      await this.owner.push("--set-upstream", "origin", this.name);
     }
   }
 
@@ -92,7 +92,7 @@ export class LocalBranch extends Branch {
     }
     matchingPatterns.push("!.git");
 
-    await this.repository.setCurrentBranch(this);
+    await this.owner.setCurrentBranch(this);
     for (const name of await globby(matchingPatterns, {
       cwd: this.workspace,
       dot: true
@@ -107,7 +107,7 @@ export class LocalBranch extends Branch {
    * @return {ContentEntry} matching branch path names
    */
   async entry(name) {
-    await this.repository.setCurrentBranch(this);
+    await this.owner.setCurrentBranch(this);
 
     const entry = new FileSystemEntry(name, this.workspace);
     if (await entry.isExistent) {
@@ -122,7 +122,7 @@ export class LocalBranch extends Branch {
    * @return {ContentEntry} matching branch path names
    */
   async maybeEntry(name) {
-    await this.repository.setCurrentBranch(this);
+    await this.owner.setCurrentBranch(this);
 
     const entry = new FileSystemEntry(name, this.workspace);
     if (await entry.isExistent) {
@@ -132,7 +132,7 @@ export class LocalBranch extends Branch {
   }
 
   async removeEntries(entries) {
-    await this.repository.exec(["delete", ...entries.map(entry => entry.name)]);
+    await this.owner.exec(["delete", ...entries.map(entry => entry.name)]);
   }
 
   async createPullRequest(to, message) {
@@ -143,7 +143,7 @@ export class LocalBranch extends Branch {
 
   get fullCondensedName() {
     return this.isDefault
-      ? this.repository.condensedName
-      : `${this.repository.condensedName}#${this.name}`;
+      ? this.owner.condensedName
+      : `${this.owner.condensedName}#${this.name}`;
   }
 }

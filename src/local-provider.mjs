@@ -110,22 +110,19 @@ export class LocalProvider extends SingleGroupProvider {
       return undefined;
     }
 
-    let repository = super.repository(name);
+    let repository = await super.repository(name);
     if (repository === undefined) {
       try {
-      console.log("new a",name);
         repository = new this.repositoryClass(this, name, {
           workspace: workspace || this.newWorkspacePath(name)
         });
 
-console.log("new", name,repository);
         if (await repository.initialize()) {
           //this.addRepository(repository);
         } else {
           return undefined;
         }
-console.log("done");
-      } catch(err) {
+      } catch (err) {
         this.error(err);
         return undefined;
       }
