@@ -28,8 +28,8 @@ export class LocalRepository extends Repository {
     return await execa("git", args, options);
   }
 
-  get urls() {
-    return [this.name];
+  get url() {
+    return this.name;
   }
 
   async push(...args) {
