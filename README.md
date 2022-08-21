@@ -58,7 +58,7 @@ repository provider using local (native) git commands
 
 ### Properties
 
-*   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+*   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 ### writeEntries
 
@@ -66,7 +66,7 @@ Writes ContentEntries into the branch
 
 #### Parameters
 
-*   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<ContentEntry>** 
+*   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<ContentEntry>**&#x20;
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<ContentEntry>>** written entries
 
@@ -103,7 +103,7 @@ Search for path in the branch.
 
 #### Parameters
 
-*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **ContentEntry** matching branch path names
 
@@ -113,7 +113,7 @@ Search for path in the branch.
 
 #### Parameters
 
-*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **ContentEntry** matching branch path names
 
@@ -124,11 +124,11 @@ Returns **ContentEntry** matching branch path names
 Provider using native git executable.
 Known environment variables.
 
-*   GIT_CLONE_OPTIONS
+*   GIT\_CLONE\_OPTIONS
 
 ### Properties
 
-*   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+*   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 ### newWorkspacePath
 
@@ -137,7 +137,7 @@ For the livetime of the provider always genrate new names
 
 #### Parameters
 
-*   `name`  
+*   `name` &#x20;
 *   `repository` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** name
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** path
@@ -149,7 +149,7 @@ Only delivers branches for valid complete git urls.
 
 #### Parameters
 
-*   `patterns` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>)** 
+*   `patterns` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>)**&#x20;
 
 ### repositories
 
@@ -158,7 +158,7 @@ Only delivers repositories for valid complete git urls.
 
 #### Parameters
 
-*   `patterns` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>)** 
+*   `patterns` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>)**&#x20;
 
 ### repository
 
@@ -166,7 +166,7 @@ Using provider workspace and number of repositories to create repository workspa
 
 #### Parameters
 
-*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 *   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** where to place the repos workspace @see #newWorkspacePath
 
 ### name
@@ -182,7 +182,7 @@ Default configuration options.
 *   workspace
 *   cloneOptions defaults to \["--depth", "8", "--no-single-branch"]
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
 ## LocalRepository
 
@@ -190,8 +190,8 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ### Properties
 
-*   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-*   `currentBranch` **Branch** 
+*   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+*   `currentBranch` **Branch**&#x20;
 
 ### setCurrentBranch
 
@@ -199,7 +199,7 @@ Set the current active branch (workspace)
 
 #### Parameters
 
-*   `branch` **Branch** 
+*   `branch` **Branch**&#x20;
 
 ### refId
 
@@ -212,7 +212,7 @@ git show-ref <ref>
 
 #### Parameters
 
-*   `ref` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+*   `ref` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** sha of the ref
 
@@ -228,7 +228,7 @@ git ls-remote --heads
 
 workspace directory.
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 # install
 
