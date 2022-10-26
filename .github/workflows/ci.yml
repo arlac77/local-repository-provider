@@ -15,8 +15,7 @@ jobs:
         with:
           global: true
           token: ${{ secrets.GH_TOKEN }}
-      - name: Test Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v3.5.1
+      - uses: actions/setup-node@v3.5.1
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
