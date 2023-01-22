@@ -28,6 +28,7 @@
     "lint:docs": "documentation lint ./src/**/*.mjs"
   },
   "dependencies": {
+    "content-entry": "^6.0.0",
     "content-entry-filesystem": "^5.2.13",
     "execa": "^6.1.0",
     "globby": "^13.1.3",
