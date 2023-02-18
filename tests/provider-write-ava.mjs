@@ -1,8 +1,5 @@
 import test from "ava";
-import { tmpdir } from "os";
-import { readFileSync, writeFileSync } from 'fs';
-import { homedir } from "os";
-import { join } from "path";
+import { tmpdir } from "node:os";
 
 import { REPOSITORY_NAME_GITHUB_HTTP } from "repository-provider-test-support";
 import LocalProvider from "local-repository-provider";

@@ -1,5 +1,5 @@
 import test from "ava";
-import { tmpdir } from "os";
+import { tmpdir } from "node:os";
 import LocalProvider from "local-repository-provider";
 
 test("create repo", async t => {

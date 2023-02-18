@@ -1,7 +1,7 @@
-import { join, dirname } from "path";
-import { createWriteStream } from "fs";
-import { mkdir } from "fs/promises";
-import { pipeline } from "stream";
+import { join, dirname } from "node:path";
+import { createWriteStream } from "node:fs";
+import { mkdir } from "node:fs/promises";
+import { pipeline } from "node:stream";
 import { globby } from "globby";
 import { Branch } from "repository-provider";
 import { FileSystemEntry } from "content-entry-filesystem";

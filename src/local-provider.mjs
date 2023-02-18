@@ -1,7 +1,7 @@
-import { join } from "path";
-import { tmpdir } from "os";
-import { mkdir } from "fs/promises";
-import { createHash } from "crypto";
+import { join } from "node:path";
+import { tmpdir } from "node:os";
+import { mkdir } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { execa } from "execa";
 import { FileSystemEntry } from "content-entry-filesystem";
 import { SingleGroupProvider, asArray } from "repository-provider";

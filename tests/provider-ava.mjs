@@ -1,6 +1,6 @@
 import test from "ava";
-import { join } from "path";
-import { tmpdir } from "os";
+import { join } from "node:path";
+import { tmpdir } from "node:os";
 import LocalProvider from "local-repository-provider";
 import { REPOSITORY_NAME_WITH_BRANCH } from "./helpers/constants.mjs";
 import {

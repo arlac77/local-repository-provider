@@ -1,4 +1,4 @@
-import { stat } from "fs/promises";
+import { stat } from "node:fs/promises";
 import { execa } from "execa";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 import { Repository } from "repository-provider";
