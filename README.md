@@ -31,6 +31,7 @@ repository provider using local (native) git commands
         *   [Parameters](#parameters-3)
     *   [maybeEntry](#maybeentry)
         *   [Parameters](#parameters-4)
+*   [Promise](#promise)
 *   [LocalProvider](#localprovider)
     *   [Properties](#properties-1)
     *   [newWorkspacePath](#newworkspacepath)
@@ -68,7 +69,7 @@ Writes ContentEntries into the branch
 
 *   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<ContentEntry>**&#x20;
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<ContentEntry>>** written entries
+Returns **[Promise](#promise)<[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<ContentEntry>>** written entries
 
 ### commit
 
@@ -95,7 +96,7 @@ Deliver all matchine entires for a given pattern.
 
 *   `matchingPatterns` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>**  (optional, default `["**/*"]`)
 
-Returns **Iterable\<ContentEntry>** matching branch path names
+Returns **AsyncIterable\<ContentEntry>** matching branch path names
 
 ### entry
 
@@ -117,6 +118,10 @@ Search for path in the branch.
 
 Returns **ContentEntry** matching branch path names
 
+## Promise
+
+Type: [Promise](#promise)\<void>
+
 ## LocalProvider
 
 **Extends SingleGroupProvider**
@@ -137,8 +142,7 @@ For the livetime of the provider always genrate new names
 
 #### Parameters
 
-*   `name` &#x20;
-*   `repository` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** name
+*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** path
 
@@ -158,7 +162,7 @@ Only delivers repositories for valid complete git urls.
 
 #### Parameters
 
-*   `patterns` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>)**&#x20;
+*   `patterns` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))?**&#x20;
 
 ### repository
 
@@ -214,7 +218,7 @@ git show-ref <ref>
 
 *   `ref` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** sha of the ref
+Returns **[Promise](#promise)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** sha of the ref
 
 ### initializeBranches
 
