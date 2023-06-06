@@ -34,7 +34,7 @@ export class LocalBranch extends Branch {
       }
     }
 
-    await new Promise(async (resolve, reject) => {
+    await /** @type {Promise<void>} */(new Promise(async (resolve, reject) => {
       let ongoing = 0;
 
       for (const u of entries) {
@@ -55,7 +55,7 @@ export class LocalBranch extends Branch {
           }
         );
       }
-    });
+    }));
 
     await this.owner.exec(["add", ...entries.map(entry => entry.name)]);
 
@@ -84,7 +84,7 @@ export class LocalBranch extends Branch {
   /**
    * Deliver all matchine entires for a given pattern.
    * @param {string[]} matchingPatterns
-   * @return {Iterable<ContentEntry>} matching branch path names
+   * @return {AsyncIterable<ContentEntry>} matching branch path names
    */
   async *entries(matchingPatterns = ["**/*"]) {
     if (!Array.isArray(matchingPatterns)) {

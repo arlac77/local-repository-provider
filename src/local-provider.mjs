@@ -47,7 +47,7 @@ export class LocalProvider extends SingleGroupProvider {
   /**
    * Generate path for a new workspace.
    * For the livetime of the provider always genrate new names
-   * @param {string} repository name
+   * @param {string} name
    * @return {string} path
    */
   newWorkspacePath(name) {
@@ -85,7 +85,7 @@ export class LocalProvider extends SingleGroupProvider {
   /**
    * List repositories for a given set of patterns.
    * Only delivers repositories for valid complete git urls.
-   * @param {string|string[]} patterns
+   * @param {string[]|string} [patterns]
    */
   async *repositories(patterns) {
     for (const pattern of asArray(patterns)) {

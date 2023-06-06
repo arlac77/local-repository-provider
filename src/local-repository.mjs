@@ -68,7 +68,7 @@ export class LocalRepository extends Repository {
    * git show-ref <ref>
    * ```
    * @param {string} ref
-   * @return {string} sha of the ref
+   * @return {Promise<string>} sha of the ref
    */
   async refId(ref) {
     const g = await this.exec(["show-ref", ref], {});
