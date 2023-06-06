@@ -24,7 +24,7 @@ export class LocalBranch extends Branch {
     try {
       await Promise.all(
         entries.map(b =>
-          mkdir(dirname(join(this.workspace, b.name), { recursive: true }))
+          mkdir(dirname(join(this.workspace, b.name)), { recursive: true })
         )
       );
     } catch (e) {
