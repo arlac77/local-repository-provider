@@ -103,11 +103,11 @@ export class LocalProvider extends SingleGroupProvider {
    */
   async repository(name, workspace) {
     if (name === undefined) {
-      return undefined;
+      return;
     }
     name = this.normalizeRepositoryName(name);
     if (name.length < 2) {
-      return undefined;
+      return;
     }
 
     let repository = await super.repository(name);
@@ -120,11 +120,11 @@ export class LocalProvider extends SingleGroupProvider {
         if (await repository.initialize()) {
           //this.addRepository(repository);
         } else {
-          return undefined;
+          return;
         }
       } catch (err) {
         this.error(err);
-        return undefined;
+        return;
       }
     }
 
@@ -133,13 +133,13 @@ export class LocalProvider extends SingleGroupProvider {
 
   async branch(name) {
     if (name === undefined) {
-      return undefined;
+      return;
     }
 
     const repository = await this.repository(name);
 
     if (repository === undefined) {
-      return undefined;
+      return;
     }
 
     const m = name.match(/#(.+)$/);
