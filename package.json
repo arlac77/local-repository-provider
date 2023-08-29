@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "content-entry": "^6.0.0",
-    "content-entry-filesystem": "^5.2.13",
+    "content-entry-filesystem": "^6.0.0",
     "execa": "^8.0.1",
     "globby": "^13.2.2",
     "one-time-execution-method": "^3.0.6",
