@@ -2,8 +2,7 @@
   "name": "local-repository-provider",
   "version": "0.0.0-semantic-release",
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "exports": {
     ".": "./src/local-provider.mjs"
@@ -48,7 +47,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/arlac77/local-repository-provider"
+    "url": "git+https://github.com/arlac77/local-repository-provider.git"
   },
   "bugs": {
     "url": "https://github.com/arlac77/local-repository-provider/issues"
