@@ -34,7 +34,7 @@
     "execa": "^8.0.1",
     "globby": "^14.0.1",
     "one-time-execution-method": "^3.1.1",
-    "repository-provider": "^35.0.4"
+    "repository-provider": "^35.1.0"
   },
   "devDependencies": {
     "ava": "^6.1.1",
