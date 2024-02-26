@@ -3,8 +3,9 @@ import { createWriteStream } from "node:fs";
 import { mkdir } from "node:fs/promises";
 import { pipeline } from "node:stream";
 import { globby } from "globby";
-import { Branch } from "repository-provider";
+import { Branch, CommitResult } from "repository-provider";
 import { FileSystemEntry } from "content-entry-filesystem";
+import { ContentEntry } from "content-entry";
 
 /**
  * @property {string} workspace
@@ -34,28 +35,30 @@ export class LocalBranch extends Branch {
       }
     }
 
-    await /** @type {Promise<void>} */(new Promise(async (resolve, reject) => {
-      let ongoing = 0;
+    await /** @type {Promise<void>} */ (
+      new Promise(async (resolve, reject) => {
+        let ongoing = 0;
 
-      for (const u of entries) {
-        ongoing++;
+        for (const u of entries) {
+          ongoing++;
 
-        pipeline(
-          await u.getReadStream(),
-          createWriteStream(join(this.workspace, u.name)),
-          err => {
-            if (err) {
-              reject(err);
-            } else {
-              ongoing--;
-              if (ongoing <= 0) {
-                resolve();
+          pipeline(
+            await u.getReadStream(),
+            createWriteStream(join(this.workspace, u.name)),
+            err => {
+              if (err) {
+                reject(err);
+              } else {
+                ongoing--;
+                if (ongoing <= 0) {
+                  resolve();
+                }
               }
             }
-          }
-        );
-      }
-    }));
+          );
+        }
+      })
+    );
 
     await this.owner.exec(["add", ...entries.map(entry => entry.name)]);
 
@@ -79,12 +82,13 @@ export class LocalBranch extends Branch {
     if (options.push) {
       await this.owner.push("--set-upstream", "origin", this.name);
     }
+    return new CommitResult("");
   }
 
   /**
    * Deliver all matchine entires for a given pattern.
-   * @param {string[]} matchingPatterns
-   * @return {AsyncIterable<ContentEntry>} matching branch path names
+   * @param {string[]|string} matchingPatterns
+   * @return {AsyncGenerator<ContentEntry>} matching branch path names
    */
   async *entries(matchingPatterns = ["**/*"]) {
     if (!Array.isArray(matchingPatterns)) {
@@ -104,13 +108,14 @@ export class LocalBranch extends Branch {
   /**
    * Search for path in the branch.
    * @param {string} name
-   * @return {ContentEntry} matching branch path names
+   * @return {Promise<ContentEntry>} matching branch path names
    */
   async entry(name) {
     await this.owner.setCurrentBranch(this);
 
     const entry = new FileSystemEntry(name, this.workspace);
     if (await entry.isExistent) {
+      // @ts-ignore
       return entry;
     }
     throw new Error(`file not found: ${name}`);
@@ -119,16 +124,16 @@ export class LocalBranch extends Branch {
   /**
    * Search for path in the branch.
    * @param {string} name
-   * @return {ContentEntry} matching branch path names
+   * @return {Promise<ContentEntry|undefined>} matching branch path names
    */
   async maybeEntry(name) {
     await this.owner.setCurrentBranch(this);
 
     const entry = new FileSystemEntry(name, this.workspace);
     if (await entry.isExistent) {
+      // @ts-ignore
       return entry;
     }
-    return undefined;
   }
 
   async removeEntries(entries) {

@@ -31,6 +31,7 @@ export class LocalProvider extends SingleGroupProvider {
    */
   static get attributes() {
     return {
+      // @ts-ignore
       ...super.attributes,
       cloneOptions: {
         env: "GIT_CLONE_OPTIONS",
@@ -99,7 +100,7 @@ export class LocalProvider extends SingleGroupProvider {
   /**
    * Using provider workspace and number of repositories to create repository workspace.
    * @param {string} name
-   * @param {string} workspace where to place the repos workspace @see #newWorkspacePath
+   * @param {string} [workspace] where to place the repos workspace
    */
   async repository(name, workspace) {
     if (name === undefined) {
@@ -117,11 +118,7 @@ export class LocalProvider extends SingleGroupProvider {
           workspace: workspace || this.newWorkspacePath(name)
         });
 
-        if (await repository.initialize()) {
-          //this.addRepository(repository);
-        } else {
-          return;
-        }
+        await repository.initialize();
       } catch (err) {
         this.error(err);
         return;

@@ -6,8 +6,12 @@
     "provenance": true
   },
   "exports": {
-    ".": "./src/local-provider.mjs"
+    ".": {
+      "default": "./src/local-provider.mjs",
+      "types": "./types/local-provider.d.mts"
+    }
   },
+  "types": "./types/local-provider.d.mts",
   "description": "repository provider using local (native) git commands",
   "keywords": [
     "git",
@@ -39,6 +43,7 @@
     "repository-provider": "^35.2.14"
   },
   "devDependencies": {
+    "@types/node": "^20.11.20",
     "ava": "^6.1.1",
     "c8": "^9.1.0",
     "documentation": "^14.0.3",

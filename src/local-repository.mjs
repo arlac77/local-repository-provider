@@ -1,7 +1,7 @@
 import { stat } from "node:fs/promises";
 import { execa } from "execa";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
-import { Repository } from "repository-provider";
+import { Repository, Branch } from "repository-provider";
 import { refNamesFromString } from "./util.mjs";
 
 /**
@@ -21,9 +21,13 @@ export class LocalRepository extends Repository {
   }
 
   get displayName() {
-    return this.name.replace(/\.git$/,'').replace(/^[^:]+:\/\/([^\/]+\/)?/,'').replace(/\w+@([\.\w]+:)?/,'')
+    return this.name
+      .replace(/\.git$/, "")
+      .replace(/^[^:]+:\/\/([^\/]+\/)?/, "")
+      .replace(/\w+@([\.\w]+:)?/, "");
   }
 
+  // @ts-ignore
   async exec(args, options = { cwd: this.workspace }) {
     return await execa("git", args, options);
   }
@@ -71,7 +75,7 @@ export class LocalRepository extends Repository {
    * @return {Promise<string>} sha of the ref
    */
   async refId(ref) {
-    const g = await this.exec(["show-ref", ref], {});
+    const g = await this.exec(["show-ref", ref]);
     return g.stdout.split(/\s+/)[0];
   }
 
@@ -87,6 +91,7 @@ export class LocalRepository extends Repository {
 
   async initialize() {
     try {
+      // @ts-ignore
       await stat(this.workspace);
 
       const remoteResult = await this.exec(["remote", "-v"]);
@@ -94,14 +99,16 @@ export class LocalRepository extends Repository {
       if (m && m[1] === this.name) {
         await this.exec(["pull"]);
       } else {
+        // @ts-ignore
+
         throw new Error(`Unknown content in ${this.workspace}`);
       }
     } catch (e) {
       if (e.code === "ENOENT") {
         try {
           await this.exec(
-            ["clone", ...this.provider.cloneOptions, this.name, this.workspace],
-            {}
+            // @ts-ignore
+            ["clone", ...this.provider.cloneOptions, this.name, this.workspace]
           );
         } catch (cloneException) {
           if (
@@ -116,8 +123,6 @@ export class LocalRepository extends Repository {
         throw e;
       }
     }
-
-    return this;
   }
 
   /**
