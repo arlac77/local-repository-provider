@@ -5,13 +5,13 @@
     "access": "public",
     "provenance": true
   },
+  "types": "./types/local-provider.d.mts",
   "exports": {
     ".": {
       "default": "./src/local-provider.mjs",
       "types": "./types/local-provider.d.mts"
     }
   },
-  "types": "./types/local-provider.d.mts",
   "description": "repository provider using local (native) git commands",
   "keywords": [
     "git",
