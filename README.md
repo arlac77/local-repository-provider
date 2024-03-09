@@ -95,9 +95,9 @@ Deliver all matchine entires for a given pattern.
 
 #### Parameters
 
-*   `matchingPatterns` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>**  (optional, default `["**/*"]`)
+*   `matchingPatterns` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))**  (optional, default `["**/*"]`)
 
-Returns **AsyncIterable\<ContentEntry>** matching branch path names
+Returns **AsyncGenerator\<ContentEntry>** matching branch path names
 
 ### entry
 
@@ -107,7 +107,7 @@ Search for path in the branch.
 
 *   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
-Returns **ContentEntry** matching branch path names
+Returns **[Promise](#promise)\<ContentEntry>** matching branch path names
 
 ### maybeEntry
 
@@ -117,7 +117,7 @@ Search for path in the branch.
 
 *   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
-Returns **ContentEntry** matching branch path names
+Returns **[Promise](#promise)<(ContentEntry | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))>** matching branch path names
 
 ## Promise
 
@@ -172,7 +172,7 @@ Using provider workspace and number of repositories to create repository workspa
 #### Parameters
 
 *   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** where to place the repos workspace @see #newWorkspacePath
+*   `workspace` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** where to place the repos workspace
 
 ### name
 
