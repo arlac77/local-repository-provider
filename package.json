@@ -38,7 +38,7 @@
   "dependencies": {
     "content-entry": "^11.0.0",
     "content-entry-filesystem": "^7.0.2",
-    "execa": "^8.0.1",
+    "execa": "^9.0.1",
     "globby": "^14.0.1",
     "one-time-execution-method": "^3.1.1",
     "repository-provider": "^35.2.15"
