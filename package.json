@@ -8,8 +8,8 @@
   "types": "./types/local-provider.d.mts",
   "exports": {
     ".": {
-      "default": "./src/local-provider.mjs",
-      "types": "./types/local-provider.d.mts"
+      "types": "./types/local-provider.d.mts",
+      "default": "./src/local-provider.mjs"
     }
   },
   "description": "repository provider using local (native) git commands",
