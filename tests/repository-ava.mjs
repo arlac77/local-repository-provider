@@ -45,7 +45,7 @@ test.serial("locate repository several", async t => {
   }
 });
 
-test("locate invalid repository", async t => {
+test.serial("locate invalid repository", async t => {
   const provider = new LocalProvider();
   t.is(
     await provider.repository("git@mfelten.de/github-repository-provider.git"),
