@@ -35,7 +35,7 @@ const repoFixtures = {
   }
 };
 
-test("locate repository several", async t => {
+test.serial("locate repository several", async t => {
   const provider = new LocalProvider();
 
   t.plan(21);
@@ -53,7 +53,7 @@ test("locate invalid repository", async t => {
   );
 });
 
-test("local provider reuse workspace", async t => {
+test.serial("local provider reuse workspace", async t => {
   const provider1 = new LocalProvider();
   const provider2 = new LocalProvider();
 

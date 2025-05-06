@@ -4,7 +4,7 @@ import { entryListTest, REPOSITORY_NAME_WITH_BRANCH_GITHUB_HTTP } from "reposito
 
 const provider = new LocalProvider();
 
-test("local provider branchname default pattern", async t => {
+test.serial("local provider branchname default pattern", async t => {
   const branch = await provider.branch(REPOSITORY_NAME_WITH_BRANCH_GITHUB_HTTP);
 
   await entryListTest(t, branch, undefined, {
@@ -16,7 +16,7 @@ test("local provider branchname default pattern", async t => {
   });
 });
 
-test("local provider branchname pattern", async t => {
+test.serial("local provider branchname pattern", async t => {
   const branch = await provider.branch(REPOSITORY_NAME_WITH_BRANCH_GITHUB_HTTP);
 
   await entryListTest(t, branch, "**/*ADME*", {
