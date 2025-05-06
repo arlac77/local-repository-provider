@@ -1,4 +1,5 @@
 import { stat } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 import { execa } from "execa";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 import { Repository, Branch } from "repository-provider";
@@ -100,11 +101,12 @@ export class LocalRepository extends Repository {
         await this.exec(["pull"]);
       } else {
         // @ts-ignore
-
         throw new Error(`Unknown content in ${this.workspace}`);
       }
     } catch (e) {
       if (e.code === "ENOENT") {
+        await mkdir(this.workspace, { recursive: true });
+
         try {
           await this.exec(
             // @ts-ignore
