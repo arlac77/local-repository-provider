@@ -139,9 +139,11 @@ export class LocalProvider extends SingleGroupProvider {
       return;
     }
 
-    const m = name.match(/#(.+)$/);
+    const i = name.indexOf("#");
 
-    return repository.branch(m ? m[1] : repository.defaultBranchName);
+    return repository.branch(
+      i >= 0 ? name.substring(i + 1) : repository.defaultBranchName
+    );
   }
 
   get repositoryClass() {
