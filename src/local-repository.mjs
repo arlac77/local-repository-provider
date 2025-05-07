@@ -97,7 +97,7 @@ export class LocalRepository extends Repository {
 
       const remoteResult = await this.exec(["remote", "-v"]);
       const m = remoteResult.stdout.match(/origin\s+([^\s]+)\s+/);
-      if (m && m[1] === this.name) {
+      if (m?.[1] === this.name) {
         await this.exec(["pull"]);
       } else {
         // @ts-ignore
