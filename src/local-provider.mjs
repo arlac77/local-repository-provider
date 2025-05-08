@@ -3,7 +3,6 @@ import { tmpdir } from "node:os";
 import { mkdir } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { execa } from "execa";
-import { FileSystemEntry } from "content-entry-filesystem";
 import { SingleGroupProvider, asArray } from "repository-provider";
 import { LocalRepository } from "./local-repository.mjs";
 import { LocalBranch } from "./local-branch.mjs";
@@ -152,10 +151,6 @@ export class LocalProvider extends SingleGroupProvider {
 
   get branchClass() {
     return LocalBranch;
-  }
-
-  get entryClass() {
-    return FileSystemEntry;
   }
 }
 

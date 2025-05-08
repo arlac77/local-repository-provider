@@ -101,7 +101,7 @@ export class LocalBranch extends Branch {
       cwd: this.workspace,
       dot: true
     })) {
-      yield new this.entryClass(name, this.workspace);
+      yield new FileSystemEntry(name, this.workspace);
     }
   }
 

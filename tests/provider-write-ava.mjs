@@ -4,8 +4,6 @@ import { tmpdir } from "node:os";
 import { REPOSITORY_NAME_GITHUB_HTTP } from "repository-provider-test-support";
 import LocalProvider from "local-repository-provider";
 
-
-
 test.skip("local provider create & delete branch", async t => {
   const provider = new LocalProvider({ workspace: tmpdir() });
   const repository = await provider.repository(REPOSITORY_NAME_GITHUB_HTTP);
