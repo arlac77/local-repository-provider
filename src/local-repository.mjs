@@ -105,8 +105,6 @@ export class LocalRepository extends Repository {
       }
     } catch (e) {
       if (e.code === "ENOENT") {
-        //await mkdir(this.workspace, { recursive: true });
-
         try {
           await this.exec(
             // @ts-ignore
