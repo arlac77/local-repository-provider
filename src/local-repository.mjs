@@ -1,5 +1,4 @@
 import { stat } from "node:fs/promises";
-import { mkdir } from "node:fs/promises";
 import { execa } from "execa";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 import { Repository, Branch } from "repository-provider";
