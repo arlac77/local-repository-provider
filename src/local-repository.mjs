@@ -9,16 +9,14 @@ import { refNamesFromString } from "./util.mjs";
  * @property {Branch} currentBranch
  */
 export class LocalRepository extends Repository {
-  static get attributes() {
-    return {
-      ...super.attributes,
-      /**
-       * workspace directory.
-       * @return {string}
-       */
-      workspace: { type: "string" }
-    };
-  }
+  static attributes = {
+    ...super.attributes,
+    /**
+     * workspace directory.
+     * @return {string}
+     */
+    workspace: { type: "string" }
+  };
 
   get displayName() {
     return this.name

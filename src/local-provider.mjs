@@ -28,21 +28,19 @@ export class LocalProvider extends SingleGroupProvider {
    * - cloneOptions defaults to ["--depth", "8", "--no-single-branch"]
    * @return {Object}
    */
-  static get attributes() {
-    return {
-      // @ts-ignore
-      ...super.attributes,
-      cloneOptions: {
-        env: "GIT_CLONE_OPTIONS",
-        set: value => (typeof value === "object" ? value : value.split(/\s+/)),
-        default: ["--depth", "8", "--no-single-branch"]
-      },
-      workspace: {
-        default: tmpdir(),
-        type: "string"
-      }
-    };
-  }
+  static attributes = {
+    // @ts-ignore
+    ...super.attributes,
+    cloneOptions: {
+      env: "GIT_CLONE_OPTIONS",
+      set: value => (typeof value === "object" ? value : value.split(/\s+/)),
+      default: ["--depth", "8", "--no-single-branch"]
+    },
+    workspace: {
+      default: tmpdir(),
+      type: "string"
+    }
+  };
 
   /**
    * Generate path for a new workspace.
