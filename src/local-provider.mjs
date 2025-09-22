@@ -3,6 +3,7 @@ import { tmpdir } from "node:os";
 import { mkdir } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { execa } from "execa";
+import { string_attribute_writable, string_collection_attribute_writable } from "pacc";
 import { SingleGroupProvider, asArray } from "repository-provider";
 import { LocalRepository } from "./local-repository.mjs";
 import { LocalBranch } from "./local-branch.mjs";
@@ -29,16 +30,16 @@ export class LocalProvider extends SingleGroupProvider {
    * @return {Object}
    */
   static attributes = {
-    // @ts-ignore
     ...super.attributes,
     cloneOptions: {
+      ...string_collection_attribute_writable,
       env: "GIT_CLONE_OPTIONS",
-      set: value => (typeof value === "object" ? value : value.split(/\s+/)),
+      prepareValue: value => (typeof value === "object" ? value : value.split(/\s+/)),
       default: ["--depth", "8", "--no-single-branch"]
     },
     workspace: {
+      ...string_attribute_writable,
       default: tmpdir(),
-      type: "string"
     }
   };
 
