@@ -33,11 +33,11 @@
   },
   "dependencies": {
     "content-entry": "^14.2.7",
-    "content-entry-filesystem": "^9.0.13",
+    "content-entry-filesystem": "^9.0.14",
     "execa": "^9.6.0",
     "globby": "^16.0.0",
     "one-time-execution-method": "^3.1.4",
-    "repository-provider": "^35.8.2"
+    "repository-provider": "^35.9.0"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
