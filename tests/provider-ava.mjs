@@ -10,8 +10,8 @@ import {
 
 test("provider factory name", t => t.is(LocalProvider.name, "local"));
 
-test("local provider optionsFromEnvironment", t => {
-  const options = LocalProvider.optionsFromEnvironment({
+test("local provider with env", t => {
+  const options = LocalProvider.initialize(undefined, {
     GIT_CLONE_OPTIONS: "--depth 1"
   });
 
