@@ -1,4 +1,4 @@
-import { stat } from "node:fs/promises";
+import { stat, mkdir } from "node:fs/promises";
 import { execa } from "execa";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 import { Repository, Branch } from "repository-provider";
@@ -93,6 +93,7 @@ export class LocalRepository extends Repository {
       await stat(this.workspace);
 
       const remoteResult = await this.exec(["remote", "-v"]);
+
       const m = remoteResult.stdout.match(/origin\s+([^\s]+)\s+/);
       if (m?.[1] === this.name) {
         await this.exec(["pull"]);
@@ -101,8 +102,9 @@ export class LocalRepository extends Repository {
         throw new Error(`Unknown content in ${this.workspace}`);
       }
     } catch (e) {
-      if (e.code === "ENOENT") {
+      if (e.code === "ENOENT" || e.message.match(/not a git repository/)) {
         try {
+          await mkdir(this.workspace, { recursive: true });
           await this.exec(
             // @ts-ignore
             ["clone", ...this.provider.cloneOptions, this.name, this.workspace]
