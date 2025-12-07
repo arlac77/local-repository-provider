@@ -22,14 +22,12 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v6.0.1
-      - uses: oleksiyrudenko/gha-git-credentials@v2.1
-        with:
-          global: true
-          token: ${{ secrets.GH_TOKEN }}
       - name: prepare node
         uses: actions/setup-node@v6.1.0
         with:
           node-version: ${{ matrix.node-version }}
+      - name: install
+        run: npm ci
       - name: install
         run: npm ci
       - name: test and coverage
@@ -45,8 +43,10 @@ jobs:
           path-to-lcov: build/coverage/lcov.info
           parallel: true
         continue-on-error: true
-      - name: install
-        run: npm ci
+      - uses: oleksiyrudenko/gha-git-credentials@v2.1
+        with:
+          global: true
+          token: ${{ secrets.GH_TOKEN }}
   release:
     needs:
       - test-node
