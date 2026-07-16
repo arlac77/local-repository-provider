@@ -35,7 +35,7 @@
     "content-entry": "^14.2.7",
     "content-entry-filesystem": "^9.0.14",
     "execa": "^9.6.0",
-    "globby": "^16.2.1",
+    "globby": "^16.2.2",
     "one-time-execution-method": "^3.1.4",
     "repository-provider": "^37.1.7"
   },
